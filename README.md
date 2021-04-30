@@ -1,2 +1,2 @@
 # gachaGame
-A game to roll for collectibles
+A game to roll for collectibles kek
