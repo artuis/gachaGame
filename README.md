@@ -1,5 +1,2 @@
 # gachaGame
-A game to roll for collectibles (ascii art? pets?)
-
-# User Stories
-Idk we'll figure it out
+A game to roll for collectibles 4head
