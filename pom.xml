@@ -6,6 +6,8 @@
 	<artifactId>GachaGamer</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<properties>
+		<maven.compiler.target>1.8</maven.compiler.target>
+		<maven.compiler.source>1.8</maven.compiler.source>
 		<sonar.projectKey>artuis_gachaGame</sonar.projectKey>
 		<sonar.organization>2103reactivep2g3</sonar.organization>
 		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
