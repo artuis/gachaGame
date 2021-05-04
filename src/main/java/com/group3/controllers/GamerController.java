@@ -27,9 +27,8 @@ public class GamerController {
 	}
 
 	@PutMapping
-	public ResponseEntity<Gamer> registerGamer(@RequestBody Gamer gg) {
-		gamerService.addGamer(gg);
-		return ResponseEntity.status(201).body(gg);
+	public Publisher<Gamer> registerGamer(@RequestBody Gamer gg) {
+		return gamerService.addGamer(gg);
 	}
 
 	@PostMapping
