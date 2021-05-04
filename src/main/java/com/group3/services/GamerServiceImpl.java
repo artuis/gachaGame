@@ -24,6 +24,8 @@ public class GamerServiceImpl implements GamerService {
 
 	@Override
 	public Mono<Gamer> addGamer(Gamer gg) {
+		log.trace("insert?");
+		log.trace(gg.toString());
 		return gamerRepo.insert(gg);
 	}
 
