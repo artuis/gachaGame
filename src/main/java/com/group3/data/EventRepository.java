@@ -1,9 +1,6 @@
 package com.group3.data;
 
-public class EventRepository {
+public interface EventRepository {
 
-	public EventRepository() {
-		// TODO Auto-generated constructor stub
-	}
 
 }
