@@ -12,4 +12,5 @@ buildNumber.properties
 *.jks
 *.crt
 *.der
+*.log
 application.conf

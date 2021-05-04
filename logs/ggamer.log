@@ -13344,3 +13344,329 @@ java.lang.Exception: ChannelOperation terminal stack
 	at io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74) [netty-common-4.1.63.Final.jar:4.1.63.Final]
 	at io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30) [netty-common-4.1.63.Final.jar:4.1.63.Final]
 	at java.lang.Thread.run(Thread.java:832) [?:?]
+2021-05-03 23:36:21 TRACE SpringFactoriesLoader:103 - Loaded [org.springframework.boot.logging.LoggingSystemFactory] names: [org.springframework.boot.logging.logback.LogbackLoggingSystem.Factory, org.springframework.boot.logging.log4j2.Log4J2LoggingSystem.Factory, org.springframework.boot.logging.java.JavaLoggingSystem.Factory]
+2021-05-03 23:36:21 TRACE BeanUtils:583 - No property editor [org.springframework.boot.logging.LogLevelEditor] found for type org.springframework.boot.logging.LogLevel according to 'Editor' suffix convention
+2021-05-03 23:36:21 INFO  Driver:55 - Starting Driver using Java 15.0.2 on DESKTOP-G08BF3F with PID 12292 (C:\Users\Thomas An\code\gachaGame\target\classes started by Thomas An in C:\Users\Thomas An\code\gachaGame)
+2021-05-03 23:36:21 DEBUG Driver:56 - Running with Spring Boot v2.4.5, Spring v5.3.6
+2021-05-03 23:36:21 INFO  Driver:675 - No active profile set, falling back to default profiles: default
+2021-05-03 23:36:21 INFO  DevToolsPropertyDefaultsPostProcessor:255 - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2021-05-03 23:36:21 INFO  DevToolsPropertyDefaultsPostProcessor:255 - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2021-05-03 23:36:21 INFO  RepositoryConfigurationDelegate:128 - Bootstrapping Spring Data Cassandra repositories in DEFAULT mode.
+2021-05-03 23:36:21 INFO  RepositoryConfigurationDelegate:188 - Finished Spring Data repository scanning in 67 ms. Found 0 Cassandra repository interfaces.
+2021-05-03 23:36:21 INFO  RepositoryConfigurationDelegate:128 - Bootstrapping Spring Data Reactive Cassandra repositories in DEFAULT mode.
+2021-05-03 23:36:21 INFO  RepositoryConfigurationDelegate:188 - Finished Spring Data repository scanning in 15 ms. Found 2 Reactive Cassandra repository interfaces.
+2021-05-03 23:36:21 INFO  RepositoryConfigurationDelegate:128 - Bootstrapping Spring Data Cassandra repositories in DEFAULT mode.
+2021-05-03 23:36:21 INFO  RepositoryConfigurationDelegate:188 - Finished Spring Data repository scanning in 3 ms. Found 0 Cassandra repository interfaces.
+2021-05-03 23:36:21 DEBUG Loggers:244 - Using Slf4j logging framework
+2021-05-03 23:36:21 DEBUG InternalLoggerFactory:63 - Using SLF4J as the default logging framework
+2021-05-03 23:36:21 DEBUG PlatformDependent:1063 - Platform: Windows
+2021-05-03 23:36:21 DEBUG PlatformDependent0:433 - -Dio.netty.noUnsafe: false
+2021-05-03 23:36:21 DEBUG PlatformDependent0:927 - Java version: 15
+2021-05-03 23:36:22 DEBUG PlatformDependent0:131 - sun.misc.Unsafe.theUnsafe: available
+2021-05-03 23:36:22 DEBUG PlatformDependent0:155 - sun.misc.Unsafe.copyMemory: available
+2021-05-03 23:36:22 DEBUG PlatformDependent0:193 - java.nio.Buffer.address: available
+2021-05-03 23:36:22 DEBUG PlatformDependent0:267 - direct buffer constructor: unavailable
+java.lang.UnsupportedOperationException: Reflective setAccessible(true) disabled
+	at io.netty.util.internal.ReflectionUtil.trySetAccessible(ReflectionUtil.java:31) ~[netty-common-4.1.63.Final.jar:4.1.63.Final]
+	at io.netty.util.internal.PlatformDependent0$4.run(PlatformDependent0.java:239) ~[netty-common-4.1.63.Final.jar:4.1.63.Final]
+	at java.security.AccessController.doPrivileged(AccessController.java:312) ~[?:?]
+	at io.netty.util.internal.PlatformDependent0.<clinit>(PlatformDependent0.java:233) ~[netty-common-4.1.63.Final.jar:4.1.63.Final]
+	at io.netty.util.internal.PlatformDependent.isAndroid(PlatformDependent.java:294) ~[netty-common-4.1.63.Final.jar:4.1.63.Final]
+	at io.netty.util.internal.PlatformDependent.<clinit>(PlatformDependent.java:93) ~[netty-common-4.1.63.Final.jar:4.1.63.Final]
+	at io.netty.util.ConstantPool.<init>(ConstantPool.java:32) ~[netty-common-4.1.63.Final.jar:4.1.63.Final]
+	at io.netty.util.AttributeKey$1.<init>(AttributeKey.java:27) ~[netty-common-4.1.63.Final.jar:4.1.63.Final]
+	at io.netty.util.AttributeKey.<clinit>(AttributeKey.java:27) ~[netty-common-4.1.63.Final.jar:4.1.63.Final]
+	at reactor.netty.resources.DefaultPooledConnectionProvider.<clinit>(DefaultPooledConnectionProvider.java:110) ~[reactor-netty-core-1.0.6.jar:1.0.6]
+	at reactor.netty.resources.ConnectionProvider$Builder.build(ConnectionProvider.java:294) ~[reactor-netty-core-1.0.6.jar:1.0.6]
+	at reactor.netty.resources.ConnectionProvider.create(ConnectionProvider.java:160) ~[reactor-netty-core-1.0.6.jar:1.0.6]
+	at reactor.netty.tcp.TcpResources.create(TcpResources.java:399) ~[reactor-netty-core-1.0.6.jar:1.0.6]
+	at reactor.netty.tcp.TcpResources.getOrCreate(TcpResources.java:352) ~[reactor-netty-core-1.0.6.jar:1.0.6]
+	at reactor.netty.http.HttpResources.get(HttpResources.java:99) ~[reactor-netty-http-1.0.6.jar:1.0.6]
+	at org.springframework.http.client.reactive.ReactorResourceFactory.afterPropertiesSet(ReactorResourceFactory.java:202) ~[spring-web-5.3.6.jar:5.3.6]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1845) ~[spring-beans-5.3.6.jar:5.3.6]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1782) ~[spring-beans-5.3.6.jar:5.3.6]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:602) ~[spring-beans-5.3.6.jar:5.3.6]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:524) ~[spring-beans-5.3.6.jar:5.3.6]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:335) ~[spring-beans-5.3.6.jar:5.3.6]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-5.3.6.jar:5.3.6]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:333) ~[spring-beans-5.3.6.jar:5.3.6]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:208) ~[spring-beans-5.3.6.jar:5.3.6]
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:276) ~[spring-beans-5.3.6.jar:5.3.6]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1380) ~[spring-beans-5.3.6.jar:5.3.6]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1300) ~[spring-beans-5.3.6.jar:5.3.6]
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:887) ~[spring-beans-5.3.6.jar:5.3.6]
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:791) ~[spring-beans-5.3.6.jar:5.3.6]
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:541) ~[spring-beans-5.3.6.jar:5.3.6]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1334) ~[spring-beans-5.3.6.jar:5.3.6]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1177) ~[spring-beans-5.3.6.jar:5.3.6]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:564) ~[spring-beans-5.3.6.jar:5.3.6]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:524) ~[spring-beans-5.3.6.jar:5.3.6]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:335) ~[spring-beans-5.3.6.jar:5.3.6]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) [spring-beans-5.3.6.jar:5.3.6]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:333) [spring-beans-5.3.6.jar:5.3.6]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:213) [spring-beans-5.3.6.jar:5.3.6]
+	at org.springframework.boot.web.reactive.context.ReactiveWebServerApplicationContext.getWebServerFactory(ReactiveWebServerApplicationContext.java:118) [spring-boot-2.4.5.jar:2.4.5]
+	at org.springframework.boot.web.reactive.context.ReactiveWebServerApplicationContext.createWebServer(ReactiveWebServerApplicationContext.java:90) [spring-boot-2.4.5.jar:2.4.5]
+	at org.springframework.boot.web.reactive.context.ReactiveWebServerApplicationContext.onRefresh(ReactiveWebServerApplicationContext.java:78) [spring-boot-2.4.5.jar:2.4.5]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:577) [spring-context-5.3.6.jar:5.3.6]
+	at org.springframework.boot.web.reactive.context.ReactiveWebServerApplicationContext.refresh(ReactiveWebServerApplicationContext.java:63) [spring-boot-2.4.5.jar:2.4.5]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:782) [spring-boot-2.4.5.jar:2.4.5]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:774) [spring-boot-2.4.5.jar:2.4.5]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:439) [spring-boot-2.4.5.jar:2.4.5]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:339) [spring-boot-2.4.5.jar:2.4.5]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1340) [spring-boot-2.4.5.jar:2.4.5]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1329) [spring-boot-2.4.5.jar:2.4.5]
+	at com.group3.Driver.main(Driver.java:10) [classes/:?]
+	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[?:?]
+	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:64) ~[?:?]
+	at jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[?:?]
+	at java.lang.reflect.Method.invoke(Method.java:564) ~[?:?]
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:49) [spring-boot-devtools-2.4.5.jar:2.4.5]
+2021-05-03 23:36:22 DEBUG PlatformDependent0:332 - java.nio.Bits.unaligned: available, true
+2021-05-03 23:36:22 DEBUG PlatformDependent0:391 - jdk.internal.misc.Unsafe.allocateUninitializedArray(int): unavailable
+java.lang.IllegalAccessException: class io.netty.util.internal.PlatformDependent0$6 cannot access class jdk.internal.misc.Unsafe (in module java.base) because module java.base does not export jdk.internal.misc to unnamed module @e0be117
+	at jdk.internal.reflect.Reflection.newIllegalAccessException(Reflection.java:385) ~[?:?]
+	at java.lang.reflect.AccessibleObject.checkAccess(AccessibleObject.java:693) ~[?:?]
+	at java.lang.reflect.Method.invoke(Method.java:556) ~[?:?]
+	at io.netty.util.internal.PlatformDependent0$6.run(PlatformDependent0.java:353) ~[netty-common-4.1.63.Final.jar:4.1.63.Final]
+	at java.security.AccessController.doPrivileged(AccessController.java:312) ~[?:?]
+	at io.netty.util.internal.PlatformDependent0.<clinit>(PlatformDependent0.java:344) ~[netty-common-4.1.63.Final.jar:4.1.63.Final]
+	at io.netty.util.internal.PlatformDependent.isAndroid(PlatformDependent.java:294) ~[netty-common-4.1.63.Final.jar:4.1.63.Final]
+	at io.netty.util.internal.PlatformDependent.<clinit>(PlatformDependent.java:93) ~[netty-common-4.1.63.Final.jar:4.1.63.Final]
+	at io.netty.util.ConstantPool.<init>(ConstantPool.java:32) ~[netty-common-4.1.63.Final.jar:4.1.63.Final]
+	at io.netty.util.AttributeKey$1.<init>(AttributeKey.java:27) ~[netty-common-4.1.63.Final.jar:4.1.63.Final]
+	at io.netty.util.AttributeKey.<clinit>(AttributeKey.java:27) ~[netty-common-4.1.63.Final.jar:4.1.63.Final]
+	at reactor.netty.resources.DefaultPooledConnectionProvider.<clinit>(DefaultPooledConnectionProvider.java:110) ~[reactor-netty-core-1.0.6.jar:1.0.6]
+	at reactor.netty.resources.ConnectionProvider$Builder.build(ConnectionProvider.java:294) ~[reactor-netty-core-1.0.6.jar:1.0.6]
+	at reactor.netty.resources.ConnectionProvider.create(ConnectionProvider.java:160) ~[reactor-netty-core-1.0.6.jar:1.0.6]
+	at reactor.netty.tcp.TcpResources.create(TcpResources.java:399) ~[reactor-netty-core-1.0.6.jar:1.0.6]
+	at reactor.netty.tcp.TcpResources.getOrCreate(TcpResources.java:352) ~[reactor-netty-core-1.0.6.jar:1.0.6]
+	at reactor.netty.http.HttpResources.get(HttpResources.java:99) ~[reactor-netty-http-1.0.6.jar:1.0.6]
+	at org.springframework.http.client.reactive.ReactorResourceFactory.afterPropertiesSet(ReactorResourceFactory.java:202) ~[spring-web-5.3.6.jar:5.3.6]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1845) ~[spring-beans-5.3.6.jar:5.3.6]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1782) ~[spring-beans-5.3.6.jar:5.3.6]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:602) ~[spring-beans-5.3.6.jar:5.3.6]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:524) ~[spring-beans-5.3.6.jar:5.3.6]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:335) ~[spring-beans-5.3.6.jar:5.3.6]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-5.3.6.jar:5.3.6]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:333) ~[spring-beans-5.3.6.jar:5.3.6]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:208) ~[spring-beans-5.3.6.jar:5.3.6]
+	at org.springframework.beans.factory.config.DependencyDescriptor.resolveCandidate(DependencyDescriptor.java:276) ~[spring-beans-5.3.6.jar:5.3.6]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.doResolveDependency(DefaultListableBeanFactory.java:1380) ~[spring-beans-5.3.6.jar:5.3.6]
+	at org.springframework.beans.factory.support.DefaultListableBeanFactory.resolveDependency(DefaultListableBeanFactory.java:1300) ~[spring-beans-5.3.6.jar:5.3.6]
+	at org.springframework.beans.factory.support.ConstructorResolver.resolveAutowiredArgument(ConstructorResolver.java:887) ~[spring-beans-5.3.6.jar:5.3.6]
+	at org.springframework.beans.factory.support.ConstructorResolver.createArgumentArray(ConstructorResolver.java:791) ~[spring-beans-5.3.6.jar:5.3.6]
+	at org.springframework.beans.factory.support.ConstructorResolver.instantiateUsingFactoryMethod(ConstructorResolver.java:541) ~[spring-beans-5.3.6.jar:5.3.6]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.instantiateUsingFactoryMethod(AbstractAutowireCapableBeanFactory.java:1334) ~[spring-beans-5.3.6.jar:5.3.6]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBeanInstance(AbstractAutowireCapableBeanFactory.java:1177) ~[spring-beans-5.3.6.jar:5.3.6]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:564) ~[spring-beans-5.3.6.jar:5.3.6]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:524) ~[spring-beans-5.3.6.jar:5.3.6]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:335) ~[spring-beans-5.3.6.jar:5.3.6]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) [spring-beans-5.3.6.jar:5.3.6]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:333) [spring-beans-5.3.6.jar:5.3.6]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:213) [spring-beans-5.3.6.jar:5.3.6]
+	at org.springframework.boot.web.reactive.context.ReactiveWebServerApplicationContext.getWebServerFactory(ReactiveWebServerApplicationContext.java:118) [spring-boot-2.4.5.jar:2.4.5]
+	at org.springframework.boot.web.reactive.context.ReactiveWebServerApplicationContext.createWebServer(ReactiveWebServerApplicationContext.java:90) [spring-boot-2.4.5.jar:2.4.5]
+	at org.springframework.boot.web.reactive.context.ReactiveWebServerApplicationContext.onRefresh(ReactiveWebServerApplicationContext.java:78) [spring-boot-2.4.5.jar:2.4.5]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:577) [spring-context-5.3.6.jar:5.3.6]
+	at org.springframework.boot.web.reactive.context.ReactiveWebServerApplicationContext.refresh(ReactiveWebServerApplicationContext.java:63) [spring-boot-2.4.5.jar:2.4.5]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:782) [spring-boot-2.4.5.jar:2.4.5]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:774) [spring-boot-2.4.5.jar:2.4.5]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:439) [spring-boot-2.4.5.jar:2.4.5]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:339) [spring-boot-2.4.5.jar:2.4.5]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1340) [spring-boot-2.4.5.jar:2.4.5]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1329) [spring-boot-2.4.5.jar:2.4.5]
+	at com.group3.Driver.main(Driver.java:10) [classes/:?]
+	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method) ~[?:?]
+	at jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:64) ~[?:?]
+	at jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43) ~[?:?]
+	at java.lang.reflect.Method.invoke(Method.java:564) ~[?:?]
+	at org.springframework.boot.devtools.restart.RestartLauncher.run(RestartLauncher.java:49) [spring-boot-devtools-2.4.5.jar:2.4.5]
+2021-05-03 23:36:22 DEBUG PlatformDependent0:419 - java.nio.DirectByteBuffer.<init>(long, int): unavailable
+2021-05-03 23:36:22 DEBUG PlatformDependent:1106 - sun.misc.Unsafe: available
+2021-05-03 23:36:22 DEBUG PlatformDependent:1208 - maxDirectMemory: 8573157376 bytes (maybe)
+2021-05-03 23:36:22 DEBUG PlatformDependent:1227 - -Dio.netty.tmpdir: C:\Users\THOMAS~1\AppData\Local\Temp (java.io.tmpdir)
+2021-05-03 23:36:22 DEBUG PlatformDependent:1306 - -Dio.netty.bitMode: 64 (sun.arch.data.model)
+2021-05-03 23:36:22 DEBUG PlatformDependent:178 - -Dio.netty.maxDirectMemory: -1 bytes
+2021-05-03 23:36:22 DEBUG PlatformDependent:185 - -Dio.netty.uninitializedArrayAllocationThreshold: -1
+2021-05-03 23:36:22 DEBUG CleanerJava9:71 - java.nio.ByteBuffer.cleaner(): available
+2021-05-03 23:36:22 DEBUG PlatformDependent:205 - -Dio.netty.noPreferDirect: false
+2021-05-03 23:36:22 DEBUG TcpResources:249 - [http] resources will use the default LoopResources: DefaultLoopResources {prefix=reactor-http, daemon=true, selectCount=12, workerCount=12}
+2021-05-03 23:36:22 DEBUG TcpResources:249 - [http] resources will use the default ConnectionProvider: reactor.netty.resources.DefaultPooledConnectionProvider@322a710c
+2021-05-03 23:36:22 DEBUG ResourceLeakDetector:129 - -Dio.netty.leakDetection.level: simple
+2021-05-03 23:36:22 DEBUG ResourceLeakDetector:130 - -Dio.netty.leakDetection.targetRecords: 4
+2021-05-03 23:36:22 DEBUG InternalThreadLocalMap:83 - -Dio.netty.threadLocalMap.stringBuilder.initialSize: 1024
+2021-05-03 23:36:22 DEBUG InternalThreadLocalMap:86 - -Dio.netty.threadLocalMap.stringBuilder.maxSize: 4096
+2021-05-03 23:36:22 DEBUG MultithreadEventLoopGroup:44 - -Dio.netty.eventLoopThreads: 24
+2021-05-03 23:36:22 DEBUG NioEventLoop:106 - -Dio.netty.noKeySetOptimization: false
+2021-05-03 23:36:22 DEBUG NioEventLoop:107 - -Dio.netty.selectorAutoRebuildThreshold: 512
+2021-05-03 23:36:22 DEBUG PlatformDependent:967 - org.jctools-core.MpscChunkedArrayQueue: available
+2021-05-03 23:36:22 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@39e2a7f
+2021-05-03 23:36:22 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@52caa0e4
+2021-05-03 23:36:22 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@78fedaba
+2021-05-03 23:36:22 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@46579bfb
+2021-05-03 23:36:22 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@7277a916
+2021-05-03 23:36:22 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@75bdfa3c
+2021-05-03 23:36:22 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@7b98c53b
+2021-05-03 23:36:22 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@1ea11f0
+2021-05-03 23:36:22 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@4e9a37c2
+2021-05-03 23:36:22 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@54ec4837
+2021-05-03 23:36:22 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@6960ee8c
+2021-05-03 23:36:22 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@385417c1
+2021-05-03 23:36:22 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@27ef132e
+2021-05-03 23:36:22 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@11745a14
+2021-05-03 23:36:22 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@7f0ed238
+2021-05-03 23:36:22 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@677c3807
+2021-05-03 23:36:22 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@38d521a5
+2021-05-03 23:36:22 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@b426851
+2021-05-03 23:36:22 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@254f413
+2021-05-03 23:36:22 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@46e485e
+2021-05-03 23:36:22 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@15a7897f
+2021-05-03 23:36:22 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@d3f7b7a
+2021-05-03 23:36:22 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@286ee2a2
+2021-05-03 23:36:22 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@5eb46349
+2021-05-03 23:36:22 DEBUG ResourceLeakDetectorFactory:196 - Loaded default ResourceLeakDetector: io.netty.util.ResourceLeakDetector@7bb81a57
+2021-05-03 23:36:22 DEBUG PooledByteBufAllocator:155 - -Dio.netty.allocator.numHeapArenas: 24
+2021-05-03 23:36:22 DEBUG PooledByteBufAllocator:156 - -Dio.netty.allocator.numDirectArenas: 24
+2021-05-03 23:36:22 DEBUG PooledByteBufAllocator:158 - -Dio.netty.allocator.pageSize: 8192
+2021-05-03 23:36:22 DEBUG PooledByteBufAllocator:163 - -Dio.netty.allocator.maxOrder: 11
+2021-05-03 23:36:22 DEBUG PooledByteBufAllocator:167 - -Dio.netty.allocator.chunkSize: 16777216
+2021-05-03 23:36:22 DEBUG PooledByteBufAllocator:168 - -Dio.netty.allocator.smallCacheSize: 256
+2021-05-03 23:36:22 DEBUG PooledByteBufAllocator:169 - -Dio.netty.allocator.normalCacheSize: 64
+2021-05-03 23:36:22 DEBUG PooledByteBufAllocator:170 - -Dio.netty.allocator.maxCachedBufferCapacity: 32768
+2021-05-03 23:36:22 DEBUG PooledByteBufAllocator:171 - -Dio.netty.allocator.cacheTrimInterval: 8192
+2021-05-03 23:36:22 DEBUG PooledByteBufAllocator:172 - -Dio.netty.allocator.cacheTrimIntervalMillis: 0
+2021-05-03 23:36:22 DEBUG PooledByteBufAllocator:173 - -Dio.netty.allocator.useCacheForAllThreads: true
+2021-05-03 23:36:22 DEBUG PooledByteBufAllocator:174 - -Dio.netty.allocator.maxCachedByteBuffersPerChunk: 1023
+2021-05-03 23:36:22 DEBUG ByteBufUtil:87 - -Dio.netty.allocator.type: pooled
+2021-05-03 23:36:22 DEBUG ByteBufUtil:96 - -Dio.netty.threadLocalDirectBufferSize: 0
+2021-05-03 23:36:22 DEBUG ByteBufUtil:99 - -Dio.netty.maxThreadLocalCharBufferSize: 16384
+2021-05-03 23:36:22 DEBUG DefaultChannelId:79 - -Dio.netty.processId: 12292 (auto-detected)
+2021-05-03 23:36:22 DEBUG NetUtil:135 - -Djava.net.preferIPv4Stack: false
+2021-05-03 23:36:22 DEBUG NetUtil:136 - -Djava.net.preferIPv6Addresses: false
+2021-05-03 23:36:22 DEBUG NetUtilInitializations:129 - Loopback interface: lo (Software Loopback Interface 1, 127.0.0.1)
+2021-05-03 23:36:22 DEBUG NetUtil:187 - Failed to get SOMAXCONN from sysctl and file \proc\sys\net\core\somaxconn. Default: 200
+2021-05-03 23:36:22 DEBUG DefaultChannelId:101 - -Dio.netty.machineId: a8:a1:59:ff:fe:44:83:df (auto-detected)
+2021-05-03 23:36:24 DEBUG Recycler:103 - -Dio.netty.recycler.maxCapacityPerThread: 4096
+2021-05-03 23:36:24 DEBUG Recycler:104 - -Dio.netty.recycler.maxSharedCapacityFactor: 2
+2021-05-03 23:36:24 DEBUG Recycler:105 - -Dio.netty.recycler.linkCapacity: 16
+2021-05-03 23:36:24 DEBUG Recycler:106 - -Dio.netty.recycler.ratio: 8
+2021-05-03 23:36:24 DEBUG Recycler:107 - -Dio.netty.recycler.delayedQueue.ratio: 8
+2021-05-03 23:36:24 DEBUG AbstractByteBuf:63 - -Dio.netty.buffer.checkAccessible: true
+2021-05-03 23:36:24 DEBUG AbstractByteBuf:64 - -Dio.netty.buffer.checkBounds: true
+2021-05-03 23:36:24 DEBUG ResourceLeakDetectorFactory:196 - Loaded default ResourceLeakDetector: io.netty.util.ResourceLeakDetector@49c974b0
+2021-05-03 23:36:25 DEBUG SslHandler:1783 - [id: 0x33b8c393, L:/192.168.1.136:53346 - R:cassandra.us-east-2.amazonaws.com/3.12.23.181:9142] HANDSHAKEN: protocol:TLSv1.2 cipher suite:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA
+2021-05-03 23:36:25 DEBUG SslHandler:1783 - [id: 0xab469057, L:/192.168.1.136:53347 - R:cassandra.us-east-2.amazonaws.com/3.12.23.181:9142] HANDSHAKEN: protocol:TLSv1.2 cipher suite:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA
+2021-05-03 23:36:25 DEBUG SslHandler:1783 - [id: 0x2a0cdf70, L:/192.168.1.136:53348 - R:cassandra.us-east-2.amazonaws.com/3.12.23.181:9142] HANDSHAKEN: protocol:TLSv1.2 cipher suite:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA
+2021-05-03 23:36:26 DEBUG SslHandler:1783 - [id: 0x970898df, L:/192.168.1.136:53356 - R:cassandra.us-east-2.amazonaws.com/3.12.23.181:9142] HANDSHAKEN: protocol:TLSv1.2 cipher suite:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA
+2021-05-03 23:36:27 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@7462f2d2
+2021-05-03 23:36:27 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@7da43ca
+2021-05-03 23:36:27 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@70154a04
+2021-05-03 23:36:27 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@62d6d884
+2021-05-03 23:36:27 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@141426e
+2021-05-03 23:36:27 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@5450959f
+2021-05-03 23:36:27 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@ecfa07b
+2021-05-03 23:36:27 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@5a094bde
+2021-05-03 23:36:27 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@515030c3
+2021-05-03 23:36:27 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@1fcbb1b
+2021-05-03 23:36:27 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@72431f27
+2021-05-03 23:36:27 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@6284ed0a
+2021-05-03 23:36:27 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@32021fb1
+2021-05-03 23:36:27 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@56425e89
+2021-05-03 23:36:27 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@3c12c941
+2021-05-03 23:36:27 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@79bb8f74
+2021-05-03 23:36:27 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@5b66f865
+2021-05-03 23:36:27 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@1f944396
+2021-05-03 23:36:27 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@35e6c9e4
+2021-05-03 23:36:27 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@10033003
+2021-05-03 23:36:27 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@7c4a57b6
+2021-05-03 23:36:27 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@41ff235a
+2021-05-03 23:36:27 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@42d56b68
+2021-05-03 23:36:27 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@4bdfd819
+2021-05-03 23:36:27 DEBUG SslHandler:1783 - [id: 0x4bc76cba, L:/192.168.1.136:53407 - R:cassandra.us-east-2.amazonaws.com/3.12.23.181:9142] HANDSHAKEN: protocol:TLSv1.2 cipher suite:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA
+2021-05-03 23:36:27 DEBUG SslHandler:1783 - [id: 0x814e64d2, L:/192.168.1.136:53408 - R:cassandra.us-east-2.amazonaws.com/3.12.23.181:9142] HANDSHAKEN: protocol:TLSv1.2 cipher suite:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA
+2021-05-03 23:36:28 DEBUG SslHandler:1783 - [id: 0x9f8398b5, L:/192.168.1.136:53414 - R:cassandra.us-east-2.amazonaws.com/3.12.23.181:9142] HANDSHAKEN: protocol:TLSv1.2 cipher suite:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA
+2021-05-03 23:36:29 DEBUG SslHandler:1783 - [id: 0x55ec1f9e, L:/192.168.1.136:53426 - R:cassandra.us-east-2.amazonaws.com/3.12.23.181:9142] HANDSHAKEN: protocol:TLSv1.2 cipher suite:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA
+2021-05-03 23:36:30 INFO  OptionalLiveReloadServer:58 - LiveReload server is running on port 35729
+2021-05-03 23:36:30 DEBUG Mappings:215 - 
+	c.g.c.GamerController:
+	{GET /gamers}: getGamers()
+	{PUT /gamers/{gamerId}}: updateGamer(int,Gamer)
+	{PUT /gamers}: registerGamer(Gamer)
+	{POST /gamers}: login(Gamer)
+	{DELETE /gamers}: logout()
+2021-05-03 23:36:30 DEBUG Mappings:167 - 'resourceHandlerMapping' {/webjars/**=ResourceWebHandler ["classpath:/META-INF/resources/webjars/"], /**=ResourceWebHandler ["classpath:/META-INF/resources/", "classpath:/resources/", "classpath:/static/", "classpath:/public/"]}
+2021-05-03 23:36:30 INFO  EndpointLinksResolver:58 - Exposing 2 endpoint(s) beneath base path '/actuator'
+2021-05-03 23:36:30 DEBUG InternalLoggerFactory:61 - Using SLF4J as the default logging framework
+2021-05-03 23:36:30 DEBUG DefaultLoopIOUring:244 - Default io_uring support : false
+2021-05-03 23:36:30 DEBUG DefaultLoopEpoll:244 - Default Epoll support : false
+2021-05-03 23:36:30 DEBUG DefaultLoopKQueue:244 - Default KQueue support : false
+2021-05-03 23:36:30 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@2b91e858
+2021-05-03 23:36:30 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@bf5b148
+2021-05-03 23:36:30 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@59b17a36
+2021-05-03 23:36:30 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@4dcf9c79
+2021-05-03 23:36:30 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@69b87eb0
+2021-05-03 23:36:30 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@4f61fd3e
+2021-05-03 23:36:30 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@1dd34e2e
+2021-05-03 23:36:30 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@2c4e35b9
+2021-05-03 23:36:30 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@6a9937e
+2021-05-03 23:36:30 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@46e11698
+2021-05-03 23:36:30 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@41c49254
+2021-05-03 23:36:30 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@1cfa8428
+2021-05-03 23:36:30 DEBUG ServerTransport:244 - [id:b8b92955, L:/[0:0:0:0:0:0:0:0]:8080] Bound new server
+2021-05-03 23:36:30 INFO  NettyWebServer:111 - Netty started on port 8080
+2021-05-03 23:36:30 INFO  Driver:61 - Started Driver in 9.854 seconds (JVM running for 10.403)
+2021-05-03 23:36:34 DEBUG HttpServerOperations:244 - [id:06c7dc46, L:/[0:0:0:0:0:0:0:1]:8080 - R:/[0:0:0:0:0:0:0:1]:53490] New http connection, requesting read
+2021-05-03 23:36:34 DEBUG HttpServerOperations:244 - [id:90910084, L:/[0:0:0:0:0:0:0:1]:8080 - R:/[0:0:0:0:0:0:0:1]:53491] New http connection, requesting read
+2021-05-03 23:36:34 DEBUG TransportConfig:249 - [id:06c7dc46, L:/[0:0:0:0:0:0:0:1]:8080 - R:/[0:0:0:0:0:0:0:1]:53490] Initialized pipeline DefaultChannelPipeline{(reactor.left.httpCodec = io.netty.handler.codec.http.HttpServerCodec), (reactor.left.httpTrafficHandler = reactor.netty.http.server.HttpTrafficHandler), (reactor.right.reactiveBridge = reactor.netty.channel.ChannelOperationsHandler)}
+2021-05-03 23:36:34 DEBUG TransportConfig:249 - [id:90910084, L:/[0:0:0:0:0:0:0:1]:8080 - R:/[0:0:0:0:0:0:0:1]:53491] Initialized pipeline DefaultChannelPipeline{(reactor.left.httpCodec = io.netty.handler.codec.http.HttpServerCodec), (reactor.left.httpTrafficHandler = reactor.netty.http.server.HttpTrafficHandler), (reactor.right.reactiveBridge = reactor.netty.channel.ChannelOperationsHandler)}
+2021-05-03 23:36:34 DEBUG HttpServerOperations:249 - [id:90910084, L:/[0:0:0:0:0:0:0:1]:8080 - R:/[0:0:0:0:0:0:0:1]:53491] Increasing pending responses, now 1
+2021-05-03 23:36:34 DEBUG HttpServer:249 - [id:90910084-1, L:/[0:0:0:0:0:0:0:1]:8080 - R:/[0:0:0:0:0:0:0:1]:53491] Handler is being applied: org.springframework.http.server.reactive.ReactorHttpHandlerAdapter@43fcb156
+2021-05-03 23:36:34 DEBUG FluxReceive:249 - [id:90910084-1, L:/[0:0:0:0:0:0:0:1]:8080 - R:/[0:0:0:0:0:0:0:1]:53491] FluxReceive{pending=0, cancelled=false, inboundDone=false, inboundError=null}: subscribing inbound receiver
+2021-05-03 23:36:34 TRACE GamerServiceImpl:27 - insert?
+2021-05-03 23:36:34 TRACE GamerServiceImpl:28 - Gamer [gamerId=1, role=GAMER, rolls=5, stardust=50, strings=1000, collectionSize=0, collectionStrength=0, pvpScore=0]
+2021-05-03 23:36:35 DEBUG HttpServerOperations:249 - [id:90910084-1, L:/[0:0:0:0:0:0:0:1]:8080 - R:/[0:0:0:0:0:0:0:1]:53491] Decreasing pending responses, now 0
+2021-05-03 23:36:35 DEBUG HttpServerOperations:244 - [id:90910084-1, L:/[0:0:0:0:0:0:0:1]:8080 - R:/[0:0:0:0:0:0:0:1]:53491] Last HTTP response frame
+2021-05-03 23:36:35 DEBUG HttpServerOperations:244 - [id:90910084-1, L:/[0:0:0:0:0:0:0:1]:8080 - R:/[0:0:0:0:0:0:0:1]:53491] Last HTTP packet was sent, terminating the channel
+2021-05-03 23:36:35 TRACE ChannelOperations:234 - [id:90910084, L:/[0:0:0:0:0:0:0:1]:8080 - R:/[0:0:0:0:0:0:0:1]:53491] Disposing ChannelOperation from a channel
+java.lang.Exception: ChannelOperation terminal stack
+	at reactor.netty.channel.ChannelOperations.terminate(ChannelOperations.java:462) [reactor-netty-core-1.0.6.jar:1.0.6]
+	at reactor.netty.http.server.HttpServerOperations.cleanHandlerTerminate(HttpServerOperations.java:644) [reactor-netty-http-1.0.6.jar:1.0.6]
+	at reactor.netty.http.server.HttpTrafficHandler.operationComplete(HttpTrafficHandler.java:413) [reactor-netty-http-1.0.6.jar:1.0.6]
+	at reactor.netty.http.server.HttpTrafficHandler.operationComplete(HttpTrafficHandler.java:68) [reactor-netty-http-1.0.6.jar:1.0.6]
+	at io.netty.util.concurrent.DefaultPromise.notifyListener0(DefaultPromise.java:578) [netty-common-4.1.63.Final.jar:4.1.63.Final]
+	at io.netty.util.concurrent.DefaultPromise.notifyListeners0(DefaultPromise.java:571) [netty-common-4.1.63.Final.jar:4.1.63.Final]
+	at io.netty.util.concurrent.DefaultPromise.notifyListenersNow(DefaultPromise.java:550) [netty-common-4.1.63.Final.jar:4.1.63.Final]
+	at io.netty.util.concurrent.DefaultPromise.notifyListeners(DefaultPromise.java:491) [netty-common-4.1.63.Final.jar:4.1.63.Final]
+	at io.netty.util.concurrent.DefaultPromise.setValue0(DefaultPromise.java:616) [netty-common-4.1.63.Final.jar:4.1.63.Final]
+	at io.netty.util.concurrent.DefaultPromise.setSuccess0(DefaultPromise.java:605) [netty-common-4.1.63.Final.jar:4.1.63.Final]
+	at io.netty.util.concurrent.DefaultPromise.trySuccess(DefaultPromise.java:104) [netty-common-4.1.63.Final.jar:4.1.63.Final]
+	at io.netty.util.internal.PromiseNotificationUtil.trySuccess(PromiseNotificationUtil.java:48) [netty-common-4.1.63.Final.jar:4.1.63.Final]
+	at io.netty.channel.ChannelOutboundBuffer.safeSuccess(ChannelOutboundBuffer.java:717) [netty-transport-4.1.63.Final.jar:4.1.63.Final]
+	at io.netty.channel.ChannelOutboundBuffer.remove(ChannelOutboundBuffer.java:272) [netty-transport-4.1.63.Final.jar:4.1.63.Final]
+	at io.netty.channel.ChannelOutboundBuffer.removeBytes(ChannelOutboundBuffer.java:352) [netty-transport-4.1.63.Final.jar:4.1.63.Final]
+	at io.netty.channel.socket.nio.NioSocketChannel.doWrite(NioSocketChannel.java:414) [netty-transport-4.1.63.Final.jar:4.1.63.Final]
+	at io.netty.channel.AbstractChannel$AbstractUnsafe.flush0(AbstractChannel.java:953) [netty-transport-4.1.63.Final.jar:4.1.63.Final]
+	at io.netty.channel.nio.AbstractNioChannel$AbstractNioUnsafe.flush0(AbstractNioChannel.java:354) [netty-transport-4.1.63.Final.jar:4.1.63.Final]
+	at io.netty.channel.AbstractChannel$AbstractUnsafe.flush(AbstractChannel.java:917) [netty-transport-4.1.63.Final.jar:4.1.63.Final]
+	at io.netty.channel.DefaultChannelPipeline$HeadContext.flush(DefaultChannelPipeline.java:1372) [netty-transport-4.1.63.Final.jar:4.1.63.Final]
+	at io.netty.channel.AbstractChannelHandlerContext.invokeFlush0(AbstractChannelHandlerContext.java:750) [netty-transport-4.1.63.Final.jar:4.1.63.Final]
+	at io.netty.channel.AbstractChannelHandlerContext.invokeFlush(AbstractChannelHandlerContext.java:742) [netty-transport-4.1.63.Final.jar:4.1.63.Final]
+	at io.netty.channel.AbstractChannelHandlerContext.flush(AbstractChannelHandlerContext.java:728) [netty-transport-4.1.63.Final.jar:4.1.63.Final]
+	at io.netty.channel.CombinedChannelDuplexHandler$DelegatingChannelHandlerContext.flush(CombinedChannelDuplexHandler.java:531) [netty-transport-4.1.63.Final.jar:4.1.63.Final]
+	at io.netty.channel.ChannelOutboundHandlerAdapter.flush(ChannelOutboundHandlerAdapter.java:125) [netty-transport-4.1.63.Final.jar:4.1.63.Final]
+	at io.netty.channel.CombinedChannelDuplexHandler.flush(CombinedChannelDuplexHandler.java:356) [netty-transport-4.1.63.Final.jar:4.1.63.Final]
+	at io.netty.channel.AbstractChannelHandlerContext.invokeFlush0(AbstractChannelHandlerContext.java:750) [netty-transport-4.1.63.Final.jar:4.1.63.Final]
+	at io.netty.channel.AbstractChannelHandlerContext.invokeFlush(AbstractChannelHandlerContext.java:742) [netty-transport-4.1.63.Final.jar:4.1.63.Final]
+	at io.netty.channel.AbstractChannelHandlerContext.flush(AbstractChannelHandlerContext.java:728) [netty-transport-4.1.63.Final.jar:4.1.63.Final]
+	at io.netty.channel.ChannelDuplexHandler.flush(ChannelDuplexHandler.java:127) [netty-transport-4.1.63.Final.jar:4.1.63.Final]
+	at io.netty.channel.AbstractChannelHandlerContext.invokeFlush0(AbstractChannelHandlerContext.java:750) [netty-transport-4.1.63.Final.jar:4.1.63.Final]
+	at io.netty.channel.AbstractChannelHandlerContext.invokeWriteAndFlush(AbstractChannelHandlerContext.java:765) [netty-transport-4.1.63.Final.jar:4.1.63.Final]
+	at io.netty.channel.AbstractChannelHandlerContext$WriteTask.run(AbstractChannelHandlerContext.java:1071) [netty-transport-4.1.63.Final.jar:4.1.63.Final]
+	at io.netty.util.concurrent.AbstractEventExecutor.safeExecute(AbstractEventExecutor.java:164) [netty-common-4.1.63.Final.jar:4.1.63.Final]
+	at io.netty.util.concurrent.SingleThreadEventExecutor.runAllTasks(SingleThreadEventExecutor.java:472) [netty-common-4.1.63.Final.jar:4.1.63.Final]
+	at io.netty.channel.nio.NioEventLoop.run(NioEventLoop.java:500) [netty-transport-4.1.63.Final.jar:4.1.63.Final]
+	at io.netty.util.concurrent.SingleThreadEventExecutor$4.run(SingleThreadEventExecutor.java:989) [netty-common-4.1.63.Final.jar:4.1.63.Final]
+	at io.netty.util.internal.ThreadExecutorMap$2.run(ThreadExecutorMap.java:74) [netty-common-4.1.63.Final.jar:4.1.63.Final]
+	at io.netty.util.concurrent.FastThreadLocalRunnable.run(FastThreadLocalRunnable.java:30) [netty-common-4.1.63.Final.jar:4.1.63.Final]
+	at java.lang.Thread.run(Thread.java:832) [?:?]
