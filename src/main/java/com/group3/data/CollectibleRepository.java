@@ -1,9 +1,13 @@
 package com.group3.data;
 
-public class CollectibleRepository {
+import java.util.List;
 
-	public CollectibleRepository() {
-		// TODO Auto-generated constructor stub
-	}
+import org.springframework.data.cassandra.repository.AllowFiltering;
+import org.springframework.data.cassandra.repository.ReactiveCassandraRepository;
+
+import com.group3.beans.Collectible;
+
+public interface CollectibleRepository extends ReactiveCassandraRepository<Collectible, /*PRIMARY KEY DATATYPE REPLACES String PLACEHOLDER*/ String> {
+	
 
 }
