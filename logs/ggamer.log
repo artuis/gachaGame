@@ -1,0 +1,325 @@
+2021-05-03 20:42:04 TRACE SpringFactoriesLoader:103 - Loaded [org.springframework.boot.logging.LoggingSystemFactory] names: [org.springframework.boot.logging.logback.LogbackLoggingSystem.Factory, org.springframework.boot.logging.log4j2.Log4J2LoggingSystem.Factory, org.springframework.boot.logging.java.JavaLoggingSystem.Factory]
+2021-05-03 20:42:04 TRACE SpringFactoriesLoader:103 - Loaded [org.springframework.boot.logging.LoggingSystemFactory] names: [org.springframework.boot.logging.logback.LogbackLoggingSystem.Factory, org.springframework.boot.logging.log4j2.Log4J2LoggingSystem.Factory, org.springframework.boot.logging.java.JavaLoggingSystem.Factory]
+2021-05-03 20:42:05 TRACE BeanUtils:583 - No property editor [org.springframework.boot.logging.LogLevelEditor] found for type org.springframework.boot.logging.LogLevel according to 'Editor' suffix convention
+2021-05-03 20:42:05 TRACE BeanUtils:583 - No property editor [org.springframework.boot.logging.LogLevelEditor] found for type org.springframework.boot.logging.LogLevel according to 'Editor' suffix convention
+2021-05-03 20:42:05 INFO  Driver:55 - Starting Driver using Java 1.8.0_281 on Astrallewynn with PID 17236 (C:\Users\15748\project2repo\gachaGame\target\classes started by 15748 in C:\Users\15748\project2repo\gachaGame)
+2021-05-03 20:42:05 DEBUG Driver:56 - Running with Spring Boot v2.4.5, Spring v5.3.6
+2021-05-03 20:42:05 INFO  Driver:675 - No active profile set, falling back to default profiles: default
+2021-05-03 20:42:05 INFO  Driver:55 - Starting Driver using Java 1.8.0_281 on Astrallewynn with PID 14980 (C:\Users\15748\project2repo\gachaGame\target\classes started by 15748 in C:\Users\15748\project2repo\gachaGame)
+2021-05-03 20:42:05 DEBUG Driver:56 - Running with Spring Boot v2.4.5, Spring v5.3.6
+2021-05-03 20:42:05 INFO  Driver:675 - No active profile set, falling back to default profiles: default
+2021-05-03 20:42:05 INFO  DevToolsPropertyDefaultsPostProcessor:255 - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2021-05-03 20:42:05 INFO  DevToolsPropertyDefaultsPostProcessor:255 - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2021-05-03 20:42:05 INFO  DevToolsPropertyDefaultsPostProcessor:255 - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2021-05-03 20:42:05 INFO  DevToolsPropertyDefaultsPostProcessor:255 - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2021-05-03 20:42:05 INFO  RepositoryConfigurationDelegate:128 - Bootstrapping Spring Data Cassandra repositories in DEFAULT mode.
+2021-05-03 20:42:05 INFO  RepositoryConfigurationDelegate:128 - Bootstrapping Spring Data Cassandra repositories in DEFAULT mode.
+2021-05-03 20:42:05 INFO  RepositoryConfigurationDelegate:188 - Finished Spring Data repository scanning in 138 ms. Found 0 Cassandra repository interfaces.
+2021-05-03 20:42:05 INFO  RepositoryConfigurationDelegate:188 - Finished Spring Data repository scanning in 141 ms. Found 0 Cassandra repository interfaces.
+2021-05-03 20:42:06 INFO  RepositoryConfigurationDelegate:128 - Bootstrapping Spring Data Reactive Cassandra repositories in DEFAULT mode.
+2021-05-03 20:42:06 INFO  RepositoryConfigurationDelegate:128 - Bootstrapping Spring Data Reactive Cassandra repositories in DEFAULT mode.
+2021-05-03 20:42:06 INFO  RepositoryConfigurationDelegate:188 - Finished Spring Data repository scanning in 28 ms. Found 1 Reactive Cassandra repository interfaces.
+2021-05-03 20:42:06 INFO  RepositoryConfigurationDelegate:188 - Finished Spring Data repository scanning in 29 ms. Found 1 Reactive Cassandra repository interfaces.
+2021-05-03 20:42:06 INFO  RepositoryConfigurationDelegate:128 - Bootstrapping Spring Data Cassandra repositories in DEFAULT mode.
+2021-05-03 20:42:06 INFO  RepositoryConfigurationDelegate:128 - Bootstrapping Spring Data Cassandra repositories in DEFAULT mode.
+2021-05-03 20:42:06 INFO  RepositoryConfigurationDelegate:188 - Finished Spring Data repository scanning in 5 ms. Found 0 Cassandra repository interfaces.
+2021-05-03 20:42:06 INFO  RepositoryConfigurationDelegate:188 - Finished Spring Data repository scanning in 5 ms. Found 0 Cassandra repository interfaces.
+2021-05-03 20:42:06 DEBUG Loggers:244 - Using Slf4j logging framework
+2021-05-03 20:42:06 DEBUG InternalLoggerFactory:63 - Using SLF4J as the default logging framework
+2021-05-03 20:42:06 DEBUG PlatformDependent:1063 - Platform: Windows
+2021-05-03 20:42:06 DEBUG Loggers:244 - Using Slf4j logging framework
+2021-05-03 20:42:06 DEBUG PlatformDependent0:433 - -Dio.netty.noUnsafe: false
+2021-05-03 20:42:06 DEBUG PlatformDependent0:927 - Java version: 8
+2021-05-03 20:42:06 DEBUG PlatformDependent0:131 - sun.misc.Unsafe.theUnsafe: available
+2021-05-03 20:42:06 DEBUG PlatformDependent0:155 - sun.misc.Unsafe.copyMemory: available
+2021-05-03 20:42:06 DEBUG PlatformDependent0:193 - java.nio.Buffer.address: available
+2021-05-03 20:42:06 DEBUG PlatformDependent0:258 - direct buffer constructor: available
+2021-05-03 20:42:06 DEBUG PlatformDependent0:332 - java.nio.Bits.unaligned: available, true
+2021-05-03 20:42:06 DEBUG PlatformDependent0:397 - jdk.internal.misc.Unsafe.allocateUninitializedArray(int): unavailable prior to Java9
+2021-05-03 20:42:06 DEBUG PlatformDependent0:419 - java.nio.DirectByteBuffer.<init>(long, int): available
+2021-05-03 20:42:06 DEBUG PlatformDependent:1106 - sun.misc.Unsafe: available
+2021-05-03 20:42:06 DEBUG PlatformDependent:1227 - -Dio.netty.tmpdir: C:\Users\15748\AppData\Local\Temp (java.io.tmpdir)
+2021-05-03 20:42:06 DEBUG PlatformDependent:1306 - -Dio.netty.bitMode: 32 (sun.arch.data.model)
+2021-05-03 20:42:06 DEBUG PlatformDependent:178 - -Dio.netty.maxDirectMemory: 259522560 bytes
+2021-05-03 20:42:06 DEBUG PlatformDependent:185 - -Dio.netty.uninitializedArrayAllocationThreshold: -1
+2021-05-03 20:42:06 DEBUG CleanerJava6:92 - java.nio.ByteBuffer.cleaner(): available
+2021-05-03 20:42:06 DEBUG PlatformDependent:205 - -Dio.netty.noPreferDirect: false
+2021-05-03 20:42:06 DEBUG TcpResources:249 - [http] resources will use the default LoopResources: DefaultLoopResources {prefix=reactor-http, daemon=true, selectCount=8, workerCount=8}
+2021-05-03 20:42:06 DEBUG TcpResources:249 - [http] resources will use the default ConnectionProvider: reactor.netty.resources.DefaultPooledConnectionProvider@12a2649
+2021-05-03 20:42:06 DEBUG InternalLoggerFactory:63 - Using SLF4J as the default logging framework
+2021-05-03 20:42:06 DEBUG PlatformDependent:1063 - Platform: Windows
+2021-05-03 20:42:06 DEBUG PlatformDependent0:433 - -Dio.netty.noUnsafe: false
+2021-05-03 20:42:06 DEBUG PlatformDependent0:927 - Java version: 8
+2021-05-03 20:42:06 DEBUG PlatformDependent0:131 - sun.misc.Unsafe.theUnsafe: available
+2021-05-03 20:42:06 DEBUG PlatformDependent0:155 - sun.misc.Unsafe.copyMemory: available
+2021-05-03 20:42:06 DEBUG PlatformDependent0:193 - java.nio.Buffer.address: available
+2021-05-03 20:42:06 DEBUG PlatformDependent0:258 - direct buffer constructor: available
+2021-05-03 20:42:06 DEBUG PlatformDependent0:332 - java.nio.Bits.unaligned: available, true
+2021-05-03 20:42:06 DEBUG PlatformDependent0:397 - jdk.internal.misc.Unsafe.allocateUninitializedArray(int): unavailable prior to Java9
+2021-05-03 20:42:06 DEBUG PlatformDependent0:419 - java.nio.DirectByteBuffer.<init>(long, int): available
+2021-05-03 20:42:06 DEBUG PlatformDependent:1106 - sun.misc.Unsafe: available
+2021-05-03 20:42:06 DEBUG PlatformDependent:1227 - -Dio.netty.tmpdir: C:\Users\15748\AppData\Local\Temp (java.io.tmpdir)
+2021-05-03 20:42:06 DEBUG PlatformDependent:1306 - -Dio.netty.bitMode: 32 (sun.arch.data.model)
+2021-05-03 20:42:06 DEBUG PlatformDependent:178 - -Dio.netty.maxDirectMemory: 259522560 bytes
+2021-05-03 20:42:06 DEBUG PlatformDependent:185 - -Dio.netty.uninitializedArrayAllocationThreshold: -1
+2021-05-03 20:42:06 DEBUG CleanerJava6:92 - java.nio.ByteBuffer.cleaner(): available
+2021-05-03 20:42:06 DEBUG PlatformDependent:205 - -Dio.netty.noPreferDirect: false
+2021-05-03 20:42:06 DEBUG TcpResources:249 - [http] resources will use the default LoopResources: DefaultLoopResources {prefix=reactor-http, daemon=true, selectCount=8, workerCount=8}
+2021-05-03 20:42:06 DEBUG TcpResources:249 - [http] resources will use the default ConnectionProvider: reactor.netty.resources.DefaultPooledConnectionProvider@16a7b34
+2021-05-03 20:42:06 DEBUG ResourceLeakDetector:129 - -Dio.netty.leakDetection.level: simple
+2021-05-03 20:42:06 DEBUG ResourceLeakDetector:130 - -Dio.netty.leakDetection.targetRecords: 4
+2021-05-03 20:42:06 DEBUG InternalThreadLocalMap:83 - -Dio.netty.threadLocalMap.stringBuilder.initialSize: 1024
+2021-05-03 20:42:06 DEBUG ResourceLeakDetector:129 - -Dio.netty.leakDetection.level: simple
+2021-05-03 20:42:06 DEBUG InternalThreadLocalMap:86 - -Dio.netty.threadLocalMap.stringBuilder.maxSize: 4096
+2021-05-03 20:42:06 DEBUG ResourceLeakDetector:130 - -Dio.netty.leakDetection.targetRecords: 4
+2021-05-03 20:42:06 DEBUG InternalThreadLocalMap:83 - -Dio.netty.threadLocalMap.stringBuilder.initialSize: 1024
+2021-05-03 20:42:06 DEBUG InternalThreadLocalMap:86 - -Dio.netty.threadLocalMap.stringBuilder.maxSize: 4096
+2021-05-03 20:42:07 DEBUG MultithreadEventLoopGroup:44 - -Dio.netty.eventLoopThreads: 16
+2021-05-03 20:42:07 DEBUG MultithreadEventLoopGroup:44 - -Dio.netty.eventLoopThreads: 16
+2021-05-03 20:42:07 DEBUG NioEventLoop:106 - -Dio.netty.noKeySetOptimization: false
+2021-05-03 20:42:07 DEBUG NioEventLoop:107 - -Dio.netty.selectorAutoRebuildThreshold: 512
+2021-05-03 20:42:07 DEBUG NioEventLoop:106 - -Dio.netty.noKeySetOptimization: false
+2021-05-03 20:42:07 DEBUG NioEventLoop:107 - -Dio.netty.selectorAutoRebuildThreshold: 512
+2021-05-03 20:42:07 DEBUG PlatformDependent:967 - org.jctools-core.MpscChunkedArrayQueue: available
+2021-05-03 20:42:07 DEBUG PlatformDependent:967 - org.jctools-core.MpscChunkedArrayQueue: available
+2021-05-03 20:42:07 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@196a860
+2021-05-03 20:42:07 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@eba2e9
+2021-05-03 20:42:07 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@ca2630
+2021-05-03 20:42:07 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@17364df
+2021-05-03 20:42:07 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@bb5ee1
+2021-05-03 20:42:07 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@4a6c32
+2021-05-03 20:42:07 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@150fe27
+2021-05-03 20:42:07 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@131dd1d
+2021-05-03 20:42:07 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@1ad3829
+2021-05-03 20:42:07 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@1bfe33a
+2021-05-03 20:42:07 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@2f6b0a
+2021-05-03 20:42:07 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@1863cce
+2021-05-03 20:42:07 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@357038
+2021-05-03 20:42:07 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@ccf030
+2021-05-03 20:42:07 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@4a1c9f
+2021-05-03 20:42:07 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@12a0b01
+2021-05-03 20:42:07 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@3a104f
+2021-05-03 20:42:07 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@1c68eed
+2021-05-03 20:42:07 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@13a4f79
+2021-05-03 20:42:07 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@14ebbd7
+2021-05-03 20:42:07 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@7f5616
+2021-05-03 20:42:07 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@dc823e
+2021-05-03 20:42:07 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@51fa2
+2021-05-03 20:42:07 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@179ec67
+2021-05-03 20:42:07 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@f5d6c5
+2021-05-03 20:42:07 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@31bec3
+2021-05-03 20:42:07 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@1890065
+2021-05-03 20:42:07 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@f13791
+2021-05-03 20:42:07 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@1a23e64
+2021-05-03 20:42:07 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@229843
+2021-05-03 20:42:07 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@1b8c2bd
+2021-05-03 20:42:07 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@da45b4
+2021-05-03 20:42:07 DEBUG ResourceLeakDetectorFactory:196 - Loaded default ResourceLeakDetector: io.netty.util.ResourceLeakDetector@2fb00
+2021-05-03 20:42:07 DEBUG ResourceLeakDetectorFactory:196 - Loaded default ResourceLeakDetector: io.netty.util.ResourceLeakDetector@12cd270
+2021-05-03 20:42:08 DEBUG PooledByteBufAllocator:155 - -Dio.netty.allocator.numHeapArenas: 2
+2021-05-03 20:42:08 DEBUG PooledByteBufAllocator:155 - -Dio.netty.allocator.numHeapArenas: 2
+2021-05-03 20:42:08 DEBUG PooledByteBufAllocator:156 - -Dio.netty.allocator.numDirectArenas: 2
+2021-05-03 20:42:08 DEBUG PooledByteBufAllocator:156 - -Dio.netty.allocator.numDirectArenas: 2
+2021-05-03 20:42:08 DEBUG PooledByteBufAllocator:158 - -Dio.netty.allocator.pageSize: 8192
+2021-05-03 20:42:08 DEBUG PooledByteBufAllocator:158 - -Dio.netty.allocator.pageSize: 8192
+2021-05-03 20:42:08 DEBUG PooledByteBufAllocator:163 - -Dio.netty.allocator.maxOrder: 11
+2021-05-03 20:42:08 DEBUG PooledByteBufAllocator:163 - -Dio.netty.allocator.maxOrder: 11
+2021-05-03 20:42:08 DEBUG PooledByteBufAllocator:167 - -Dio.netty.allocator.chunkSize: 16777216
+2021-05-03 20:42:08 DEBUG PooledByteBufAllocator:167 - -Dio.netty.allocator.chunkSize: 16777216
+2021-05-03 20:42:08 DEBUG PooledByteBufAllocator:168 - -Dio.netty.allocator.smallCacheSize: 256
+2021-05-03 20:42:08 DEBUG PooledByteBufAllocator:169 - -Dio.netty.allocator.normalCacheSize: 64
+2021-05-03 20:42:08 DEBUG PooledByteBufAllocator:168 - -Dio.netty.allocator.smallCacheSize: 256
+2021-05-03 20:42:08 DEBUG PooledByteBufAllocator:170 - -Dio.netty.allocator.maxCachedBufferCapacity: 32768
+2021-05-03 20:42:08 DEBUG PooledByteBufAllocator:169 - -Dio.netty.allocator.normalCacheSize: 64
+2021-05-03 20:42:08 DEBUG PooledByteBufAllocator:171 - -Dio.netty.allocator.cacheTrimInterval: 8192
+2021-05-03 20:42:08 DEBUG PooledByteBufAllocator:170 - -Dio.netty.allocator.maxCachedBufferCapacity: 32768
+2021-05-03 20:42:08 DEBUG PooledByteBufAllocator:172 - -Dio.netty.allocator.cacheTrimIntervalMillis: 0
+2021-05-03 20:42:08 DEBUG PooledByteBufAllocator:173 - -Dio.netty.allocator.useCacheForAllThreads: true
+2021-05-03 20:42:08 DEBUG PooledByteBufAllocator:171 - -Dio.netty.allocator.cacheTrimInterval: 8192
+2021-05-03 20:42:08 DEBUG PooledByteBufAllocator:174 - -Dio.netty.allocator.maxCachedByteBuffersPerChunk: 1023
+2021-05-03 20:42:08 DEBUG PooledByteBufAllocator:172 - -Dio.netty.allocator.cacheTrimIntervalMillis: 0
+2021-05-03 20:42:08 DEBUG PooledByteBufAllocator:173 - -Dio.netty.allocator.useCacheForAllThreads: true
+2021-05-03 20:42:08 DEBUG PooledByteBufAllocator:174 - -Dio.netty.allocator.maxCachedByteBuffersPerChunk: 1023
+2021-05-03 20:42:08 DEBUG ByteBufUtil:87 - -Dio.netty.allocator.type: pooled
+2021-05-03 20:42:08 DEBUG ByteBufUtil:87 - -Dio.netty.allocator.type: pooled
+2021-05-03 20:42:08 DEBUG ByteBufUtil:96 - -Dio.netty.threadLocalDirectBufferSize: 0
+2021-05-03 20:42:08 DEBUG ByteBufUtil:96 - -Dio.netty.threadLocalDirectBufferSize: 0
+2021-05-03 20:42:08 DEBUG ByteBufUtil:99 - -Dio.netty.maxThreadLocalCharBufferSize: 16384
+2021-05-03 20:42:08 DEBUG ByteBufUtil:99 - -Dio.netty.maxThreadLocalCharBufferSize: 16384
+2021-05-03 20:42:08 DEBUG DefaultChannelId:79 - -Dio.netty.processId: 17236 (auto-detected)
+2021-05-03 20:42:08 DEBUG DefaultChannelId:79 - -Dio.netty.processId: 14980 (auto-detected)
+2021-05-03 20:42:08 DEBUG NetUtil:135 - -Djava.net.preferIPv4Stack: false
+2021-05-03 20:42:08 DEBUG NetUtil:135 - -Djava.net.preferIPv4Stack: false
+2021-05-03 20:42:08 DEBUG NetUtil:136 - -Djava.net.preferIPv6Addresses: false
+2021-05-03 20:42:08 DEBUG NetUtil:136 - -Djava.net.preferIPv6Addresses: false
+2021-05-03 20:42:08 DEBUG NetUtilInitializations:129 - Loopback interface: lo (Software Loopback Interface 1, 127.0.0.1)
+2021-05-03 20:42:08 DEBUG NetUtilInitializations:129 - Loopback interface: lo (Software Loopback Interface 1, 127.0.0.1)
+2021-05-03 20:42:08 DEBUG NetUtil:187 - Failed to get SOMAXCONN from sysctl and file \proc\sys\net\core\somaxconn. Default: 200
+2021-05-03 20:42:08 DEBUG NetUtil:187 - Failed to get SOMAXCONN from sysctl and file \proc\sys\net\core\somaxconn. Default: 200
+2021-05-03 20:42:08 DEBUG DefaultChannelId:101 - -Dio.netty.machineId: 48:a4:72:ff:fe:89:70:46 (auto-detected)
+2021-05-03 20:42:08 DEBUG DefaultChannelId:101 - -Dio.netty.machineId: 48:a4:72:ff:fe:89:70:46 (auto-detected)
+2021-05-03 20:42:09 DEBUG Recycler:103 - -Dio.netty.recycler.maxCapacityPerThread: 4096
+2021-05-03 20:42:09 DEBUG Recycler:104 - -Dio.netty.recycler.maxSharedCapacityFactor: 2
+2021-05-03 20:42:09 DEBUG Recycler:105 - -Dio.netty.recycler.linkCapacity: 16
+2021-05-03 20:42:09 DEBUG Recycler:106 - -Dio.netty.recycler.ratio: 8
+2021-05-03 20:42:09 DEBUG Recycler:107 - -Dio.netty.recycler.delayedQueue.ratio: 8
+2021-05-03 20:42:09 DEBUG AbstractByteBuf:63 - -Dio.netty.buffer.checkAccessible: true
+2021-05-03 20:42:09 DEBUG AbstractByteBuf:64 - -Dio.netty.buffer.checkBounds: true
+2021-05-03 20:42:09 DEBUG ResourceLeakDetectorFactory:196 - Loaded default ResourceLeakDetector: io.netty.util.ResourceLeakDetector@105a56a
+2021-05-03 20:42:09 DEBUG SslHandler:1783 - [id: 0x68d5060b, L:/192.168.175.175:64565 - R:cassandra.us-east-2.amazonaws.com/3.12.23.171:9142] HANDSHAKEN: protocol:TLSv1.2 cipher suite:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA
+2021-05-03 20:42:10 DEBUG SslHandler:1783 - [id: 0x9f1621ec, L:/192.168.175.175:64567 - R:cassandra.us-east-2.amazonaws.com/3.12.23.171:9142] HANDSHAKEN: protocol:TLSv1.2 cipher suite:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA
+2021-05-03 20:42:10 DEBUG SslHandler:1783 - [id: 0x03400dc0, L:/192.168.175.175:64568 - R:cassandra.us-east-2.amazonaws.com/3.12.23.171:9142] HANDSHAKEN: protocol:TLSv1.2 cipher suite:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA
+2021-05-03 20:42:11 DEBUG Recycler:103 - -Dio.netty.recycler.maxCapacityPerThread: 4096
+2021-05-03 20:42:11 DEBUG Recycler:104 - -Dio.netty.recycler.maxSharedCapacityFactor: 2
+2021-05-03 20:42:11 DEBUG Recycler:105 - -Dio.netty.recycler.linkCapacity: 16
+2021-05-03 20:42:11 DEBUG Recycler:106 - -Dio.netty.recycler.ratio: 8
+2021-05-03 20:42:11 DEBUG Recycler:107 - -Dio.netty.recycler.delayedQueue.ratio: 8
+2021-05-03 20:42:11 DEBUG AbstractByteBuf:63 - -Dio.netty.buffer.checkAccessible: true
+2021-05-03 20:42:11 DEBUG AbstractByteBuf:64 - -Dio.netty.buffer.checkBounds: true
+2021-05-03 20:42:11 DEBUG ResourceLeakDetectorFactory:196 - Loaded default ResourceLeakDetector: io.netty.util.ResourceLeakDetector@6f9c91
+2021-05-03 20:42:11 DEBUG SslHandler:1783 - [id: 0x9446253a, L:/192.168.175.175:64569 - R:cassandra.us-east-2.amazonaws.com/3.12.23.171:9142] HANDSHAKEN: protocol:TLSv1.2 cipher suite:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA
+2021-05-03 20:42:12 DEBUG SslHandler:1783 - [id: 0x6d08bcb1, L:/192.168.175.175:64570 - R:cassandra.us-east-2.amazonaws.com/3.12.23.171:9142] HANDSHAKEN: protocol:TLSv1.2 cipher suite:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA
+2021-05-03 20:42:12 DEBUG SslHandler:1783 - [id: 0xd57c1f8a, L:/192.168.175.175:64571 - R:cassandra.us-east-2.amazonaws.com/3.12.23.171:9142] HANDSHAKEN: protocol:TLSv1.2 cipher suite:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA
+2021-05-03 20:42:12 DEBUG SslHandler:1783 - [id: 0xec1f6da3, L:/192.168.175.175:64581 - R:cassandra.us-east-2.amazonaws.com/3.12.23.171:9142] HANDSHAKEN: protocol:TLSv1.2 cipher suite:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA
+2021-05-03 20:42:12 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@7009d8
+2021-05-03 20:42:12 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@19c8a96
+2021-05-03 20:42:12 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@1a0a96c
+2021-05-03 20:42:12 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@1bfa0fa
+2021-05-03 20:42:12 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@18f46dc
+2021-05-03 20:42:12 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@faa481
+2021-05-03 20:42:12 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@2d817b
+2021-05-03 20:42:12 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@e14934
+2021-05-03 20:42:12 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@1a55812
+2021-05-03 20:42:12 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@943bcb
+2021-05-03 20:42:12 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@d848fb
+2021-05-03 20:42:12 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@8087d
+2021-05-03 20:42:12 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@1c8abe6
+2021-05-03 20:42:12 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@4398b7
+2021-05-03 20:42:12 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@149514
+2021-05-03 20:42:12 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@6d254b
+2021-05-03 20:42:14 DEBUG SslHandler:1783 - [id: 0x8f360b9d, L:/192.168.175.175:64630 - R:cassandra.us-east-2.amazonaws.com/3.12.23.171:9142] HANDSHAKEN: protocol:TLSv1.2 cipher suite:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA
+2021-05-03 20:42:14 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@3bf8d5
+2021-05-03 20:42:14 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@11223a2
+2021-05-03 20:42:14 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@1b44b31
+2021-05-03 20:42:14 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@f5903d
+2021-05-03 20:42:14 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@1032026
+2021-05-03 20:42:14 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@1c60057
+2021-05-03 20:42:14 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@b82b1d
+2021-05-03 20:42:14 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@8c308f
+2021-05-03 20:42:14 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@703d68
+2021-05-03 20:42:14 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@1a94189
+2021-05-03 20:42:14 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@3661e2
+2021-05-03 20:42:14 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@1a12d63
+2021-05-03 20:42:14 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@bbd4c2
+2021-05-03 20:42:14 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@14977d5
+2021-05-03 20:42:14 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@a13a2f
+2021-05-03 20:42:14 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@9fda2d
+2021-05-03 20:42:15 DEBUG SslHandler:1783 - [id: 0x1587bfba, L:/192.168.175.175:64667 - R:cassandra.us-east-2.amazonaws.com/3.12.23.171:9142] HANDSHAKEN: protocol:TLSv1.2 cipher suite:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA
+2021-05-03 20:42:15 DEBUG SslHandler:1783 - [id: 0x5ac8f96c, L:/192.168.175.175:64668 - R:cassandra.us-east-2.amazonaws.com/3.12.23.171:9142] HANDSHAKEN: protocol:TLSv1.2 cipher suite:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA
+2021-05-03 20:42:15 DEBUG SslHandler:1783 - [id: 0x9b616147, L:/192.168.175.175:64669 - R:cassandra.us-east-2.amazonaws.com/3.12.23.171:9142] HANDSHAKEN: protocol:TLSv1.2 cipher suite:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA
+2021-05-03 20:42:15 DEBUG SslHandler:1783 - [id: 0xf63234f1, L:/192.168.175.175:64675 - R:cassandra.us-east-2.amazonaws.com/3.12.23.171:9142] HANDSHAKEN: protocol:TLSv1.2 cipher suite:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA
+2021-05-03 20:42:15 DEBUG SslHandler:1783 - [id: 0x1fd1d169, L:/192.168.175.175:64682 - R:cassandra.us-east-2.amazonaws.com/3.12.23.171:9142] HANDSHAKEN: protocol:TLSv1.2 cipher suite:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA
+2021-05-03 20:42:15 DEBUG SslHandler:1783 - [id: 0x8704c15e, L:/192.168.175.175:64684 - R:cassandra.us-east-2.amazonaws.com/3.12.23.171:9142] HANDSHAKEN: protocol:TLSv1.2 cipher suite:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA
+2021-05-03 20:42:17 DEBUG SslHandler:1783 - [id: 0x0b300928, L:/192.168.175.175:64697 - R:cassandra.us-east-2.amazonaws.com/3.12.23.171:9142] HANDSHAKEN: protocol:TLSv1.2 cipher suite:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA
+2021-05-03 20:42:17 DEBUG SslHandler:1783 - [id: 0xc313b3b1, L:/192.168.175.175:64709 - R:cassandra.us-east-2.amazonaws.com/3.12.23.171:9142] HANDSHAKEN: protocol:TLSv1.2 cipher suite:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA
+2021-05-03 20:42:19 INFO  OptionalLiveReloadServer:58 - LiveReload server is running on port 35729
+2021-05-03 20:42:19 WARN  OptionalLiveReloadServer:61 - Unable to start LiveReload server
+2021-05-03 20:42:19 DEBUG SslHandler:1783 - [id: 0xf3dd4c04, L:/192.168.175.175:64739 - R:cassandra.us-east-2.amazonaws.com/3.12.23.171:9142] HANDSHAKEN: protocol:TLSv1.2 cipher suite:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA
+2021-05-03 20:42:19 DEBUG SslHandler:1783 - [id: 0xcdd92f6d, L:/192.168.175.175:64740 - R:cassandra.us-east-2.amazonaws.com/3.12.23.171:9142] HANDSHAKEN: protocol:TLSv1.2 cipher suite:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA
+2021-05-03 20:42:19 DEBUG Mappings:215 - 
+	c.g.c.GamerController:
+	{PUT /gamers}: registerGamer(Gamer)
+	{PUT /gamers/{gamerId}}: updateGamer(double,Gamer)
+	{GET /gamers}: getGamers()
+	{POST /gamers}: login(Gamer)
+	{DELETE /gamers}: logout()
+2021-05-03 20:42:19 DEBUG Mappings:215 - 
+	c.g.c.GamerController:
+	{DELETE /gamers}: logout()
+	{POST /gamers}: login(Gamer)
+	{GET /gamers}: getGamers()
+	{PUT /gamers/{gamerId}}: updateGamer(double,Gamer)
+	{PUT /gamers}: registerGamer(Gamer)
+2021-05-03 20:42:19 DEBUG Mappings:167 - 'resourceHandlerMapping' {/webjars/**=ResourceWebHandler ["classpath:/META-INF/resources/webjars/"], /**=ResourceWebHandler ["classpath:/META-INF/resources/", "classpath:/resources/", "classpath:/static/", "classpath:/public/"]}
+2021-05-03 20:42:19 DEBUG Mappings:167 - 'resourceHandlerMapping' {/webjars/**=ResourceWebHandler ["classpath:/META-INF/resources/webjars/"], /**=ResourceWebHandler ["classpath:/META-INF/resources/", "classpath:/resources/", "classpath:/static/", "classpath:/public/"]}
+2021-05-03 20:42:20 INFO  EndpointLinksResolver:58 - Exposing 2 endpoint(s) beneath base path '/actuator'
+2021-05-03 20:42:20 INFO  EndpointLinksResolver:58 - Exposing 2 endpoint(s) beneath base path '/actuator'
+2021-05-03 20:42:20 DEBUG InternalLoggerFactory:61 - Using SLF4J as the default logging framework
+2021-05-03 20:42:20 DEBUG InternalLoggerFactory:61 - Using SLF4J as the default logging framework
+2021-05-03 20:42:20 DEBUG DefaultLoopIOUring:244 - Default io_uring support : false
+2021-05-03 20:42:20 DEBUG DefaultLoopIOUring:244 - Default io_uring support : false
+2021-05-03 20:42:20 DEBUG DefaultLoopEpoll:244 - Default Epoll support : false
+2021-05-03 20:42:20 DEBUG DefaultLoopKQueue:244 - Default KQueue support : false
+2021-05-03 20:42:20 DEBUG DefaultLoopEpoll:244 - Default Epoll support : false
+2021-05-03 20:42:20 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@128e2ac
+2021-05-03 20:42:20 DEBUG DefaultLoopKQueue:244 - Default KQueue support : false
+2021-05-03 20:42:20 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@1d3af1
+2021-05-03 20:42:20 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@e41f90
+2021-05-03 20:42:20 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@17b6def
+2021-05-03 20:42:20 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@14dfaee
+2021-05-03 20:42:20 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@155e806
+2021-05-03 20:42:20 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@1ee56a9
+2021-05-03 20:42:20 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@f35bf7
+2021-05-03 20:42:20 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@372e57
+2021-05-03 20:42:20 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@346604
+2021-05-03 20:42:20 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@61ab9e
+2021-05-03 20:42:20 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@f26f38
+2021-05-03 20:42:20 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@fb0f6
+2021-05-03 20:42:20 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@f7b078
+2021-05-03 20:42:20 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@196ff2
+2021-05-03 20:42:20 TRACE NioEventLoop:260 - instrumented a special java.util.Set into: sun.nio.ch.WindowsSelectorImpl@1f82573
+2021-05-03 20:42:20 DEBUG ServerTransport:244 - [id:39a21e2c, L:/0:0:0:0:0:0:0:0:8080] Bound new server
+2021-05-03 20:42:20 INFO  NettyWebServer:111 - Netty started on port 8080
+2021-05-03 20:42:20 WARN  AnnotationConfigReactiveWebServerApplicationContext:591 - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.context.ApplicationContextException: Failed to start bean 'webServerStartStop'; nested exception is org.springframework.boot.web.server.PortInUseException: Port 8080 is already in use
+2021-05-03 20:42:20 INFO  Driver:61 - Started Driver in 15.654 seconds (JVM running for 16.619)
+2021-05-03 20:42:20 DEBUG PoolThreadCache:224 - Freed 19 thread-local buffer(s) from thread: s1-io-9
+2021-05-03 20:42:20 DEBUG PoolThreadCache:224 - Freed 9 thread-local buffer(s) from thread: s1-io-10
+2021-05-03 20:42:20 DEBUG PoolThreadCache:224 - Freed 10 thread-local buffer(s) from thread: s1-io-13
+2021-05-03 20:42:20 DEBUG PoolThreadCache:224 - Freed 9 thread-local buffer(s) from thread: s1-io-12
+2021-05-03 20:42:20 DEBUG PoolThreadCache:224 - Freed 9 thread-local buffer(s) from thread: s1-io-11
+2021-05-03 20:42:20 DEBUG PoolThreadCache:224 - Freed 9 thread-local buffer(s) from thread: s1-io-8
+2021-05-03 20:42:20 DEBUG PoolThreadCache:224 - Freed 19 thread-local buffer(s) from thread: s1-io-2
+2021-05-03 20:42:20 DEBUG PoolThreadCache:224 - Freed 9 thread-local buffer(s) from thread: s1-io-0
+2021-05-03 20:42:20 DEBUG PoolThreadCache:224 - Freed 19 thread-local buffer(s) from thread: s1-io-1
+2021-05-03 20:42:20 DEBUG PoolThreadCache:224 - Freed 11 thread-local buffer(s) from thread: s1-io-4
+2021-05-03 20:42:20 DEBUG PoolThreadCache:224 - Freed 9 thread-local buffer(s) from thread: s1-io-14
+2021-05-03 20:42:20 DEBUG PoolThreadCache:224 - Freed 9 thread-local buffer(s) from thread: s1-io-15
+2021-05-03 20:42:20 DEBUG PoolThreadCache:224 - Freed 11 thread-local buffer(s) from thread: s1-io-6
+2021-05-03 20:42:20 DEBUG PoolThreadCache:224 - Freed 9 thread-local buffer(s) from thread: s1-io-5
+2021-05-03 20:42:21 DEBUG PoolThreadCache:224 - Freed 21 thread-local buffer(s) from thread: s1-io-7
+2021-05-03 20:42:21 DEBUG SslHandler:1783 - [id: 0x7d60f544, L:/192.168.175.175:64797 - R:cassandra.us-east-2.amazonaws.com/3.12.23.171:9142] HANDSHAKEN: protocol:TLSv1.2 cipher suite:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA
+2021-05-03 20:42:22 DEBUG PoolThreadCache:224 - Freed 39 thread-local buffer(s) from thread: s1-io-3
+2021-05-03 20:42:22 DEBUG PoolThreadCache:224 - Freed 19 thread-local buffer(s) from thread: s0-io-1
+2021-05-03 20:42:22 DEBUG PoolThreadCache:224 - Freed 20 thread-local buffer(s) from thread: s0-io-0
+2021-05-03 20:42:22 DEBUG PoolThreadCache:224 - Freed 11 thread-local buffer(s) from thread: s0-io-3
+2021-05-03 20:42:22 DEBUG PoolThreadCache:224 - Freed 9 thread-local buffer(s) from thread: s0-io-10
+2021-05-03 20:42:22 DEBUG PoolThreadCache:224 - Freed 10 thread-local buffer(s) from thread: s0-io-12
+2021-05-03 20:42:22 DEBUG PoolThreadCache:224 - Freed 11 thread-local buffer(s) from thread: s0-io-5
+2021-05-03 20:42:22 DEBUG PoolThreadCache:224 - Freed 9 thread-local buffer(s) from thread: s0-io-14
+2021-05-03 20:42:22 DEBUG PoolThreadCache:224 - Freed 11 thread-local buffer(s) from thread: s0-io-11
+2021-05-03 20:42:22 DEBUG PoolThreadCache:224 - Freed 10 thread-local buffer(s) from thread: s0-io-9
+2021-05-03 20:42:22 DEBUG PoolThreadCache:224 - Freed 11 thread-local buffer(s) from thread: s0-io-15
+2021-05-03 20:42:22 DEBUG PoolThreadCache:224 - Freed 11 thread-local buffer(s) from thread: s0-io-13
+2021-05-03 20:42:22 DEBUG PoolThreadCache:224 - Freed 11 thread-local buffer(s) from thread: s0-io-6
+2021-05-03 20:42:22 DEBUG PoolThreadCache:224 - Freed 12 thread-local buffer(s) from thread: s0-io-4
+2021-05-03 20:42:22 DEBUG PoolThreadCache:224 - Freed 11 thread-local buffer(s) from thread: s0-io-7
+2021-05-03 20:42:24 DEBUG PoolThreadCache:224 - Freed 21 thread-local buffer(s) from thread: s0-io-8
+2021-05-03 20:42:24 DEBUG PoolThreadCache:224 - Freed 38 thread-local buffer(s) from thread: s0-io-2
+2021-05-03 20:42:26 DEBUG SslHandler:1783 - [id: 0x0c89301d, L:/192.168.175.175:64814 - R:cassandra.us-east-2.amazonaws.com/3.12.23.171:9142] HANDSHAKEN: protocol:TLSv1.2 cipher suite:TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA
+2021-05-03 20:42:26 INFO  ConditionEvaluationReportLoggingListener:136 - 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+2021-05-03 20:42:26 ERROR LoggingFailureAnalysisReporter:40 - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Web server failed to start. Port 8080 was already in use.
+
+Action:
+
+Identify and stop the process that's listening on port 8080 or configure this application to listen on another port.
+

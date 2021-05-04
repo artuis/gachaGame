@@ -1,9 +1,16 @@
 package com.group3.data;
 
-public class GamerRepository {
+import java.util.List;
 
-	public GamerRepository() {
-		// TODO Auto-generated constructor stub
-	}
+import org.springframework.data.cassandra.repository.AllowFiltering;
+import org.springframework.data.cassandra.repository.ReactiveCassandraRepository;
+
+import com.group3.beans.Gamer;
+import com.group3.beans.Gamer.Role;
+
+public interface GamerRepository extends ReactiveCassandraRepository<Gamer, Double> {
+
+	@AllowFiltering
+	List<Gamer> findAllByRole(Role r);
 
 }
