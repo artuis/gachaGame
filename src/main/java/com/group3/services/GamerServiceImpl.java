@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.group3.beans.Gamer;
-import com.group3.data.GamerRepository;
+import com.group3.data.ReactiveGamerRepository;
 
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -15,10 +15,10 @@ import reactor.core.publisher.Mono;
 public class GamerServiceImpl implements GamerService {
 	private static Logger log = LogManager.getLogger(GamerServiceImpl.class);
 	@Autowired
-	private GamerRepository gamerRepo;
+	private ReactiveGamerRepository gamerRepo;
 
 	@Override
-	public Mono<Gamer> getGamer(double gamerId) {
+	public Mono<Gamer> getGamer(int gamerId) {
 		return gamerRepo.findById(gamerId);
 	}
 
@@ -39,10 +39,8 @@ public class GamerServiceImpl implements GamerService {
 
 	@Override
 	public Flux<Gamer> getGamersByPvpScore() {
-		// there is probably a better way to do this, admittedly, besides mimicking the getPlayersByScore method
-		return gamerRepo.findAll().sort((gg1,gg2)->Integer.parseInt(Double.toString(gg2.getPvpScore() - gg1.getPvpScore()))).map(gg -> {
-			return gg;
-		});
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

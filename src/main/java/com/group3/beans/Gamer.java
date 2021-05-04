@@ -16,31 +16,31 @@ public class Gamer implements Serializable {
 
 	@Column
 	@PrimaryKey
-	private double gamerId;
+	private int gamerId;
 	@Column
 	private Role role;
 	@Column
-	private double rolls;
+	private int rolls;
 	@Column
-	private double stardust;
+	private int stardust;
 	@Column
-	private double strings;
+	private int strings;
 	@Column
-	private double collectionSize;
+	private int collectionSize;
 	@Column
-	private double collectionStrength;
+	private int collectionStrength;
 	@Column
-	private double pvpScore;
+	private int pvpScore;
 
 	public Gamer() {
 		super();
 	}
 
-	public double getGamerId() {
+	public int getGamerId() {
 		return gamerId;
 	}
 
-	public void setGamerId(double gamerId) {
+	public void setGamerId(int gamerId) {
 		this.gamerId = gamerId;
 	}
 
@@ -52,51 +52,51 @@ public class Gamer implements Serializable {
 		this.role = role;
 	}
 
-	public double getRolls() {
+	public int getRolls() {
 		return rolls;
 	}
 
-	public void setRolls(double rolls) {
+	public void setRolls(int rolls) {
 		this.rolls = rolls;
 	}
 
-	public double getStardust() {
+	public int getStardust() {
 		return stardust;
 	}
 
-	public void setStardust(double stardust) {
+	public void setStardust(int stardust) {
 		this.stardust = stardust;
 	}
 
-	public double getStrings() {
+	public int getStrings() {
 		return strings;
 	}
 
-	public void setStrings(double strings) {
+	public void setStrings(int strings) {
 		this.strings = strings;
 	}
 
-	public double getCollectionSize() {
+	public int getCollectionSize() {
 		return collectionSize;
 	}
 
-	public void setCollectionSize(double collectionSize) {
+	public void setCollectionSize(int collectionSize) {
 		this.collectionSize = collectionSize;
 	}
 
-	public double getCollectionStrength() {
+	public int getCollectionStrength() {
 		return collectionStrength;
 	}
 
-	public void setCollectionStrength(double collectionStrength) {
+	public void setCollectionStrength(int collectionStrength) {
 		this.collectionStrength = collectionStrength;
 	}
 
-	public double getPvpScore() {
+	public int getPvpScore() {
 		return pvpScore;
 	}
 
-	public void setPvpScore(double pvpScore) {
+	public void setPvpScore(int pvpScore) {
 		this.pvpScore = pvpScore;
 	}
 
@@ -104,22 +104,14 @@ public class Gamer implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		long temp;
-		temp = Double.doubleToLongBits(collectionSize);
-		result = prime * result + (int) (temp ^ (temp >>> 32));
-		temp = Double.doubleToLongBits(collectionStrength);
-		result = prime * result + (int) (temp ^ (temp >>> 32));
-		temp = Double.doubleToLongBits(gamerId);
-		result = prime * result + (int) (temp ^ (temp >>> 32));
-		temp = Double.doubleToLongBits(pvpScore);
-		result = prime * result + (int) (temp ^ (temp >>> 32));
+		result = prime * result + collectionSize;
+		result = prime * result + collectionStrength;
+		result = prime * result + gamerId;
+		result = prime * result + pvpScore;
 		result = prime * result + ((role == null) ? 0 : role.hashCode());
-		temp = Double.doubleToLongBits(rolls);
-		result = prime * result + (int) (temp ^ (temp >>> 32));
-		temp = Double.doubleToLongBits(stardust);
-		result = prime * result + (int) (temp ^ (temp >>> 32));
-		temp = Double.doubleToLongBits(strings);
-		result = prime * result + (int) (temp ^ (temp >>> 32));
+		result = prime * result + rolls;
+		result = prime * result + stardust;
+		result = prime * result + strings;
 		return result;
 	}
 
@@ -132,21 +124,21 @@ public class Gamer implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Gamer other = (Gamer) obj;
-		if (Double.doubleToLongBits(collectionSize) != Double.doubleToLongBits(other.collectionSize))
+		if (collectionSize != other.collectionSize)
 			return false;
-		if (Double.doubleToLongBits(collectionStrength) != Double.doubleToLongBits(other.collectionStrength))
+		if (collectionStrength != other.collectionStrength)
 			return false;
-		if (Double.doubleToLongBits(gamerId) != Double.doubleToLongBits(other.gamerId))
+		if (gamerId != other.gamerId)
 			return false;
-		if (Double.doubleToLongBits(pvpScore) != Double.doubleToLongBits(other.pvpScore))
+		if (pvpScore != other.pvpScore)
 			return false;
 		if (role != other.role)
 			return false;
-		if (Double.doubleToLongBits(rolls) != Double.doubleToLongBits(other.rolls))
+		if (rolls != other.rolls)
 			return false;
-		if (Double.doubleToLongBits(stardust) != Double.doubleToLongBits(other.stardust))
+		if (stardust != other.stardust)
 			return false;
-		if (Double.doubleToLongBits(strings) != Double.doubleToLongBits(other.strings))
+		if (strings != other.strings)
 			return false;
 		return true;
 	}

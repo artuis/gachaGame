@@ -7,7 +7,7 @@ import reactor.core.publisher.Mono;
 
 public interface GamerService {
 
-Mono<Gamer> getGamer(double gamerId);
+Mono<Gamer> getGamer(int gamerId);
 	
 	Mono<Gamer> addGamer(Gamer gg);
 	

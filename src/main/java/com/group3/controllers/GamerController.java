@@ -43,7 +43,7 @@ public class GamerController {
 	}
 
 	@PutMapping("{gamerId}")
-	public ResponseEntity<Gamer> updateGamer(@PathVariable("gamerId") double gamerId, @RequestBody Gamer gg) {
+	public ResponseEntity<Gamer> updateGamer(@PathVariable("gamerId") int gamerId, @RequestBody Gamer gg) {
 		gamerService.updateGamer(gg);
 		return ResponseEntity.ok(gg);
 	}
