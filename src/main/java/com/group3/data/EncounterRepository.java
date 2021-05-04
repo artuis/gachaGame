@@ -1,9 +1,13 @@
 package com.group3.data;
 
-public class EncounterRepository {
+import java.util.List;
 
-	public EncounterRepository() {
-		// TODO Auto-generated constructor stub
-	}
+import org.springframework.data.cassandra.repository.AllowFiltering;
+import org.springframework.data.cassandra.repository.ReactiveCassandraRepository;
+
+import com.group3.beans.Encounter;
+
+public interface EncounterRepository extends ReactiveCassandraRepository<Encounter, /*PRIMARY KEY DATATYPE REPLACES String PLACEHOLDER*/ String> {
+
 
 }

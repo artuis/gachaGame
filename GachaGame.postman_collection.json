@@ -1,0 +1,32 @@
+{
+	"info": {
+		"_postman_id": "7ceb4440-fa68-479e-9d9a-0d7ef7fbdb75",
+		"name": "GachaGame",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "New Request",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"gamerId\": 1,\r\n    \"role\": \"GAMER\",\r\n    \"rolls\": 5,\r\n    \"stardust\": 50,\r\n    \"strings\": 1000\r\n}"
+				},
+				"url": {
+					"raw": "http://localhost:8080/gamers",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"gamers"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
