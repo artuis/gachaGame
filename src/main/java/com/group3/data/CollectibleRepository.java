@@ -4,10 +4,15 @@ import java.util.List;
 
 import org.springframework.data.cassandra.repository.AllowFiltering;
 import org.springframework.data.cassandra.repository.ReactiveCassandraRepository;
+import org.springframework.stereotype.Repository;
 
 import com.group3.beans.Collectible;
+import com.group3.beans.Collectible.Stage;
 
-public interface CollectibleRepository extends ReactiveCassandraRepository<Collectible, /*PRIMARY KEY DATATYPE REPLACES String PLACEHOLDER*/ String> {
+import reactor.core.publisher.Flux;
+
+@Repository
+public interface CollectibleRepository extends ReactiveCassandraRepository<Collectible, String> {
 	
-
+	Flux<Collectible> getCollectibleByStage(Stage stage);
 }

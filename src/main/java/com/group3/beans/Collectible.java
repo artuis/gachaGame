@@ -32,13 +32,77 @@ public class Collectible implements Serializable {
 	private Integer prevStage;
 	@Column
 	private Integer nextStage;
-	
+	@Column
+	private Integer stat1Base;
+	@Column
+	private Integer stat2Base;
+
 	public enum Stage {
 		STAGE_1, STAGE_2, STAGE_3
 	}
 
 	public Collectible() {
 		super();
+	}
+	
+	public Stage getStage() {
+		return stage;
+	}
+
+	public void setStage(Stage stage) {
+		this.stage = stage;
+	}
+
+	public Integer getCollectibleId() {
+		return collectibleId;
+	}
+
+	public void setCollectibleId(Integer collectibleId) {
+		this.collectibleId = collectibleId;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public Integer getPrevStage() {
+		return prevStage;
+	}
+
+	public void setPrevStage(Integer prevStage) {
+		this.prevStage = prevStage;
+	}
+
+	public Integer getNextStage() {
+		return nextStage;
+	}
+
+	public void setNextStage(Integer nextStage) {
+		this.nextStage = nextStage;
+	}
+
+	public Integer getStat1Base() {
+		return stat1Base;
+	}
+
+	public void setStat1Base(Integer stat1Base) {
+		this.stat1Base = stat1Base;
+	}
+
+	public Integer getStat2Base() {
+		return stat2Base;
+	}
+
+	public void setStat2Base(Integer stat2Base) {
+		this.stat2Base = stat2Base;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 
 }
