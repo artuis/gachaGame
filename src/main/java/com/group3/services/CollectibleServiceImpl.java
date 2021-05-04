@@ -1,9 +1,21 @@
 package com.group3.services;
 
-public class CollectibleServiceImpl implements CollectibleService {
+import com.group3.beans.Collectible;
+import com.group3.data.CollectibleRepository;
 
+import reactor.core.publisher.Mono;
+
+public class CollectibleServiceImpl implements CollectibleService {
+	
+	private CollectibleRepository collectibleRepo;
+	
 	public CollectibleServiceImpl() {
-		// TODO Auto-generated constructor stub
+		super();
+	}
+
+	@Override
+	public Mono<Collectible> rollCollectible() {
+		
 	}
 
 }
