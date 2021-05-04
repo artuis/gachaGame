@@ -6,4 +6,8 @@ public class Collectible {
 		// TODO Auto-generated constructor stub
 	}
 
+	public int getStatSum() {
+		// TODO calculate the combined stat total
+		return 0;
+	}
 }
