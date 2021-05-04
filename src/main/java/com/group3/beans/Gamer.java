@@ -10,7 +10,7 @@ import org.springframework.data.cassandra.core.mapping.Table;
 public class Gamer implements Serializable {
 	private static final long serialVersionUID = 4447548260627752098L;
 
-	public static enum Role {
+	public enum Role {
 		GAMER, MODERATOR
 	}
 
