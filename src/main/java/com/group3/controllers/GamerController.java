@@ -12,14 +12,20 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.group3.beans.Collectible;
 import com.group3.beans.Gamer;
+import com.group3.services.CollectibleService;
 import com.group3.services.GamerService;
+
+import reactor.core.publisher.Mono;
 
 @RestController
 @RequestMapping(value = "/gamers")
 public class GamerController {
 	@Autowired
 	private GamerService gamerService;
+	@Autowired
+	private CollectibleService collectibleService;
 
 	@GetMapping
 	public Publisher<Gamer> getGamers() {
@@ -46,5 +52,9 @@ public class GamerController {
 		gamerService.updateGamer(gg);
 		return ResponseEntity.ok(gg);
 	}
-
+	
+	@PutMapping("/collectibles/roll")
+	public Mono<Collectible> rollNewCollectible() {
+		return collectibleService.rollCollectible();
+	}
 }
