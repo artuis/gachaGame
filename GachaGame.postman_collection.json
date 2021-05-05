@@ -1,18 +1,23 @@
 {
 	"info": {
-		"_postman_id": "7ceb4440-fa68-479e-9d9a-0d7ef7fbdb75",
+		"_postman_id": "56dc5f87-9d90-45a8-9f06-b55ba88ce6be",
 		"name": "GachaGame",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
-			"name": "New Request",
+			"name": "Register Gamer",
 			"request": {
 				"method": "PUT",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"gamerId\": 1,\r\n    \"role\": \"GAMER\",\r\n    \"rolls\": 5,\r\n    \"stardust\": 50,\r\n    \"strings\": 1000\r\n}"
+					"raw": "{\r\n    \"gamerId\": 2,\r\n    \"role\": \"GAMER\",\r\n    \"rolls\": 5,\r\n    \"stardust\": 5000,\r\n    \"strings\": 100000\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
 				},
 				"url": {
 					"raw": "http://localhost:8080/gamers",
@@ -23,6 +28,81 @@
 					"port": "8080",
 					"path": [
 						"gamers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Collectible",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/collectibles",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"collectibles"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Collectible",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"stage\" : \"STAGE_1\",\r\n    \"collectibleId\" : 1,\r\n    \"name\" : \"Shungite\",\r\n    \"nextStage\" : 2,\r\n    \"stat1Base\" : 5,\r\n    \"stat2Base\" : 5\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/collectibles",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"collectibles"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Collectible Copy",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"stage\" : \"STAGE_1\",\r\n    \"collectibleId\" : 1,\r\n    \"name\" : \"Shungite\",\r\n    \"nextStage\" : 2,\r\n    \"stat1Base\" : 5,\r\n    \"stat2Base\" : 5\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/collectibles",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"collectibles"
 					]
 				}
 			},
