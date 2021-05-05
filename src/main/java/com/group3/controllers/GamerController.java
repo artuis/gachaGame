@@ -17,6 +17,8 @@ import com.group3.beans.Gamer;
 import com.group3.services.CollectibleService;
 import com.group3.services.GamerService;
 
+import reactor.core.publisher.Mono;
+
 @RestController
 @RequestMapping(value = "/gamers")
 public class GamerController {
@@ -52,7 +54,7 @@ public class GamerController {
 	}
 	
 	@PutMapping("/collectibles/roll")
-	public Publisher<Collectible> rollNewCollectible() {
+	public Mono<Collectible> rollNewCollectible() {
 		return collectibleService.rollCollectible();
 	}
 }

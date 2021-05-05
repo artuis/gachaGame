@@ -38,7 +38,18 @@ public class Collectible implements Serializable {
 	private Integer stat2Base;
 
 	public enum Stage {
-		STAGE_1, STAGE_2, STAGE_3
+		STAGE_1(0.87), 
+		STAGE_2(0.98), 
+		STAGE_3(1.00);
+		private final double rate;
+		
+		Stage(double rate) {
+			this.rate = rate;
+		}
+		
+		public double getRate() {
+			return this.rate;
+		}
 	}
 
 	public Collectible() {
