@@ -234,5 +234,5 @@ public class Gamer implements Serializable {
 				+ ", collectionSize=" + collectionSize + ", collectionStrength=" + collectionStrength + ", pvpScore="
 				+ pvpScore + ", registrationDate=" + registrationDate + ", lastLogin=" + lastLogin + "]";
 	}
-
+}
 	
