@@ -19,6 +19,10 @@ public class Gamer implements Serializable {
 	@PrimaryKey
 	private int gamerId;
 	@Column
+	private String username;
+	@Column
+	private String password;
+	@Column
 	private Role role;
 	@Column
 	private int rolls;
