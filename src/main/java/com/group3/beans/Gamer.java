@@ -11,6 +11,9 @@ import org.springframework.data.cassandra.core.mapping.Table;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
 @Table("gamers")
 public class Gamer implements Serializable, UserDetails {
 	private static final long serialVersionUID = 4447548260627752098L;
@@ -28,40 +31,57 @@ public class Gamer implements Serializable, UserDetails {
 	@PrimaryKey
 	private int gamerId;
 	@Column
+	@JsonInclude(Include.NON_NULL)
 	private String username;
 	@Column
+	@JsonInclude(Include.NON_NULL)
 	private String password;
 	@Column
+	@JsonInclude(Include.NON_NULL)
 	private Role role;
 	@Column
+	@JsonInclude(Include.NON_NULL)
 	private List<Role> authorities;
 	@Column
+	@JsonInclude(Include.NON_NULL)
 	private int rolls;
 	@Column
+	@JsonInclude(Include.NON_NULL)
 	private int dailyRolls;
 	// daily free rolls, gets reset to 10 for every user on new day
 	
 	@Column
+	@JsonInclude(Include.NON_NULL)
 	private int stardust;
 	@Column
+	@JsonInclude(Include.NON_NULL)
 	private int strings;
 	@Column
+	@JsonInclude(Include.NON_NULL)
 	private int collectionSize;
 	@Column
+	@JsonInclude(Include.NON_NULL)
 	private int collectionStrength;
 	@Column
+	@JsonInclude(Include.NON_NULL)
 	private int pvpScore;
 	@Column
+	@JsonInclude(Include.NON_NULL)
 	private Date registrationDate;
 	@Column
+	@JsonInclude(Include.NON_NULL)
 	private Date lastLogin;
 	@Column
+	@JsonInclude(Include.NON_NULL)
 	private boolean enabled;
 	@Column
+	@JsonInclude(Include.NON_NULL)
 	private boolean accountNonLocked;
 	@Column
+	@JsonInclude(Include.NON_NULL)
 	private boolean credentialsNonExpired;
 	@Column
+	@JsonInclude(Include.NON_NULL)
 	private boolean accountNonExpired;
 
 	public Role getRole() {

@@ -1,7 +1,9 @@
 package com.group3.controllers;
 
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.reactivestreams.Publisher;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,19 +50,21 @@ public class GamerController {
 	public Mono<UserDetails> getGamerByUsername(@PathVariable("name") String name) {
 		return gamerService.findByUsername(name);
 	}
-
-	@PutMapping
+	
+	@PutMapping("/register")
 	public Publisher<Gamer> registerGamer(@RequestBody Gamer gg) {
+		gg.setRegistrationDate(Date.from(Instant.now()));
+		List<Gamer.Role> perms = new ArrayList<Gamer.Role>();
+		perms.add(Gamer.Role.GAMER);
+		gg.setAuthorities(perms);
 		gg.setRegistrationDate(Date.from(Instant.now()));
 		return gamerService.addGamer(gg);
 	}
 	
 	@PostMapping("/login")
 	public Mono<ResponseEntity<?>> login(@RequestBody Gamer gg, ServerWebExchange exchange) {
-		System.out.println(gg.getUsername());
 		return gamerService.findByUsername(gg.getUsername())
 				.map(gamer -> {
-					System.out.println(gamer);
 					if (gamer != null) {
 						exchange.getResponse()
 								.addCookie(ResponseCookie
@@ -78,7 +82,8 @@ public class GamerController {
 	public ResponseEntity<Void> logout() {
 		return ResponseEntity.noContent().build();
 	}
-
+	
+	@PreAuthorize("hasRole('MODERATOR')")
 	@PutMapping("{gamerId}")
 	public Publisher<Gamer> updateGamer(@PathVariable("gamerId") int gamerId, @RequestBody Gamer gg) {
 		return gamerService.updateGamer(gg);
