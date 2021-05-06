@@ -1,0 +1,27 @@
+{"properties": [
+  {
+    "name": "springbootwebfluxjjwt.password.encoder.secret",
+    "type": "java.lang.String",
+    "description": "A description for 'springbootwebfluxjjwt.password.encoder.secret'"
+  },
+  {
+    "name": "springbootwebfluxjjwt.password.encoder.iteration",
+    "type": "java.lang.String",
+    "description": "A description for 'springbootwebfluxjjwt.password.encoder.iteration'"
+  },
+  {
+    "name": "springbootwebfluxjjwt.password.encoder.keylength",
+    "type": "java.lang.String",
+    "description": "A description for 'springbootwebfluxjjwt.password.encoder.keylength'"
+  },
+  {
+    "name": "springbootwebfluxjjwt.jjwt.secret",
+    "type": "java.lang.String",
+    "description": "A description for 'springbootwebfluxjjwt.jjwt.secret'"
+  },
+  {
+    "name": "springbootwebfluxjjwt.jjwt.expiration",
+    "type": "java.lang.String",
+    "description": "A description for 'springbootwebfluxjjwt.jjwt.expiration'"
+  }
+]}
