@@ -1,5 +1,6 @@
 package com.group3.services;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import com.group3.beans.Collectible;
 import com.group3.beans.Encounter;
+import com.group3.beans.RewardToken;
 import com.group3.data.CollectibleRepository;
 import com.group3.data.EncounterRepository;
 
@@ -33,15 +35,16 @@ public class EncounterServiceImpl implements EncounterService {
 	public RewardToken setEncounter(List<Integer> colIDs, Integer encID) {
 		
 		// TODO get collectible list from gamer
-		List<Collectible> sent;
+		List<Collectible> sent = new ArrayList<Collectible>();
 		//colIDs.forEach(x -> sent.add(collectibleRepo.));
+		
 		// TODO get encounter selection
-		Encounter journey;
+		Encounter journey = new Encounter();
 		//journey = encounterRepo.getEncounter(encID);
 		
 		// TODO create reward token that contains the Mono
 		// of the Encounter the collectibles are sent on
-		RewardToken reward;
+		RewardToken reward = new RewardToken();
 		reward.setRunningEncounter(runEncounter(sent, journey));
 		
 		return reward;
@@ -55,7 +58,7 @@ public class EncounterServiceImpl implements EncounterService {
 		// Gather stat total of sent collectible list
 		// TODO: Create a better way of calculating 'success'
 		int total = sent.stream()
-						.mapToInt(x -> x.getStatSum())
+						.mapToInt(x -> x.getCurrentStat())
 						.sum();
 		int reward;
 

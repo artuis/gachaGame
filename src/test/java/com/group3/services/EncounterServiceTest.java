@@ -38,9 +38,9 @@ class EncounterServiceTest {
 
 	@BeforeEach
 	void init() {
-		mol1.setStat(1);
-		mol2.setStat(2);
-		mol3.setStat(3);
+		mol1.setCurrentStat(1);
+		mol2.setCurrentStat(2);
+		mol3.setCurrentStat(3);
 		inputE.setDifficulty(5);
 		inputE.setReward(100);
 		inputE.setLength(1000);
@@ -62,8 +62,8 @@ class EncounterServiceTest {
 
 	@Test
 	void testLoseRunEncounter() {
-		mol2.setStat(1);
-		mol3.setStat(1);
+		mol2.setCurrentStat(1);
+		mol3.setCurrentStat(1);
 		// Inputting weak team
 		int result = (int) esi.runEncounter(inputC, inputE).block();
 		// Should return 10 reward

@@ -50,6 +50,8 @@ public class Gamer implements Serializable, UserDetails {
 	@Column
 	private int collectionStrength;
 	@Column
+	private List<RewardToken> activeEncounters;
+	@Column
 	private int pvpScore;
 	@Column
 	private Date registrationDate;
@@ -146,6 +148,14 @@ public class Gamer implements Serializable, UserDetails {
 
 	public void setCollectionStrength(int collectionStrength) {
 		this.collectionStrength = collectionStrength;
+	}
+
+	public List<RewardToken> getActiveEncounters() {
+		return activeEncounters;
+	}
+
+	public void setActiveEncounters(List<RewardToken> activeEncounters) {
+		this.activeEncounters = activeEncounters;
 	}
 
 	public int getPvpScore() {
