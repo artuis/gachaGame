@@ -84,6 +84,7 @@ public class GamerController {
 		return gamerService.updateGamer(gg);
 	}
 
+	@PreAuthorize("hasRole('MODERATOR')")
 	@PostMapping("{gamerId}")
 	public Publisher<Gamer> banGamer(@PathVariable("gamerId") int gamerId, @RequestBody Date banLiftDate) {
 		return gamerService.banGamer(gamerId, banLiftDate);
