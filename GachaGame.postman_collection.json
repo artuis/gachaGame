@@ -6,13 +6,33 @@
 	},
 	"item": [
 		{
-			"name": "Register Gamer",
+			"name": "Get Gamers",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/gamers/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"gamers",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Gamer",
 			"request": {
 				"method": "PUT",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"gamerId\": 2,\r\n    \"role\": \"GAMER\",\r\n    \"rolls\": 5,\r\n    \"stardust\": 5000,\r\n    \"strings\": 100000\r\n}",
+					"raw": "{\r\n    \"gamerId\": 2,\r\n    \"username\": \"1337Gamer\",\r\n    \"password\": null,\r\n    \"role\": \"GAMER\",\r\n    \"authorities\": [\"GAMER\", \"MODERATOR\"],\r\n    \"rolls\": 5,\r\n    \"dailyRolls\": 0,\r\n    \"stardust\": 5000,\r\n    \"strings\": 100000,\r\n    \"collectionSize\": 0,\r\n    \"collectionStrength\": 0,\r\n    \"pvpScore\": 0,\r\n    \"registrationDate\": \"2021-05-06T18:56:26.980+00:00\",\r\n    \"lastLogin\": \"2021-05-06T19:06:09.401+00:00\",\r\n    \"enabled\": false,\r\n    \"accountNonLocked\": false,\r\n    \"credentialsNonExpired\": false,\r\n    \"accountNonExpired\": false\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -20,14 +40,73 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/gamers",
+					"raw": "http://localhost:8080/gamers/32",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
-						"gamers"
+						"gamers",
+						"32"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login Gamer 1337Gamer",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\" : \"1337Gamer\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/gamers/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"gamers",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Register Gamer",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"gamerId\": 22\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/gamers/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"gamers",
+						"register"
 					]
 				}
 			},
@@ -38,15 +117,24 @@
 			"request": {
 				"method": "POST",
 				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"stage\" : \"STAGE_3\",\r\n    \"collectibleId\" : 3,\r\n    \"name\" : \"Shiny Shungite\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
 				"url": {
-					"raw": "http://localhost:8080/collectibles",
+					"raw": "http://localhost:8080/collectibletypes",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
-						"collectibles"
+						"collectibletypes"
 					]
 				}
 			},
@@ -81,13 +169,13 @@
 			"response": []
 		},
 		{
-			"name": "Update Collectible Copy",
+			"name": "Let's Roll Roll",
 			"request": {
 				"method": "PUT",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"stage\" : \"STAGE_1\",\r\n    \"collectibleId\" : 1,\r\n    \"name\" : \"Shungite\",\r\n    \"nextStage\" : 2,\r\n    \"stat1Base\" : 5,\r\n    \"stat2Base\" : 5\r\n}",
+					"raw": "",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -95,14 +183,16 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/collectibles",
+					"raw": "http://localhost:8080/gamers/collectibles/roll",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
-						"collectibles"
+						"gamers",
+						"collectibles",
+						"roll"
 					]
 				}
 			},

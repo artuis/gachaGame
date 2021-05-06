@@ -46,7 +46,6 @@ public class SecurityConfig {
 			.authorizeExchange()
 			.pathMatchers(HttpMethod.OPTIONS).permitAll()
 			.pathMatchers("/gamers/login").permitAll()
-			.pathMatchers("/gamers/32").permitAll()
 			.anyExchange().authenticated()
 			.and().build();
 	}

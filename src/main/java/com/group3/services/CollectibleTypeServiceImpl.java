@@ -4,7 +4,6 @@ import org.reactivestreams.Publisher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.group3.beans.Collectible;
 import com.group3.beans.CollectibleType;
 import com.group3.data.CollectibleTypeRepository;
 
