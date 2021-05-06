@@ -22,9 +22,7 @@ public class CollectibleType implements Serializable {
 	@Column
 	private Integer nextStage;
 	@Column
-	private Integer stat1Base;
-	@Column
-	private Integer stat2Base;
+	private Integer baseStat;
 
 	public enum Stage {
 		STAGE_1(0.87), STAGE_2(0.98), STAGE_3(1.00);
@@ -84,20 +82,12 @@ public class CollectibleType implements Serializable {
 		this.nextStage = nextStage;
 	}
 
-	public Integer getStat1Base() {
-		return stat1Base;
+	public Integer getBaseStat() {
+		return baseStat;
 	}
 
-	public void setStat1Base(Integer stat1Base) {
-		this.stat1Base = stat1Base;
-	}
-
-	public Integer getStat2Base() {
-		return stat2Base;
-	}
-
-	public void setStat2Base(Integer stat2Base) {
-		this.stat2Base = stat2Base;
+	public void setBaseStat(Integer stat) {
+		this.baseStat = stat;
 	}
 
 	public static long getSerialversionuid() {
