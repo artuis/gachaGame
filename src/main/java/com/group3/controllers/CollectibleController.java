@@ -9,28 +9,39 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.group3.beans.Collectible;
 import com.group3.beans.CollectibleType;
-import com.group3.services.CollectibleTypeService;
+import com.group3.services.CollectibleService;
 
 @RestController
-@RequestMapping(value = "/collectibletypes")
+@RequestMapping(value = "/collectibles")
 public class CollectibleController {
-	
+
 	@Autowired
-	private CollectibleTypeService collectibleService;
+	private CollectibleService collectibleService;
 	
+
 	public CollectibleController() {
 		super();
 	}
 	
 	@PostMapping
-	public Publisher<CollectibleType> addCollectible(@RequestBody CollectibleType c) {
-		return collectibleService.createCollectibleType(c);
+	public Publisher<Collectible> addCollectible(@RequestBody Collectible c) {
+		return collectibleService.createCollectible(c);
 	}
 	
 	@PutMapping
-	public Publisher<CollectibleType> updateCollectible(@RequestBody CollectibleType c) {
-		return collectibleService.updateCollectibleType(c);
+	public Publisher<Collectible> updateCollectible(@RequestBody Collectible c) {
+		return collectibleService.updateCollectible(c);
 	}
-
+	
+	@GetMapping
+	public Publisher<Collectible> getCollectibles(@RequestBody String filter) {
+		switch(filter.toLowerCase()) {
+		case "all":
+			return collectibleService.getAllCollectibles();
+		default:
+			return collectibleService.getCollectibles(filter);
+		}
+	}
 }
