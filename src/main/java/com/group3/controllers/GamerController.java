@@ -20,9 +20,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ServerWebExchange;
 
-import com.group3.beans.Collectible;
+import com.group3.beans.CollectibleType;
 import com.group3.beans.Gamer;
-import com.group3.services.CollectibleService;
+import com.group3.services.CollectibleTypeService;
 import com.group3.services.GamerService;
 import com.group3.util.JWTUtil;
 
@@ -36,7 +36,7 @@ public class GamerController {
 	@Autowired
 	private GamerService gamerService;
 	@Autowired
-	private CollectibleService collectibleService;
+	private CollectibleTypeService collectibleService;
 	
 	@PreAuthorize("hasRole('MODERATOR')")
 	@GetMapping
@@ -86,7 +86,8 @@ public class GamerController {
 	
 	@PreAuthorize("hasRole('GAMER')")
 	@PutMapping("/collectibles/roll")
-	public Publisher<Collectible> rollNewCollectible() {
-		return collectibleService.rollCollectible();
+	
+	public Mono<CollectibleType> rollNewCollectible() {
+		return collectibleService.rollCollectibleType();
 	}
 }
