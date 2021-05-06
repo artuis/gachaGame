@@ -16,8 +16,9 @@ public class ScheduledTasks implements CommandLineRunner {
 	private GamerRepository gamerRepo;
 	// ScheduledTasks will begin a thread and run after the Driver finishes initialization
 	@Override
-	  public void run(String... args) throws Exception {
-	  }
+	public void run(String... args) throws Exception {
+		// intentionally blank, perhaps log later
+	}
 	
 	// documentation for @Scheduling: https://docs.spring.io/spring-framework/docs/current/reference/html/integration.html#scheduling
 	// documentation for cron format: https://docs.spring.io/spring-framework/docs/current/reference/html/integration.html#scheduling-cron-expression
