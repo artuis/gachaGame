@@ -1,6 +1,11 @@
 package com.group3.services;
 
+import java.time.Instant;
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.group3.beans.Gamer;
@@ -40,4 +45,14 @@ public class GamerServiceImpl implements GamerService {
 		return null;
 	}
 
+	@Override
+	public Mono<UserDetails> findByUsername(String username) throws UsernameNotFoundException {
+		return gamerRepo.findByUsername(username)
+				.doOnSuccess(gamer -> {
+					gamer.setLastLogin(Date.from(Instant.now()));
+					gamerRepo.save(gamer);
+				})
+				.map(gamer -> gamer);
+	}
+	
 }
