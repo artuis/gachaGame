@@ -13,9 +13,9 @@ import org.aspectj.lang.annotation.Aspect;
 @Aspect
 public @interface Moderator {
 	
-	@Before(/*hook goes here*/)
-	public
-	
-	@Pointcut("execution( *")
-	
+//	@Before(/*hook goes here*/)
+//	public
+//	
+//	@Pointcut("execution( *")
+//	
 }

@@ -37,19 +37,23 @@ public class ScheduledTasks implements CommandLineRunner {
 		});
 	}
 	
-	@Scheduled(cron="0 0 0 * * *")
+	@Scheduled(cron="0 0 0 * * *")								// updates at midnight daily
 	public void dailyBanReset() {
-		Date today = Date.from(Instant.now());
-		gamerRepo.findAllByRole(Gamer.Role.BANNED).collectList().flatMap(gamers -> {
-			for(Gamer gg : gamers) {
-				Set<Date> banDates = gg.getBanDates();
-				if(banDates == null || banDates.isEmpty()) {
-					continue;
-				} else {
-					forEach(date : banDates) {
-						if(date.) {
-							continue;
+		Date today = Date.from(Instant.now());					// pull today's date for reference
+		gamerRepo.findAll().collectList().flatMap(gamers -> {	// collect all gamers to a list, then map the contents
+			for(Gamer gg : gamers) {							// for each gamer in the list
+				if(gg.getRole().equals(Gamer.Role.BANNED)) {	// that is currently banned
+					Set<Date> banDates = gg.getBanDates();		// pull their list of ban lift dates
+					boolean stillBanned = false;				// set a flag for the user still being banned
+					for(Date date : banDates) {					// check every date in the gamer's list of ban lift dates
+						if(date.after(today)) {					// if a ban date is found that falls after today
+							stillBanned = true;					// the user is still banned
+							break;								// stop checking
 						}
+					}
+					if(!stillBanned) {							// if the gamer is not still banned
+						gg.setRole(Gamer.Role.GAMER);			// set the gamer role to Gamer
+						gamerRepo.save(gg);						// save the updated Gamer info
 					}
 				}
 			}
