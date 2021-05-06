@@ -22,7 +22,7 @@ public class CollectibleServiceImpl implements CollectibleService{
 
 	@Override
 	public Flux<Collectible> getCollectibles(String filter) {
-		return repo.findByGamerId(filter);
+		return repo.findByGamerId(Integer.parseInt(filter));
 	}
 
 	@Override

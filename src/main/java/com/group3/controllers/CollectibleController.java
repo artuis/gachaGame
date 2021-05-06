@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.group3.beans.Collectible;
@@ -36,7 +37,8 @@ public class CollectibleController {
 	}
 	
 	@GetMapping
-	public Publisher<Collectible> getCollectibles(@RequestBody String filter) {
+	public Publisher<Collectible> getCollectibles(@RequestParam("filter") String filter) {
+		System.out.println(filter);
 		switch(filter.toLowerCase()) {
 		case "all":
 			return collectibleService.getAllCollectibles();
