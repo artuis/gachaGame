@@ -1,6 +1,8 @@
 package com.group3.schedule;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.core.annotation.Order;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -8,9 +10,16 @@ import com.group3.beans.Gamer;
 import com.group3.data.GamerRepository;
 
 @Component
-public class ScheduledTasks {
+@Order(1)
+public class ScheduledTasks implements CommandLineRunner {
 	@Autowired
 	private GamerRepository gamerRepo;
+	// ScheduledTasks will begin a thread and run after the Driver finishes initialization
+	@Override
+	  public void run(String... args) throws Exception {
+		if(args.length > 0) {
+		}
+	  }
 	
 	// documentation for @Scheduling: https://docs.spring.io/spring-framework/docs/current/reference/html/integration.html#scheduling
 	// documentation for cron format: https://docs.spring.io/spring-framework/docs/current/reference/html/integration.html#scheduling-cron-expression
