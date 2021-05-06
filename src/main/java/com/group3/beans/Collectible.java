@@ -12,8 +12,4 @@ public class Collectible implements Serializable{
 	private static final long serialVersionUID = 4776899515170739873L;
 	@PrimaryKeyColumn(name = "gamerId", ordinal = 0, type = PrimaryKeyType.PARTITIONED)
 	private int gamerId;
-	@Column
-	private int statIncreaseAmount;
-	@Column
-	private int items;
 }

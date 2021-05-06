@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.group3.beans.CollectibleType;
 import com.group3.beans.Gamer;
-import com.group3.services.CollectibleService;
+import com.group3.services.CollectibleTypeService;
 import com.group3.services.GamerService;
 
 import reactor.core.publisher.Mono;
@@ -28,7 +28,7 @@ public class GamerController {
 	@Autowired
 	private GamerService gamerService;
 	@Autowired
-	private CollectibleService collectibleService;
+	private CollectibleTypeService collectibleService;
 
 	@GetMapping
 	public Publisher<Gamer> getGamers() {
@@ -61,6 +61,6 @@ public class GamerController {
 
 	@PutMapping("/collectibles/roll")
 	public Mono<CollectibleType> rollNewCollectible() {
-		return collectibleService.rollCollectible();
+		return collectibleService.rollCollectibleType();
 	}
 }

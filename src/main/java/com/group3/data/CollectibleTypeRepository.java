@@ -9,7 +9,7 @@ import com.group3.beans.CollectibleType.Stage;
 import reactor.core.publisher.Flux;
 
 @Repository
-public interface CollectibleRepository extends ReactiveCassandraRepository<CollectibleType, String> {
+public interface CollectibleTypeRepository extends ReactiveCassandraRepository<CollectibleType, String> {
 	
 	Flux<CollectibleType> findCollectiblesByStage(Stage stage);
 }

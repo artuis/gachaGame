@@ -8,7 +8,7 @@ import org.springframework.data.cassandra.core.mapping.Column;
 import org.springframework.data.cassandra.core.mapping.PrimaryKeyColumn;
 import org.springframework.data.cassandra.core.mapping.Table;
 
-@Table("collectibleType")
+@Table("collectibleTypes")
 public class CollectibleType implements Serializable {
 	private static final long serialVersionUID = 4776899515170739873L;
 	@PrimaryKeyColumn(name = "stage", ordinal = 0, type = PrimaryKeyType.PARTITIONED)
