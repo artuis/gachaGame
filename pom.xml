@@ -79,5 +79,11 @@
 			<groupId>org.springframework.data</groupId>
 			<artifactId>spring-data-cassandra</artifactId>
 		</dependency>
+		
+		<dependency>
+  			<groupId>org.awaitility</groupId>
+  			<artifactId>awaitility</artifactId>
+  			<scope>test</scope>
+		</dependency>
 	</dependencies>
 </project>

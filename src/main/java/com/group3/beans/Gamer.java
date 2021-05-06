@@ -1,6 +1,7 @@
 package com.group3.beans;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import org.springframework.data.cassandra.core.mapping.Column;
 import org.springframework.data.cassandra.core.mapping.PrimaryKey;
@@ -18,9 +19,17 @@ public class Gamer implements Serializable {
 	@PrimaryKey
 	private int gamerId;
 	@Column
+	private String username;
+	@Column
+	private String password;
+	@Column
 	private Role role;
 	@Column
 	private int rolls;
+	@Column
+	private int dailyRolls;
+	// daily free rolls, gets reset to 10 for every user on new day
+	
 	@Column
 	private int stardust;
 	@Column
@@ -31,6 +40,10 @@ public class Gamer implements Serializable {
 	private int collectionStrength;
 	@Column
 	private int pvpScore;
+	@Column
+	private Date registrationDate;
+	@Column
+	private Date lastLogin;
 
 	public Gamer() {
 		super();
@@ -42,6 +55,22 @@ public class Gamer implements Serializable {
 
 	public void setGamerId(int gamerId) {
 		this.gamerId = gamerId;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public Role getRole() {
@@ -58,6 +87,14 @@ public class Gamer implements Serializable {
 
 	public void setRolls(int rolls) {
 		this.rolls = rolls;
+	}
+
+	public int getDailyRolls() {
+		return dailyRolls;
+	}
+
+	public void setDailyRolls(int dailyRolls) {
+		this.dailyRolls = dailyRolls;
 	}
 
 	public int getStardust() {
@@ -100,18 +137,43 @@ public class Gamer implements Serializable {
 		this.pvpScore = pvpScore;
 	}
 
+	public Date getRegistrationDate() {
+		return registrationDate;
+	}
+
+	public void setRegistrationDate(Date registrationDate) {
+		this.registrationDate = registrationDate;
+	}
+
+	public Date getLastLogin() {
+		return lastLogin;
+	}
+
+	public void setLastLogin(Date lastLogin) {
+		this.lastLogin = lastLogin;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + collectionSize;
 		result = prime * result + collectionStrength;
+		result = prime * result + dailyRolls;
 		result = prime * result + gamerId;
+		result = prime * result + ((lastLogin == null) ? 0 : lastLogin.hashCode());
+		result = prime * result + ((password == null) ? 0 : password.hashCode());
 		result = prime * result + pvpScore;
+		result = prime * result + ((registrationDate == null) ? 0 : registrationDate.hashCode());
 		result = prime * result + ((role == null) ? 0 : role.hashCode());
 		result = prime * result + rolls;
 		result = prime * result + stardust;
 		result = prime * result + strings;
+		result = prime * result + ((username == null) ? 0 : username.hashCode());
 		return result;
 	}
 
@@ -128,9 +190,26 @@ public class Gamer implements Serializable {
 			return false;
 		if (collectionStrength != other.collectionStrength)
 			return false;
+		if (dailyRolls != other.dailyRolls)
+			return false;
 		if (gamerId != other.gamerId)
 			return false;
+		if (lastLogin == null) {
+			if (other.lastLogin != null)
+				return false;
+		} else if (!lastLogin.equals(other.lastLogin))
+			return false;
+		if (password == null) {
+			if (other.password != null)
+				return false;
+		} else if (!password.equals(other.password))
+			return false;
 		if (pvpScore != other.pvpScore)
+			return false;
+		if (registrationDate == null) {
+			if (other.registrationDate != null)
+				return false;
+		} else if (!registrationDate.equals(other.registrationDate))
 			return false;
 		if (role != other.role)
 			return false;
@@ -140,14 +219,20 @@ public class Gamer implements Serializable {
 			return false;
 		if (strings != other.strings)
 			return false;
+		if (username == null) {
+			if (other.username != null)
+				return false;
+		} else if (!username.equals(other.username))
+			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "Gamer [gamerId=" + gamerId + ", role=" + role + ", rolls=" + rolls + ", stardust=" + stardust
-				+ ", strings=" + strings + ", collectionSize=" + collectionSize + ", collectionStrength="
-				+ collectionStrength + ", pvpScore=" + pvpScore + "]";
+		return "Gamer [gamerId=" + gamerId + ", username=" + username + ", password=" + password + ", role=" + role
+				+ ", rolls=" + rolls + ", dailyRolls=" + dailyRolls + ", stardust=" + stardust + ", strings=" + strings
+				+ ", collectionSize=" + collectionSize + ", collectionStrength=" + collectionStrength + ", pvpScore="
+				+ pvpScore + ", registrationDate=" + registrationDate + ", lastLogin=" + lastLogin + "]";
 	}
-
 }
+	
