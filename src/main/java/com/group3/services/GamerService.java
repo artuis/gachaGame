@@ -2,12 +2,14 @@ package com.group3.services;
 
 import java.util.Date;
 
+import org.springframework.security.core.userdetails.ReactiveUserDetailsService;
+
 import com.group3.beans.Gamer;
 
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-public interface GamerService {
+public interface GamerService extends ReactiveUserDetailsService {
 
 	Mono<Gamer> getGamer(int gamerId);
 
@@ -20,4 +22,5 @@ public interface GamerService {
 	Flux<Gamer> getGamersByPvpScore();
 
 	Mono<Gamer> banGamer(int gamerId, Date banLiftDate);
+
 }

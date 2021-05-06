@@ -1,15 +1,20 @@
 package com.group3.data;
 
+import org.springframework.data.cassandra.repository.AllowFiltering;
 import org.springframework.data.cassandra.repository.ReactiveCassandraRepository;
-import org.springframework.stereotype.Repository;
 
 import com.group3.beans.Collectible;
-import com.group3.beans.Collectible.Stage;
 
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
-@Repository
-public interface CollectibleRepository extends ReactiveCassandraRepository<Collectible, String> {
+public interface CollectibleRepository extends ReactiveCassandraRepository<Collectible, String>{
+
+	@AllowFiltering
+	Flux<Collectible> findByGamerId(int id);
 	
-	Flux<Collectible> findCollectiblesByStage(Stage stage);
+
+	@AllowFiltering
+	Mono<Collectible> findById(int id);
+
 }
