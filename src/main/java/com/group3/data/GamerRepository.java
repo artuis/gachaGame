@@ -8,6 +8,7 @@ import org.springframework.data.cassandra.repository.ReactiveCassandraRepository
 import com.group3.beans.Gamer;
 import com.group3.beans.Gamer.Role;
 
+
 public interface GamerRepository extends ReactiveCassandraRepository<Gamer, Integer> {
 
 	@AllowFiltering
