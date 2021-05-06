@@ -4,19 +4,19 @@ import java.util.List;
 
 import org.reactivestreams.Publisher;
 
-import com.group3.beans.Collectible;
+import com.group3.beans.CollectibleType;
 
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 public interface CollectibleService {
 
-	Mono<Collectible> rollCollectible();
+	Mono<CollectibleType> rollCollectible();
 
-	Mono<Collectible> createCollectible(Collectible c);
+	Mono<CollectibleType> createCollectible(CollectibleType c);
 
-	Publisher<Collectible> updateCollectible(Collectible c);
+	Publisher<CollectibleType> updateCollectible(CollectibleType c);
 
-	Flux<Collectible> getAllCollectibles();
+	Flux<CollectibleType> getAllCollectibles();
 	
 }

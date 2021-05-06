@@ -7,7 +7,7 @@ import org.reactivestreams.Publisher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.group3.beans.Collectible;
+import com.group3.beans.CollectibleType;
 import com.group3.data.CollectibleRepository;
 
 import io.netty.util.internal.ThreadLocalRandom;
@@ -25,38 +25,38 @@ public class CollectibleServiceImpl implements CollectibleService {
 	}
 
 	@Override
-	public Mono<Collectible> rollCollectible() {
+	public Mono<CollectibleType> rollCollectible() {
 		double rand = ThreadLocalRandom.current().nextDouble();
-		if (rand < Collectible.Stage.STAGE_1.getRate()) {
+		if (rand < CollectibleType.Stage.STAGE_1.getRate()) {
 			return collectibleRepo
-					.findCollectiblesByStage(Collectible.Stage.STAGE_1)
+					.findCollectiblesByStage(CollectibleType.Stage.STAGE_1)
 					.collectList()
 					.map(collectibles -> collectibles.get(ThreadLocalRandom.current().nextInt(collectibles.size())));
-		} else if (rand < Collectible.Stage.STAGE_2.getRate()) {
+		} else if (rand < CollectibleType.Stage.STAGE_2.getRate()) {
 			return collectibleRepo
-					.findCollectiblesByStage(Collectible.Stage.STAGE_2)
+					.findCollectiblesByStage(CollectibleType.Stage.STAGE_2)
 					.collectList()
 					.map(collectibles -> collectibles.get(ThreadLocalRandom.current().nextInt(collectibles.size())));
 		} else { /*rand < Collectible.Stage.STAGE_3.getRate())*/
 			return collectibleRepo
-					.findCollectiblesByStage(Collectible.Stage.STAGE_3)
+					.findCollectiblesByStage(CollectibleType.Stage.STAGE_3)
 					.collectList()
 					.map(collectibles -> collectibles.get(ThreadLocalRandom.current().nextInt(collectibles.size())));
 		}
 	}
 	
 	@Override
-	public Mono<Collectible> createCollectible(Collectible c) {
+	public Mono<CollectibleType> createCollectible(CollectibleType c) {
 		return collectibleRepo.insert(c);
 	}
 
 	@Override
-	public Publisher<Collectible> updateCollectible(Collectible c) {
+	public Publisher<CollectibleType> updateCollectible(CollectibleType c) {
 		return collectibleRepo.save(c);
 	}
 
 	@Override
-	public Flux<Collectible> getAllCollectibles() {
+	public Flux<CollectibleType> getAllCollectibles() {
 		return collectibleRepo.findAll();
 	}
 }

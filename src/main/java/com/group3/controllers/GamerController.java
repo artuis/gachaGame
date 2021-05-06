@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.group3.beans.Collectible;
+import com.group3.beans.CollectibleType;
 import com.group3.beans.Gamer;
 import com.group3.services.CollectibleService;
 import com.group3.services.GamerService;
@@ -54,7 +54,7 @@ public class GamerController {
 	}
 	
 	@PutMapping("/collectibles/roll")
-	public Mono<Collectible> rollNewCollectible() {
+	public Mono<CollectibleType> rollNewCollectible() {
 		return collectibleService.rollCollectible();
 	}
 }
