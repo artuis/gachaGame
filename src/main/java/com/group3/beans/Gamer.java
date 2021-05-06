@@ -1,26 +1,46 @@
 package com.group3.beans;
 
 import java.io.Serializable;
+import java.util.Collection;
+import java.util.Date;
+import java.util.List;
 
 import org.springframework.data.cassandra.core.mapping.Column;
 import org.springframework.data.cassandra.core.mapping.PrimaryKey;
 import org.springframework.data.cassandra.core.mapping.Table;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 @Table("gamers")
-public class Gamer implements Serializable {
+public class Gamer implements Serializable, UserDetails {
 	private static final long serialVersionUID = 4447548260627752098L;
 
-	public enum Role {
-		GAMER, MODERATOR
+	public enum Role implements GrantedAuthority {
+		GAMER, MODERATOR;
+
+		@Override
+		public String getAuthority() {
+			return name();
+		}
 	}
 
 	@Column
 	@PrimaryKey
 	private int gamerId;
 	@Column
+	private String username;
+	@Column
+	private String password;
+	@Column
 	private Role role;
 	@Column
+	private List<Role> authorities;
+	@Column
 	private int rolls;
+	@Column
+	private int dailyRolls;
+	// daily free rolls, gets reset to 10 for every user on new day
+	
 	@Column
 	private int stardust;
 	@Column
@@ -31,6 +51,26 @@ public class Gamer implements Serializable {
 	private int collectionStrength;
 	@Column
 	private int pvpScore;
+	@Column
+	private Date registrationDate;
+	@Column
+	private Date lastLogin;
+	@Column
+	private boolean enabled;
+	@Column
+	private boolean accountNonLocked;
+	@Column
+	private boolean credentialsNonExpired;
+	@Column
+	private boolean accountNonExpired;
+
+	public Role getRole() {
+		return role;
+	}
+
+	public void setRole(Role role) {
+		this.role = role;
+	}
 
 	public Gamer() {
 		super();
@@ -44,12 +84,20 @@ public class Gamer implements Serializable {
 		this.gamerId = gamerId;
 	}
 
-	public Role getRole() {
-		return role;
+	public String getUsername() {
+		return username;
 	}
 
-	public void setRole(Role role) {
-		this.role = role;
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public int getRolls() {
@@ -58,6 +106,14 @@ public class Gamer implements Serializable {
 
 	public void setRolls(int rolls) {
 		this.rolls = rolls;
+	}
+
+	public int getDailyRolls() {
+		return dailyRolls;
+	}
+
+	public void setDailyRolls(int dailyRolls) {
+		this.dailyRolls = dailyRolls;
 	}
 
 	public int getStardust() {
@@ -100,18 +156,43 @@ public class Gamer implements Serializable {
 		this.pvpScore = pvpScore;
 	}
 
+	public Date getRegistrationDate() {
+		return registrationDate;
+	}
+
+	public void setRegistrationDate(Date registrationDate) {
+		this.registrationDate = registrationDate;
+	}
+
+	public Date getLastLogin() {
+		return lastLogin;
+	}
+
+	public void setLastLogin(Date lastLogin) {
+		this.lastLogin = lastLogin;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((authorities == null) ? 0 : authorities.hashCode());
 		result = prime * result + collectionSize;
 		result = prime * result + collectionStrength;
+		result = prime * result + dailyRolls;
 		result = prime * result + gamerId;
+		result = prime * result + ((lastLogin == null) ? 0 : lastLogin.hashCode());
+		result = prime * result + ((password == null) ? 0 : password.hashCode());
 		result = prime * result + pvpScore;
-		result = prime * result + ((role == null) ? 0 : role.hashCode());
+		result = prime * result + ((registrationDate == null) ? 0 : registrationDate.hashCode());
 		result = prime * result + rolls;
 		result = prime * result + stardust;
 		result = prime * result + strings;
+		result = prime * result + ((username == null) ? 0 : username.hashCode());
 		return result;
 	}
 
@@ -124,15 +205,35 @@ public class Gamer implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Gamer other = (Gamer) obj;
+		if (authorities == null) {
+			if (other.authorities != null)
+				return false;
+		} else if (!authorities.equals(other.authorities))
+			return false;
 		if (collectionSize != other.collectionSize)
 			return false;
 		if (collectionStrength != other.collectionStrength)
 			return false;
+		if (dailyRolls != other.dailyRolls)
+			return false;
 		if (gamerId != other.gamerId)
+			return false;
+		if (lastLogin == null) {
+			if (other.lastLogin != null)
+				return false;
+		} else if (!lastLogin.equals(other.lastLogin))
+			return false;
+		if (password == null) {
+			if (other.password != null)
+				return false;
+		} else if (!password.equals(other.password))
 			return false;
 		if (pvpScore != other.pvpScore)
 			return false;
-		if (role != other.role)
+		if (registrationDate == null) {
+			if (other.registrationDate != null)
+				return false;
+		} else if (!registrationDate.equals(other.registrationDate))
 			return false;
 		if (rolls != other.rolls)
 			return false;
@@ -140,14 +241,65 @@ public class Gamer implements Serializable {
 			return false;
 		if (strings != other.strings)
 			return false;
+		if (username == null) {
+			if (other.username != null)
+				return false;
+		} else if (!username.equals(other.username))
+			return false;
 		return true;
 	}
 
 	@Override
-	public String toString() {
-		return "Gamer [gamerId=" + gamerId + ", role=" + role + ", rolls=" + rolls + ", stardust=" + stardust
-				+ ", strings=" + strings + ", collectionSize=" + collectionSize + ", collectionStrength="
-				+ collectionStrength + ", pvpScore=" + pvpScore + "]";
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		return this.authorities;
+	}
+	
+	public List<Role> getAuthoritiesList() {
+		return this.authorities;
 	}
 
+	@Override
+	public boolean isAccountNonExpired() {
+		return false;
+	}
+
+	@Override
+	public boolean isAccountNonLocked() {
+		return false;
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		return false;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		return this.enabled;
+	}
+	
+	public void setIsEnabled(boolean enabled) {
+		this.enabled = enabled;
+	}
+	
+	public void setAuthorities(List<Role> authorities) {
+		this.authorities = authorities;
+	}
+
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
+	}
+
+	public void setAccountNonLocked(boolean accountNonLocked) {
+		this.accountNonLocked = accountNonLocked;
+	}
+
+	public void setCredentialsNonExpired(boolean credentialsNonExpired) {
+		this.credentialsNonExpired = credentialsNonExpired;
+	}
+
+	public void setAccountNonExpired(boolean accountNonExpired) {
+		this.accountNonExpired = accountNonExpired;
+	}
 }
+	

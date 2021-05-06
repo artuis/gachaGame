@@ -1,13 +1,20 @@
 package com.group3.data;
 
-import java.util.List;
-
 import org.springframework.data.cassandra.repository.AllowFiltering;
 import org.springframework.data.cassandra.repository.ReactiveCassandraRepository;
 
 import com.group3.beans.Collectible;
 
-public interface CollectibleRepository extends ReactiveCassandraRepository<Collectible, /*PRIMARY KEY DATATYPE REPLACES String PLACEHOLDER*/ String> {
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
+
+public interface CollectibleRepository extends ReactiveCassandraRepository<Collectible, String>{
+
+	@AllowFiltering
+	Flux<Collectible> findByGamerId(int id);
 	
+
+	@AllowFiltering
+	Mono<Collectible> findById(int id);
 
 }

@@ -1,21 +1,23 @@
 package com.group3.services;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import java.time.Instant;
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.group3.beans.Gamer;
-import com.group3.data.ReactiveGamerRepository;
+import com.group3.data.GamerRepository;
 
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Service
 public class GamerServiceImpl implements GamerService {
-	private static Logger log = LogManager.getLogger(GamerServiceImpl.class);
 	@Autowired
-	private ReactiveGamerRepository gamerRepo;
+	private GamerRepository gamerRepo;
 
 	@Override
 	public Mono<Gamer> getGamer(int gamerId) {
@@ -43,4 +45,14 @@ public class GamerServiceImpl implements GamerService {
 		return null;
 	}
 
+	@Override
+	public Mono<UserDetails> findByUsername(String username) throws UsernameNotFoundException {
+		return gamerRepo.findByUsername(username)
+				.doOnSuccess(gamer -> {
+					gamer.setLastLogin(Date.from(Instant.now()));
+					gamerRepo.save(gamer);
+				})
+				.map(gamer -> gamer);
+	}
+	
 }
