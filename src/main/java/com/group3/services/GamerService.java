@@ -1,5 +1,7 @@
 package com.group3.services;
 
+import java.util.Date;
+
 import com.group3.beans.Gamer;
 
 import reactor.core.publisher.Flux;
@@ -17,4 +19,5 @@ public interface GamerService {
 
 	Flux<Gamer> getGamersByPvpScore();
 
+	Mono<Gamer> banGamer(int gamerId, Date banLiftDate);
 }

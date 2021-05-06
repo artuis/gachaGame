@@ -58,7 +58,11 @@ public class GamerController {
 		gamerService.updateGamer(gg);
 		return ResponseEntity.ok(gg);
 	}
-
+	@PostMapping("{gamerId}")
+	public Publisher<Gamer> banGamer(@PathVariable("gamerId") int gamerId, @RequestBody Date banLiftDate) {
+		return gamerService.banGamer(gamerId, banLiftDate);
+	}
+	
 	@PutMapping("/collectibles/roll")
 	public Mono<Collectible> rollNewCollectible() {
 		return collectibleService.rollCollectible();

@@ -2,6 +2,7 @@ package com.group3.beans;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.Set;
 
 import org.springframework.data.cassandra.core.mapping.Column;
 import org.springframework.data.cassandra.core.mapping.PrimaryKey;
@@ -12,7 +13,7 @@ public class Gamer implements Serializable {
 	private static final long serialVersionUID = 4447548260627752098L;
 
 	public enum Role {
-		GAMER, MODERATOR
+		GAMER, MODERATOR, BANNED
 	}
 
 	@Column
@@ -29,7 +30,7 @@ public class Gamer implements Serializable {
 	@Column
 	private int dailyRolls;
 	// daily free rolls, gets reset to 10 for every user on new day
-	
+
 	@Column
 	private int stardust;
 	@Column
@@ -44,6 +45,8 @@ public class Gamer implements Serializable {
 	private Date registrationDate;
 	@Column
 	private Date lastLogin;
+	@Column
+	private Set<Date> banDates;
 
 	public Gamer() {
 		super();
@@ -153,14 +156,19 @@ public class Gamer implements Serializable {
 		this.lastLogin = lastLogin;
 	}
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
+	public Set<Date> getBanDates() {
+		return banDates;
+	}
+
+	public void setBanDates(Set<Date> banDates) {
+		this.banDates = banDates;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((banDates == null) ? 0 : banDates.hashCode());
 		result = prime * result + collectionSize;
 		result = prime * result + collectionStrength;
 		result = prime * result + dailyRolls;
@@ -186,6 +194,11 @@ public class Gamer implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Gamer other = (Gamer) obj;
+		if (banDates == null) {
+			if (other.banDates != null)
+				return false;
+		} else if (!banDates.equals(other.banDates))
+			return false;
 		if (collectionSize != other.collectionSize)
 			return false;
 		if (collectionStrength != other.collectionStrength)
@@ -232,7 +245,8 @@ public class Gamer implements Serializable {
 		return "Gamer [gamerId=" + gamerId + ", username=" + username + ", password=" + password + ", role=" + role
 				+ ", rolls=" + rolls + ", dailyRolls=" + dailyRolls + ", stardust=" + stardust + ", strings=" + strings
 				+ ", collectionSize=" + collectionSize + ", collectionStrength=" + collectionStrength + ", pvpScore="
-				+ pvpScore + ", registrationDate=" + registrationDate + ", lastLogin=" + lastLogin + "]";
+				+ pvpScore + ", registrationDate=" + registrationDate + ", lastLogin=" + lastLogin + ", banDates="
+				+ banDates + "]";
 	}
+
 }
-	
