@@ -1,5 +1,8 @@
 package com.group3.controllers;
 
+import java.time.Instant;
+import java.util.Date;
+
 import org.reactivestreams.Publisher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -34,11 +37,14 @@ public class GamerController {
 
 	@PutMapping
 	public Publisher<Gamer> registerGamer(@RequestBody Gamer gg) {
+		gg.setRegistrationDate(Date.from(Instant.now()));
 		return gamerService.addGamer(gg);
 	}
 
 	@PostMapping
 	public Publisher<Gamer> login(@RequestBody Gamer gg) {
+		gg.setLastLogin(Date.from(Instant.now()));
+		gamerService.updateGamer(gg);
 		return gamerService.getGamer(gg.getGamerId());
 	}
 
@@ -52,7 +58,7 @@ public class GamerController {
 		gamerService.updateGamer(gg);
 		return ResponseEntity.ok(gg);
 	}
-	
+
 	@PutMapping("/collectibles/roll")
 	public Mono<Collectible> rollNewCollectible() {
 		return collectibleService.rollCollectible();

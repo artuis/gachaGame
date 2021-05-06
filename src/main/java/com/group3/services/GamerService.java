@@ -7,13 +7,14 @@ import reactor.core.publisher.Mono;
 
 public interface GamerService {
 
-Mono<Gamer> getGamer(int gamerId);
-	
+	Mono<Gamer> getGamer(int gamerId);
+
 	Mono<Gamer> addGamer(Gamer gg);
-	
+
 	Mono<Gamer> updateGamer(Gamer gg);
-	
+
 	Flux<Gamer> getGamers();
-	
+
 	Flux<Gamer> getGamersByPvpScore();
+
 }
