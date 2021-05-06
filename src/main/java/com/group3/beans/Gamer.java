@@ -19,6 +19,10 @@ public class Gamer implements Serializable {
 	@PrimaryKey
 	private int gamerId;
 	@Column
+	private String username;
+	@Column
+	private String password;
+	@Column
 	private Role role;
 	@Column
 	private int rolls;
@@ -53,6 +57,22 @@ public class Gamer implements Serializable {
 		this.gamerId = gamerId;
 	}
 
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
 	public Role getRole() {
 		return role;
 	}
@@ -61,7 +81,6 @@ public class Gamer implements Serializable {
 		this.role = role;
 	}
 
-	// returns both their purchased and daily free rolls
 	public int getRolls() {
 		return rolls;
 	}
@@ -69,18 +88,15 @@ public class Gamer implements Serializable {
 	public void setRolls(int rolls) {
 		this.rolls = rolls;
 	}
-	
+
 	public int getDailyRolls() {
 		return dailyRolls;
 	}
-	
+
 	public void setDailyRolls(int dailyRolls) {
 		this.dailyRolls = dailyRolls;
 	}
 
-	public int getTotalRolls() {
-		return (rolls + dailyRolls);
-	}
 	public int getStardust() {
 		return stardust;
 	}
@@ -121,6 +137,14 @@ public class Gamer implements Serializable {
 		this.pvpScore = pvpScore;
 	}
 
+	public Date getRegistrationDate() {
+		return registrationDate;
+	}
+
+	public void setRegistrationDate(Date registrationDate) {
+		this.registrationDate = registrationDate;
+	}
+
 	public Date getLastLogin() {
 		return lastLogin;
 	}
@@ -128,13 +152,9 @@ public class Gamer implements Serializable {
 	public void setLastLogin(Date lastLogin) {
 		this.lastLogin = lastLogin;
 	}
-	
-	public Date getRegistrationDate() {
-		return registrationDate;
-	}
-	
-	public void setRegistrationDate(Date registrationDate) {
-		this.registrationDate = registrationDate;
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
 
 	@Override
@@ -146,12 +166,14 @@ public class Gamer implements Serializable {
 		result = prime * result + dailyRolls;
 		result = prime * result + gamerId;
 		result = prime * result + ((lastLogin == null) ? 0 : lastLogin.hashCode());
+		result = prime * result + ((password == null) ? 0 : password.hashCode());
 		result = prime * result + pvpScore;
 		result = prime * result + ((registrationDate == null) ? 0 : registrationDate.hashCode());
 		result = prime * result + ((role == null) ? 0 : role.hashCode());
 		result = prime * result + rolls;
 		result = prime * result + stardust;
 		result = prime * result + strings;
+		result = prime * result + ((username == null) ? 0 : username.hashCode());
 		return result;
 	}
 
@@ -177,6 +199,11 @@ public class Gamer implements Serializable {
 				return false;
 		} else if (!lastLogin.equals(other.lastLogin))
 			return false;
+		if (password == null) {
+			if (other.password != null)
+				return false;
+		} else if (!password.equals(other.password))
+			return false;
 		if (pvpScore != other.pvpScore)
 			return false;
 		if (registrationDate == null) {
@@ -192,16 +219,20 @@ public class Gamer implements Serializable {
 			return false;
 		if (strings != other.strings)
 			return false;
+		if (username == null) {
+			if (other.username != null)
+				return false;
+		} else if (!username.equals(other.username))
+			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "Gamer [gamerId=" + gamerId + ", role=" + role + ", rolls=" + rolls + ", dailyRolls=" + dailyRolls
-				+ ", stardust=" + stardust + ", strings=" + strings + ", collectionSize=" + collectionSize
-				+ ", collectionStrength=" + collectionStrength + ", pvpScore=" + pvpScore + ", registrationDate="
-				+ registrationDate + ", lastLogin=" + lastLogin + "]";
+		return "Gamer [gamerId=" + gamerId + ", username=" + username + ", password=" + password + ", role=" + role
+				+ ", rolls=" + rolls + ", dailyRolls=" + dailyRolls + ", stardust=" + stardust + ", strings=" + strings
+				+ ", collectionSize=" + collectionSize + ", collectionStrength=" + collectionStrength + ", pvpScore="
+				+ pvpScore + ", registrationDate=" + registrationDate + ", lastLogin=" + lastLogin + "]";
 	}
-
-	
 }
+	
