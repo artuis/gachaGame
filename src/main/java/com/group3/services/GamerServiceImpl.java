@@ -9,9 +9,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.group3.beans.Gamer;
@@ -24,6 +25,8 @@ import reactor.core.publisher.Mono;
 public class GamerServiceImpl implements GamerService {
 	@Autowired
 	private GamerRepository gamerRepo;
+	
+	private Logger log = LoggerFactory.getLogger(GamerServiceImpl.class);
 
 	@Override
 	public Mono<Gamer> getGamer(int gamerId) {
@@ -32,21 +35,30 @@ public class GamerServiceImpl implements GamerService {
 
 	@Override
 	public Mono<Gamer> addGamer(Gamer gg) {
-		gg.setRegistrationDate(Date.from(Instant.now()));
-		
-		List<Gamer.Role> perms = new ArrayList<Gamer.Role>();
-		if(gg.getRole() != null && gg.getRole().equals(Gamer.Role.MODERATOR)) {
-			perms.add(Gamer.Role.MODERATOR);
-		} else {gg.setRole(Gamer.Role.GAMER);}
-		perms.add(Gamer.Role.GAMER);
-		gg.setAuthorities(perms);
-		
-		if(gg.getRolls() == 0) {gg.setRolls(10);}
-		if(gg.getDailyRolls() == 0) {gg.setDailyRolls(10);}
-		if(gg.getStardust() == 0) {gg.setStardust(10);}
-		if(gg.getStrings() == 0) {gg.setStrings(1000);}
-		
-		return gamerRepo.insert(gg);
+		if (gg.getUsername() == null) {
+			log.trace("invalid username");
+			return Mono.empty();
+		}
+		return gamerRepo.findByUsername(gg.getUsername()).defaultIfEmpty(new Gamer()).flatMap(gamer -> {
+			if (gamer == null) {
+				gg.setRegistrationDate(Date.from(Instant.now()));
+				
+				List<Gamer.Role> perms = new ArrayList<Gamer.Role>();
+				if(gg.getRole() != null && gg.getRole().equals(Gamer.Role.MODERATOR)) {
+					perms.add(Gamer.Role.MODERATOR);
+				} else {gg.setRole(Gamer.Role.GAMER);}
+				perms.add(Gamer.Role.GAMER);
+				gg.setAuthorities(perms);
+				
+				if(gg.getRolls() == 0) {gg.setRolls(10);}
+				if(gg.getDailyRolls() == 0) {gg.setDailyRolls(10);}
+				if(gg.getStardust() == 0) {gg.setStardust(10);}
+				if(gg.getStrings() == 0) {gg.setStrings(1000);}
+				return gamerRepo.insert(gg);
+			} else {
+				return Mono.empty();
+			}
+		});
 	}
 
 	@Override
@@ -86,6 +98,7 @@ public class GamerServiceImpl implements GamerService {
 		return gamer;															// return Mono<Gamer> to controller
 	}
 
+	@Override
 	public Mono<UserDetails> findByUsername(String username) {
 		return gamerRepo.findByUsername(username)
 				.doOnSuccess(gamer -> {
@@ -96,4 +109,11 @@ public class GamerServiceImpl implements GamerService {
 				})
 				.map(gamer -> gamer);
 	}
+
+	@Override
+	public Mono<Gamer> findGamerByUsername(String username) {
+		// TODO Auto-generated method stub
+		return gamerRepo.findByUsername(username);
+	}
+	
 }

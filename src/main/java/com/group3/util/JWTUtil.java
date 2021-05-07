@@ -52,6 +52,7 @@ public class JWTUtil {
 	public String generateToken(Gamer gamer) {
 		Map<String, Object> claims = new HashMap<>();
 		claims.put("role", gamer.getAuthoritiesList());
+		claims.put("id", gamer.getGamerId());
 		return doGenerateToken(claims, gamer.getUsername());
 	}
 
