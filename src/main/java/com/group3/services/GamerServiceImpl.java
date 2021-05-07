@@ -67,7 +67,7 @@ public class GamerServiceImpl implements GamerService {
 
 	@Override
 //	@Moderator	// only moderators can perform this action
-	public Mono<Gamer> banGamer(int gamerId, Long daysBanned) {
+	public Mono<Gamer> banGamer(int gamerId, long daysBanned) {
 		Mono<Gamer> gamer = gamerRepo.findById(gamerId).map(gg -> {				// find the gamer
 			gg.setRole(Gamer.Role.BANNED);										// set gamer role to banned
 			Set<Date> banDates;													// declare set of ban dates

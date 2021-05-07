@@ -19,6 +19,6 @@ public interface GamerService extends ReactiveUserDetailsService {
 
 	Flux<Gamer> getGamersByPvpScore();
 
-	Mono<Gamer> banGamer(int gamerId, Long daysBanned);
+	Mono<Gamer> banGamer(int gamerId, long daysBanned);
 
 }

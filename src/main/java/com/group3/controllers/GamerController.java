@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ServerWebExchange;
 
@@ -78,7 +79,7 @@ public class GamerController {
 
 	@PreAuthorize("hasAuthority('MODERATOR')")
 	@PostMapping("{gamerId}")
-	public Publisher<Gamer> banGamer(@PathVariable("gamerId") int gamerId, @RequestBody Long daysBanned) {
+	public Publisher<Gamer> banGamer(@PathVariable("gamerId") int gamerId, @RequestParam("daysBanned") long daysBanned) {
 		return gamerService.banGamer(gamerId, daysBanned);
 	}
 
