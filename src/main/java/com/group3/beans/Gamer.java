@@ -2,9 +2,9 @@ package com.group3.beans;
 
 import java.io.Serializable;
 import java.util.Collection;
-import java.util.Set;
-import java.util.List;
 import java.util.Date;
+import java.util.List;
+import java.util.Set;
 
 import org.springframework.data.cassandra.core.mapping.Column;
 import org.springframework.data.cassandra.core.mapping.PrimaryKey;
