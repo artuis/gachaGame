@@ -40,7 +40,7 @@ public class GamerController {
 	@Autowired
 	private CollectibleTypeService collectibleService;
 	
-	@PreAuthorize("hasRole('MODERATOR')")
+	@PreAuthorize("hasAuthority('MODERATOR')")
 	@GetMapping
 	public Publisher<Gamer> getGamers() {
 		return gamerService.getGamers();
@@ -77,9 +77,10 @@ public class GamerController {
 					}
 				});
 	}
-
+	
 	@DeleteMapping
 	public ResponseEntity<Void> logout() {
+		
 		return ResponseEntity.noContent().build();
 	}
 	

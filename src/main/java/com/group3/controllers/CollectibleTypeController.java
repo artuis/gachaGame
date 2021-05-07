@@ -23,13 +23,13 @@ public class CollectibleTypeController {
 		super();
 	}
 	
-	@PreAuthorize("hasRole('MODERATOR')")
+	@PreAuthorize("hasAuthority('MODERATOR')")
 	@PostMapping
 	public Publisher<CollectibleType> addCollectibleType(@RequestBody CollectibleType c) {
 		return collectibleService.createCollectibleType(c);
 	}
 	
-	@PreAuthorize("hasRole('MODERATOR')")
+	@PreAuthorize("hasAuthority('MODERATOR')")
 	@PutMapping
 	public Publisher<CollectibleType> updateCollectibleType(@RequestBody CollectibleType c) {
 		return collectibleService.updateCollectibleType(c);
