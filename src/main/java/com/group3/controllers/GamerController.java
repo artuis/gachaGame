@@ -60,13 +60,12 @@ public class GamerController {
 				if (gamer.getUsername() == null) {
 					return ResponseEntity.notFound().build();
 				} else {
-				System.out.println("hello");
 					exchange.getResponse()
 							.addCookie(ResponseCookie
 								.from("token", jwtUtil
 								.generateToken((Gamer) gamer))
 								.httpOnly(true).build());
-					return ResponseEntity.ok(gamer);
+					return ResponseEntity.ok(gamer); //👌
 				}
 			});
 	}
@@ -89,7 +88,7 @@ public class GamerController {
 		return gamerService.banGamer(gamerId, daysBanned);
 	}
 
-	@PreAuthorize("hasRole('GAMER')")
+	@PreAuthorize("hasaAuthority('GAMER')")
 	@PutMapping("/collectibles/roll")
 
 	public Mono<CollectibleType> rollNewCollectible() {
