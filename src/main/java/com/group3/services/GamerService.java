@@ -21,4 +21,6 @@ public interface GamerService extends ReactiveUserDetailsService {
 
 	Mono<Gamer> banGamer(int gamerId, long daysBanned);
 
+	Mono<Gamer> findGamerByUsername(String usernameFromToken);
+
 }
