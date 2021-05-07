@@ -63,19 +63,21 @@ public class GamerController {
 	
 	@PostMapping("/login")
 	public Mono<ResponseEntity<?>> login(@RequestBody Gamer gg, ServerWebExchange exchange) {
-		return gamerService.findByUsername(gg.getUsername())
-				.map(gamer -> {
-					if (gamer != null) {
-						exchange.getResponse()
-								.addCookie(ResponseCookie
-									.from("token", jwtUtil
-									.generateToken((Gamer) gamer))
-									.httpOnly(true).build());
-						return ResponseEntity.ok(gamer);
-					} else {
-						return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-					}
-				});
+		 return gamerService.findByUsername(gg.getUsername())
+			.defaultIfEmpty(new Gamer())
+			.map(gamer -> {
+				if (gamer.getUsername() == null) {
+					return ResponseEntity.notFound().build();
+				} else {
+				System.out.println("hello");
+					exchange.getResponse()
+							.addCookie(ResponseCookie
+								.from("token", jwtUtil
+								.generateToken((Gamer) gamer))
+								.httpOnly(true).build());
+					return ResponseEntity.ok(gamer);
+				}
+			});
 	}
 	
 	@DeleteMapping
