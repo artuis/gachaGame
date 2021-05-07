@@ -86,11 +86,13 @@ public class GamerServiceImpl implements GamerService {
 		return gamer;															// return Mono<Gamer> to controller
 	}
 
-	public Mono<UserDetails> findByUsername(String username) throws UsernameNotFoundException {
+	public Mono<UserDetails> findByUsername(String username) {
 		return gamerRepo.findByUsername(username)
 				.doOnSuccess(gamer -> {
-					gamer.setLastLogin(Date.from(Instant.now()));
-					gamerRepo.save(gamer);
+					if (gamer != null) {
+						gamer.setLastLogin(Date.from(Instant.now()));
+						gamerRepo.save(gamer);
+					} 
 				})
 				.map(gamer -> gamer);
 	}
