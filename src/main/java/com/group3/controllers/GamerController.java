@@ -89,6 +89,12 @@ public class GamerController {
 	public Publisher<Gamer> updateGamer(@PathVariable("gamerId") int gamerId, @RequestBody Gamer gg) {
 		return gamerService.updateGamer(gg);
 	}
+
+	@PreAuthorize("hasRole('MODERATOR')")
+	@PostMapping("{gamerId}")
+	public Publisher<Gamer> banGamer(@PathVariable("gamerId") int gamerId, @RequestBody Date banLiftDate) {
+		return gamerService.banGamer(gamerId, banLiftDate);
+	}
 	
 	@PreAuthorize("hasRole('GAMER')")
 	@PutMapping("/collectibles/roll")

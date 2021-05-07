@@ -1,5 +1,6 @@
 package com.group3.services;
 
+import java.util.Date;
 
 import org.springframework.security.core.userdetails.ReactiveUserDetailsService;
 
@@ -20,5 +21,6 @@ public interface GamerService extends ReactiveUserDetailsService {
 
 	Flux<Gamer> getGamersByPvpScore();
 
+	Mono<Gamer> banGamer(int gamerId, Date banLiftDate);
 
 }
