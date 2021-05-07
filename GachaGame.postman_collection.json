@@ -113,19 +113,13 @@
 			"response": []
 		},
 		{
-			"name": "Moderator Ban path gamer (borked)",
+			"name": "Moderator Ban path gamer",
 			"request": {
 				"method": "POST",
 				"header": [],
 				"body": {
-					"mode": "formdata",
-					"formdata": [
-						{
-							"key": "daysBanned",
-							"value": "1",
-							"type": "text"
-						}
-					],
+					"mode": "raw",
+					"raw": "{\r\n    \"daysBanned\": 1\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -133,7 +127,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/gamers/58",
+					"raw": "http://localhost:8080/gamers/58?daysBanned=1",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -142,6 +136,12 @@
 					"path": [
 						"gamers",
 						"58"
+					],
+					"query": [
+						{
+							"key": "daysBanned",
+							"value": "1"
+						}
 					]
 				}
 			},
