@@ -35,7 +35,7 @@ public class GamerServiceImpl implements GamerService {
 		gg.setRegistrationDate(Date.from(Instant.now()));
 		
 		List<Gamer.Role> perms = new ArrayList<Gamer.Role>();
-		if(gg.getRole().equals(Gamer.Role.MODERATOR)) {
+		if(gg.getRole() != null && gg.getRole().equals(Gamer.Role.MODERATOR)) {
 			perms.add(Gamer.Role.MODERATOR);
 		} else {gg.setRole(Gamer.Role.GAMER);}
 		perms.add(Gamer.Role.GAMER);
