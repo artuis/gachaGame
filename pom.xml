@@ -125,6 +125,13 @@
 			<version>0.11.1</version>
 			<scope>runtime</scope>
 		</dependency>
-		
+		<!--  maybe use lombok?
+		<dependency>
+        	<groupId>org.projectlombok</groupId>
+   			<artifactId>lombok</artifactId>
+    	    <version>1.18.10</version>
+     	   <scope>provided</scope>
+   		</dependency>
+   		-->
 	</dependencies>
 </project>
