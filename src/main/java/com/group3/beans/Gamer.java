@@ -59,6 +59,9 @@ public class Gamer implements Serializable, UserDetails {
 	private int strings;
 	@Column
 	@JsonInclude(Include.NON_NULL)
+	private boolean loginBonusCollected;
+	@Column
+	@JsonInclude(Include.NON_NULL)
 	private int collectionSize;
 	@Column
 	@JsonInclude(Include.NON_NULL)
@@ -156,6 +159,14 @@ public class Gamer implements Serializable, UserDetails {
 		this.strings = strings;
 	}
 
+	public boolean isLoginBonusCollected() {
+		return loginBonusCollected;
+	}
+
+	public void setLoginBonusCollected(boolean loginBonusCollected) {
+		this.loginBonusCollected = loginBonusCollected;
+	}
+
 	public int getCollectionSize() {
 		return collectionSize;
 	}
@@ -202,100 +213,6 @@ public class Gamer implements Serializable, UserDetails {
 
 	public void setBanDates(Set<Date> banDates) {
 		this.banDates = banDates;
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + (accountNonExpired ? 1231 : 1237);
-		result = prime * result + (accountNonLocked ? 1231 : 1237);
-		result = prime * result + ((authorities == null) ? 0 : authorities.hashCode());
-		result = prime * result + ((banDates == null) ? 0 : banDates.hashCode());
-		result = prime * result + collectionSize;
-		result = prime * result + collectionStrength;
-		result = prime * result + (credentialsNonExpired ? 1231 : 1237);
-		result = prime * result + dailyRolls;
-		result = prime * result + (enabled ? 1231 : 1237);
-		result = prime * result + gamerId;
-		result = prime * result + ((lastLogin == null) ? 0 : lastLogin.hashCode());
-		result = prime * result + ((password == null) ? 0 : password.hashCode());
-		result = prime * result + pvpScore;
-		result = prime * result + ((registrationDate == null) ? 0 : registrationDate.hashCode());
-		result = prime * result + ((role == null) ? 0 : role.hashCode());
-		result = prime * result + rolls;
-		result = prime * result + stardust;
-		result = prime * result + strings;
-		result = prime * result + ((username == null) ? 0 : username.hashCode());
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Gamer other = (Gamer) obj;
-		if (accountNonExpired != other.accountNonExpired)
-			return false;
-		if (accountNonLocked != other.accountNonLocked)
-			return false;
-		if (authorities == null) {
-			if (other.authorities != null)
-				return false;
-		} else if (!authorities.equals(other.authorities))
-			return false;
-		if (banDates == null) {
-			if (other.banDates != null)
-				return false;
-		} else if (!banDates.equals(other.banDates))
-			return false;
-		if (collectionSize != other.collectionSize)
-			return false;
-		if (collectionStrength != other.collectionStrength)
-			return false;
-		if (credentialsNonExpired != other.credentialsNonExpired)
-			return false;
-		if (dailyRolls != other.dailyRolls)
-			return false;
-		if (enabled != other.enabled)
-			return false;
-		if (gamerId != other.gamerId)
-			return false;
-		if (lastLogin == null) {
-			if (other.lastLogin != null)
-				return false;
-		} else if (!lastLogin.equals(other.lastLogin))
-			return false;
-		if (password == null) {
-			if (other.password != null)
-				return false;
-		} else if (!password.equals(other.password))
-			return false;
-		if (pvpScore != other.pvpScore)
-			return false;
-		if (registrationDate == null) {
-			if (other.registrationDate != null)
-				return false;
-		} else if (!registrationDate.equals(other.registrationDate))
-			return false;
-		if (role != other.role)
-			return false;
-		if (rolls != other.rolls)
-			return false;
-		if (stardust != other.stardust)
-			return false;
-		if (strings != other.strings)
-			return false;
-		if (username == null) {
-			if (other.username != null)
-				return false;
-		} else if (!username.equals(other.username))
-			return false;
-		return true;
 	}
 
 	public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -351,14 +268,111 @@ public class Gamer implements Serializable, UserDetails {
 	}
 
 	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (accountNonExpired ? 1231 : 1237);
+		result = prime * result + (accountNonLocked ? 1231 : 1237);
+		result = prime * result + ((authorities == null) ? 0 : authorities.hashCode());
+		result = prime * result + ((banDates == null) ? 0 : banDates.hashCode());
+		result = prime * result + collectionSize;
+		result = prime * result + collectionStrength;
+		result = prime * result + (credentialsNonExpired ? 1231 : 1237);
+		result = prime * result + dailyRolls;
+		result = prime * result + (enabled ? 1231 : 1237);
+		result = prime * result + gamerId;
+		result = prime * result + ((lastLogin == null) ? 0 : lastLogin.hashCode());
+		result = prime * result + (loginBonusCollected ? 1231 : 1237);
+		result = prime * result + ((password == null) ? 0 : password.hashCode());
+		result = prime * result + pvpScore;
+		result = prime * result + ((registrationDate == null) ? 0 : registrationDate.hashCode());
+		result = prime * result + ((role == null) ? 0 : role.hashCode());
+		result = prime * result + rolls;
+		result = prime * result + stardust;
+		result = prime * result + strings;
+		result = prime * result + ((username == null) ? 0 : username.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Gamer other = (Gamer) obj;
+		if (accountNonExpired != other.accountNonExpired)
+			return false;
+		if (accountNonLocked != other.accountNonLocked)
+			return false;
+		if (authorities == null) {
+			if (other.authorities != null)
+				return false;
+		} else if (!authorities.equals(other.authorities))
+			return false;
+		if (banDates == null) {
+			if (other.banDates != null)
+				return false;
+		} else if (!banDates.equals(other.banDates))
+			return false;
+		if (collectionSize != other.collectionSize)
+			return false;
+		if (collectionStrength != other.collectionStrength)
+			return false;
+		if (credentialsNonExpired != other.credentialsNonExpired)
+			return false;
+		if (dailyRolls != other.dailyRolls)
+			return false;
+		if (enabled != other.enabled)
+			return false;
+		if (gamerId != other.gamerId)
+			return false;
+		if (lastLogin == null) {
+			if (other.lastLogin != null)
+				return false;
+		} else if (!lastLogin.equals(other.lastLogin))
+			return false;
+		if (loginBonusCollected != other.loginBonusCollected)
+			return false;
+		if (password == null) {
+			if (other.password != null)
+				return false;
+		} else if (!password.equals(other.password))
+			return false;
+		if (pvpScore != other.pvpScore)
+			return false;
+		if (registrationDate == null) {
+			if (other.registrationDate != null)
+				return false;
+		} else if (!registrationDate.equals(other.registrationDate))
+			return false;
+		if (role != other.role)
+			return false;
+		if (rolls != other.rolls)
+			return false;
+		if (stardust != other.stardust)
+			return false;
+		if (strings != other.strings)
+			return false;
+		if (username == null) {
+			if (other.username != null)
+				return false;
+		} else if (!username.equals(other.username))
+			return false;
+		return true;
+	}
+
+	@Override
 	public String toString() {
 		return "Gamer [gamerId=" + gamerId + ", username=" + username + ", password=" + password + ", role=" + role
 				+ ", authorities=" + authorities + ", rolls=" + rolls + ", dailyRolls=" + dailyRolls + ", stardust="
-				+ stardust + ", strings=" + strings + ", collectionSize=" + collectionSize + ", collectionStrength="
-				+ collectionStrength + ", pvpScore=" + pvpScore + ", registrationDate=" + registrationDate
-				+ ", lastLogin=" + lastLogin + ", banDates=" + banDates + ", enabled=" + enabled + ", accountNonLocked="
-				+ accountNonLocked + ", credentialsNonExpired=" + credentialsNonExpired + ", accountNonExpired="
-				+ accountNonExpired + "]";
+				+ stardust + ", strings=" + strings + ", loginBonusCollected=" + loginBonusCollected
+				+ ", collectionSize=" + collectionSize + ", collectionStrength=" + collectionStrength + ", pvpScore="
+				+ pvpScore + ", registrationDate=" + registrationDate + ", lastLogin=" + lastLogin + ", banDates="
+				+ banDates + ", enabled=" + enabled + ", accountNonLocked=" + accountNonLocked
+				+ ", credentialsNonExpired=" + credentialsNonExpired + ", accountNonExpired=" + accountNonExpired + "]";
 	}
 
 }

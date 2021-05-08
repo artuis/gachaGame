@@ -23,6 +23,7 @@ import reactor.core.publisher.Mono;
 
 @Service
 public class GamerServiceImpl implements GamerService {
+	public static int bonusStrings = 1000;	// login bonus strings, global variable
 	@Autowired
 	private GamerRepository gamerRepo;
 	
@@ -104,6 +105,10 @@ public class GamerServiceImpl implements GamerService {
 				.doOnSuccess(gamer -> {
 					if (gamer != null) {
 						gamer.setLastLogin(Date.from(Instant.now()));
+						if(!gamer.isLoginBonusCollected()) {
+							gamer.setStrings(gamer.getStrings()+bonusStrings);
+							gamer.setLoginBonusCollected(true);
+						}
 						gamerRepo.save(gamer);
 					} 
 				})

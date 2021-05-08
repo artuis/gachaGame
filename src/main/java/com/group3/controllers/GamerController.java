@@ -1,12 +1,9 @@
 package com.group3.controllers;
 
-import java.time.Duration;
-
 import org.reactivestreams.Publisher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.web.servlet.server.Session.Cookie;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -23,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.reactive.function.server.ServerResponse;
 import org.springframework.web.server.ServerWebExchange;
 
+import com.group3.beans.Collectible;
 import com.group3.beans.CollectibleType;
 import com.group3.beans.Gamer;
 import com.group3.services.CollectibleTypeService;
@@ -39,7 +37,7 @@ public class GamerController {
 	@Autowired
 	private GamerService gamerService;
 	@Autowired
-	private CollectibleTypeService collectibleService;
+	private CollectibleTypeService collectibleTypeService;
 	
 	private Logger log = LoggerFactory.getLogger(GamerController.class);
 
@@ -100,11 +98,19 @@ public class GamerController {
 	@PutMapping("/collectibles/roll")
 	public Mono<CollectibleType> rollNewCollectible(ServerWebExchange exchange) {
 		String token = exchange.getRequest().getCookies().getFirst("token").getValue();
-		return gamerService.getGamer((int) jwtUtil.getAllClaimsFromToken(token).get("id"))
+		Mono<CollectibleType> rollReturn = gamerService.getGamer((int) jwtUtil.getAllClaimsFromToken(token).get("id"))
 				.flatMap(gamer -> {
 					log.debug(""+gamer.getStardust());
 					
-					return collectibleService.rollCollectibleType();
+					return collectibleTypeService.rollCollectibleType();
 				});
+		rollReturn.map(collectibleArchetype -> {
+			Collectible addCollectible = new Collectible();
+			
+		})
 	}
+	
+	@PreAuthorize("hasAuthority('GAMER')")
+	@PutMapping("/collectibles")
+	public Publisher<Collectible>
 }
