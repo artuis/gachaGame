@@ -41,7 +41,7 @@ To-do list:
 
 ## Getting Started
    
-git clone https://github.com/artuis/gachaGame
+git clone https://github.com/artuis/gachaGame  
 (include all environment setup steps)
 
 > Be sure to include BOTH Windows and Unix command  
@@ -56,10 +56,10 @@ git clone https://github.com/artuis/gachaGame
 
 ## Contributors
 
-Thomas An
-Stephanie Tallman
-Antoine Touma
-Austin Withers
+Thomas An  
+Stephanie Tallman  
+Antoine Touma  
+Austin Withers  
 Benjamin Wood
 
 ## License
