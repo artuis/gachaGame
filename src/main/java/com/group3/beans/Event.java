@@ -12,6 +12,15 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 @Table("events")
 public class Event {
 	
+	public enum Type {
+		DOUBLESTRINGS, ROLLMOD;
+	}
+	
+	@Column
+	@PrimaryKey
+	@JsonInclude(Include.NON_NULL)
+	private Type eventType;
+	
 	@Column
 	@JsonInclude(Include.NON_NULL)
 	private boolean isOngoing;
@@ -21,12 +30,19 @@ public class Event {
 	private Date eventStart;
 	
 	@Column
-	@PrimaryKey
 	@JsonInclude(Include.NON_NULL)
 	private Date eventEnd;
 
 	public Event() {
 		// TODO Auto-generated constructor stub
+	}
+
+	public Type getEventType() {
+		return eventType;
+	}
+
+	public void setEventType(Type eventType) {
+		this.eventType = eventType;
 	}
 
 	public boolean isOngoing() {
@@ -59,6 +75,7 @@ public class Event {
 		int result = 1;
 		result = prime * result + ((eventEnd == null) ? 0 : eventEnd.hashCode());
 		result = prime * result + ((eventStart == null) ? 0 : eventStart.hashCode());
+		result = prime * result + ((eventType == null) ? 0 : eventType.hashCode());
 		result = prime * result + (isOngoing ? 1231 : 1237);
 		return result;
 	}
@@ -82,6 +99,8 @@ public class Event {
 				return false;
 		} else if (!eventStart.equals(other.eventStart))
 			return false;
+		if (eventType != other.eventType)
+			return false;
 		if (isOngoing != other.isOngoing)
 			return false;
 		return true;
@@ -89,8 +108,8 @@ public class Event {
 
 	@Override
 	public String toString() {
-		return "Event [isOngoing=" + isOngoing + ", eventStart=" + eventStart + ", eventEnd=" + eventEnd + "]";
+		return "Event [eventType=" + eventType + ", isOngoing=" + isOngoing + ", eventStart=" + eventStart
+				+ ", eventEnd=" + eventEnd + "]";
 	}
 
-	
 }
