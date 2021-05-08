@@ -23,8 +23,10 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.reactive.function.server.ServerResponse;
 import org.springframework.web.server.ServerWebExchange;
 
+import com.group3.beans.Collectible;
 import com.group3.beans.CollectibleType;
 import com.group3.beans.Gamer;
+import com.group3.services.CollectibleService;
 import com.group3.services.CollectibleTypeService;
 import com.group3.services.GamerService;
 import com.group3.util.JWTUtil;
@@ -35,11 +37,15 @@ import reactor.core.publisher.Mono;
 @RequestMapping(value = "/gamers")
 public class GamerController {
 	@Autowired
+	private Gamer emptyGamer;
+	@Autowired
 	private JWTUtil jwtUtil;
 	@Autowired
 	private GamerService gamerService;
 	@Autowired
-	private CollectibleTypeService collectibleService;
+	private CollectibleTypeService collectibleTypeService;
+	@Autowired
+	private CollectibleService collectibleService;
 	
 	private Logger log = LoggerFactory.getLogger(GamerController.class);
 
@@ -50,8 +56,13 @@ public class GamerController {
 	}
 
 	@GetMapping("{name}")
-	public Mono<UserDetails> getGamerByUsername(@PathVariable("name") String name) {
-		return gamerService.findByUsername(name);
+	public Mono<ResponseEntity<?>> getGamerByUsername(@PathVariable("name") String name) {
+		return gamerService.findGamerByUsername(name).defaultIfEmpty(emptyGamer).map(gamer -> {
+			if (gamer.getUsername() != null) {
+				return ResponseEntity.ok(gamer);
+			}
+			return ResponseEntity.notFound().build();
+		});
 	}
 
 	@PutMapping("/register")
@@ -61,20 +72,15 @@ public class GamerController {
 
 	@PostMapping("/login")
 	public Mono<ResponseEntity<?>> login(@RequestBody Gamer gg, ServerWebExchange exchange) {
-		 return gamerService.findByUsername(gg.getUsername())
-			.defaultIfEmpty(new Gamer())
-			.map(gamer -> {
-				if (gamer.getUsername() == null) {
-					return ResponseEntity.notFound().build();
-				} else {
-					exchange.getResponse()
-							.addCookie(ResponseCookie
-								.from("token", jwtUtil
-								.generateToken((Gamer) gamer))
-								.httpOnly(true).build());
-					return ResponseEntity.ok(gamer); //👌
-				}
-			});
+		return gamerService.findByUsername(gg.getUsername()).defaultIfEmpty(emptyGamer).map(gamer -> {
+			if (gamer.getUsername() == null) {
+				return ResponseEntity.notFound().build();
+			} else {
+				exchange.getResponse().addCookie(
+						ResponseCookie.from("token", jwtUtil.generateToken((Gamer) gamer)).httpOnly(true).build());
+				return ResponseEntity.ok(gamer); // 👌
+			}
+		});
 	}
 
 	@DeleteMapping("/logout")
@@ -86,13 +92,20 @@ public class GamerController {
 
 	@PreAuthorize("hasAuthority('MODERATOR')")
 	@PutMapping("{gamerId}")
-	public Publisher<Gamer> updateGamer(@PathVariable("gamerId") int gamerId, @RequestBody Gamer gg) {
-		return gamerService.updateGamer(gg);
+	public Mono<ResponseEntity<Gamer>> updateGamer(@PathVariable("gamerId") int gamerId, @RequestBody Gamer gg) {
+		return gamerService.updateGamer(gg).defaultIfEmpty(emptyGamer).map(gamer -> {
+			if (gamer.getUsername() == null) {
+				return ResponseEntity.notFound().build();
+			} else {
+				return ResponseEntity.ok(gamer);
+			}
+		});
 	}
 
 	@PreAuthorize("hasAuthority('MODERATOR')")
 	@PostMapping("{gamerId}")
-	public Publisher<Gamer> banGamer(@PathVariable("gamerId") int gamerId, @RequestParam("daysBanned") long daysBanned) {
+	public Publisher<Gamer> banGamer(@PathVariable("gamerId") int gamerId,
+			@RequestParam("daysBanned") long daysBanned) {
 		return gamerService.banGamer(gamerId, daysBanned);
 	}
 
@@ -100,11 +113,21 @@ public class GamerController {
 	@PutMapping("/collectibles/roll")
 	public Mono<CollectibleType> rollNewCollectible(ServerWebExchange exchange) {
 		String token = exchange.getRequest().getCookies().getFirst("token").getValue();
-		return gamerService.getGamer((int) jwtUtil.getAllClaimsFromToken(token).get("id"))
-				.flatMap(gamer -> {
-					log.debug(""+gamer.getStardust());
-					
-					return collectibleService.rollCollectibleType();
-				});
+		return gamerService.getGamer((int) jwtUtil.getAllClaimsFromToken(token).get("id")).flatMap(gamer -> {
+			log.debug("" + gamer.getStardust());
+			log.debug("" + gamer.getStrings());
+			log.debug("" + gamer.getDailyRolls());
+			if (gamer.getDailyRolls() > 0) {
+				gamer.setDailyRolls(gamer.getDailyRolls() - 1);
+			} else if (gamer.getStrings() >= 1000) {
+				gamer.setStrings(gamer.getStrings() - 1);
+			} else if (gamer.getStardust() >= 100) {
+				gamer.setStardust(gamer.getStardust() - 100);
+			}
+			return collectibleTypeService.rollCollectibleType().map(rolled -> {
+				Collectible collectible = new Collectible();
+				return rolled;
+			})
+		});
 	}
 }

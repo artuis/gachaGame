@@ -12,6 +12,7 @@ import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -63,7 +64,13 @@ public class GamerServiceImpl implements GamerService {
 
 	@Override
 	public Mono<Gamer> updateGamer(Gamer gg) {
-		return gamerRepo.save(gg);
+		return gamerRepo.existsById(gg.getGamerId()).flatMap(exists -> {
+			if (exists) {
+				return gamerRepo.save(gg);
+			} else {
+				return Mono.empty();
+			}
+		});
 	}
 
 	@Override
@@ -76,7 +83,7 @@ public class GamerServiceImpl implements GamerService {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+	
 	@Override
 //	@Moderator	// only moderators can perform this action
 	public Mono<Gamer> banGamer(int gamerId, long daysBanned) {
@@ -97,7 +104,8 @@ public class GamerServiceImpl implements GamerService {
 		});
 		return gamer;															// return Mono<Gamer> to controller
 	}
-
+	
+	//Only use this method for logging in, use findGamerByUsername if you need to query by username
 	@Override
 	public Mono<UserDetails> findByUsername(String username) {
 		return gamerRepo.findByUsername(username)
@@ -109,7 +117,8 @@ public class GamerServiceImpl implements GamerService {
 				})
 				.map(gamer -> gamer);
 	}
-
+	
+	
 	@Override
 	public Mono<Gamer> findGamerByUsername(String username) {
 		// TODO Auto-generated method stub

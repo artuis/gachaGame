@@ -11,11 +11,13 @@ import org.springframework.data.cassandra.core.mapping.PrimaryKey;
 import org.springframework.data.cassandra.core.mapping.Table;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 @Table("gamers")
+@Component
 public class Gamer implements Serializable, UserDetails {
 	private static final long serialVersionUID = 4447548260627752098L;
 
@@ -32,60 +34,60 @@ public class Gamer implements Serializable, UserDetails {
 	@PrimaryKey
 	private int gamerId;
 	@Column
-	@JsonInclude(Include.NON_NULL)
+	@JsonInclude(Include.NON_ABSENT)
 	private String username;
 	@Column
-	@JsonInclude(Include.NON_NULL)
+	@JsonInclude(Include.NON_ABSENT)
 	private String password;
 	@Column
-	@JsonInclude(Include.NON_NULL)
+	@JsonInclude(Include.NON_ABSENT)
 	private Role role;
 	@Column
-	@JsonInclude(Include.NON_NULL)
+	@JsonInclude(Include.NON_ABSENT)
 	private List<Role> authorities;
 	@Column
-	@JsonInclude(Include.NON_NULL)
+	@JsonInclude(Include.NON_ABSENT)
 	private int rolls;
 	@Column
-	@JsonInclude(Include.NON_NULL)
+	@JsonInclude(Include.NON_ABSENT)
 	private int dailyRolls;
 	// daily free rolls, gets reset to 10 for every user on new day
 
 	@Column
-	@JsonInclude(Include.NON_NULL)
+	@JsonInclude(Include.NON_ABSENT)
 	private int stardust;
 	@Column
-	@JsonInclude(Include.NON_NULL)
+	@JsonInclude(Include.NON_ABSENT)
 	private int strings;
 	@Column
-	@JsonInclude(Include.NON_NULL)
+	@JsonInclude(Include.NON_ABSENT)
 	private int collectionSize;
 	@Column
-	@JsonInclude(Include.NON_NULL)
+	@JsonInclude(Include.NON_ABSENT)
 	private int collectionStrength;
 	@Column
-	@JsonInclude(Include.NON_NULL)
+	@JsonInclude(Include.NON_ABSENT)
 	private int pvpScore;
 	@Column
-	@JsonInclude(Include.NON_NULL)
+	@JsonInclude(Include.NON_ABSENT)
 	private Date registrationDate;
 	@Column
-	@JsonInclude(Include.NON_NULL)
+	@JsonInclude(Include.NON_ABSENT)
 	private Date lastLogin;
 	@Column
-	@JsonInclude(Include.NON_NULL)
+	@JsonInclude(Include.NON_ABSENT)
 	private Set<Date> banDates;
 	@Column
-	@JsonInclude(Include.NON_NULL)
+	@JsonInclude(Include.NON_ABSENT)
 	private boolean enabled;
 	@Column
-	@JsonInclude(Include.NON_NULL)
+	@JsonInclude(Include.NON_ABSENT)
 	private boolean accountNonLocked;
 	@Column
-	@JsonInclude(Include.NON_NULL)
+	@JsonInclude(Include.NON_ABSENT)
 	private boolean credentialsNonExpired;
 	@Column
-	@JsonInclude(Include.NON_NULL)
+	@JsonInclude(Include.NON_ABSENT)
 	private boolean accountNonExpired;
 
 	public Role getRole() {

@@ -58,4 +58,12 @@ public class Collectible implements Serializable{
 	public void setTypeId(int typeId) {
 		this.typeId = typeId;
 	}
+	
+	public static Collectible fromCollectibleTypeAndId(CollectibleType ct, int gamerId) {
+		Collectible c = new Collectible();
+		c.setGamerId(gamerId);
+		c.setCurrentStat(ct.getBaseStat());
+		c.setTypeId(ct.getId());
+		return c;
+	}
 }
