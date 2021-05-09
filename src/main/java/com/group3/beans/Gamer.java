@@ -12,11 +12,13 @@ import org.springframework.data.cassandra.core.mapping.PrimaryKey;
 import org.springframework.data.cassandra.core.mapping.Table;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 @Table("gamers")
+@Component
 public class Gamer implements Serializable, UserDetails {
 	private static final long serialVersionUID = 4447548260627752098L;
 
@@ -33,60 +35,60 @@ public class Gamer implements Serializable, UserDetails {
 	@PrimaryKey
 	private UUID gamerId;
 	@Column
-	@JsonInclude(Include.NON_NULL)
+	@JsonInclude(Include.NON_ABSENT)
 	private String username;
 	@Column
-	@JsonInclude(Include.NON_NULL)
+	@JsonInclude(Include.NON_ABSENT)
 	private String password;
 	@Column
-	@JsonInclude(Include.NON_NULL)
+	@JsonInclude(Include.NON_ABSENT)
 	private Role role;
 	@Column
-	@JsonInclude(Include.NON_NULL)
+	@JsonInclude(Include.NON_ABSENT)
 	private List<Role> authorities;
 	@Column
-	@JsonInclude(Include.NON_NULL)
+	@JsonInclude(Include.NON_ABSENT)
 	private int rolls;
 	@Column
-	@JsonInclude(Include.NON_NULL)
+	@JsonInclude(Include.NON_ABSENT)
 	private int dailyRolls;
 	// daily free rolls, gets reset to 10 for every user on new day
 
 	@Column
-	@JsonInclude(Include.NON_NULL)
+	@JsonInclude(Include.NON_ABSENT)
 	private int stardust;
 	@Column
-	@JsonInclude(Include.NON_NULL)
+	@JsonInclude(Include.NON_ABSENT)
 	private int strings;
 	@Column
-	@JsonInclude(Include.NON_NULL)
+	@JsonInclude(Include.NON_ABSENT)
 	private int collectionSize;
 	@Column
-	@JsonInclude(Include.NON_NULL)
+	@JsonInclude(Include.NON_ABSENT)
 	private int collectionStrength;
 	@Column
-	@JsonInclude(Include.NON_NULL)
+	@JsonInclude(Include.NON_ABSENT)
 	private int pvpScore;
 	@Column
-	@JsonInclude(Include.NON_NULL)
+	@JsonInclude(Include.NON_ABSENT)
 	private Date registrationDate;
 	@Column
-	@JsonInclude(Include.NON_NULL)
+	@JsonInclude(Include.NON_ABSENT)
 	private Date lastLogin;
 	@Column
-	@JsonInclude(Include.NON_NULL)
+	@JsonInclude(Include.NON_ABSENT)
 	private Set<Date> banDates;
 	@Column
-	@JsonInclude(Include.NON_NULL)
+	@JsonInclude(Include.NON_ABSENT)
 	private boolean enabled;
 	@Column
-	@JsonInclude(Include.NON_NULL)
+	@JsonInclude(Include.NON_ABSENT)
 	private boolean accountNonLocked;
 	@Column
-	@JsonInclude(Include.NON_NULL)
+	@JsonInclude(Include.NON_ABSENT)
 	private boolean credentialsNonExpired;
 	@Column
-	@JsonInclude(Include.NON_NULL)
+	@JsonInclude(Include.NON_ABSENT)
 	private boolean accountNonExpired;
 
 	public Role getRole() {
@@ -101,11 +103,11 @@ public class Gamer implements Serializable, UserDetails {
 		super();
 	}
 
-	public int getGamerId() {
+	public UUID getGamerId() {
 		return gamerId;
 	}
 
-	public void setGamerId(int gamerId) {
+	public void setGamerId(UUID gamerId) {
 		this.gamerId = gamerId;
 	}
 
@@ -218,7 +220,7 @@ public class Gamer implements Serializable, UserDetails {
 		result = prime * result + (credentialsNonExpired ? 1231 : 1237);
 		result = prime * result + dailyRolls;
 		result = prime * result + (enabled ? 1231 : 1237);
-		result = prime * result + gamerId;
+		result = prime * result + ((gamerId == null) ? 0 : gamerId.hashCode());
 		result = prime * result + ((lastLogin == null) ? 0 : lastLogin.hashCode());
 		result = prime * result + ((password == null) ? 0 : password.hashCode());
 		result = prime * result + pvpScore;
@@ -264,7 +266,10 @@ public class Gamer implements Serializable, UserDetails {
 			return false;
 		if (enabled != other.enabled)
 			return false;
-		if (gamerId != other.gamerId)
+		if (gamerId == null) {
+			if (other.gamerId != null)
+				return false;
+		} else if (!gamerId.equals(other.gamerId))
 			return false;
 		if (lastLogin == null) {
 			if (other.lastLogin != null)
@@ -299,11 +304,8 @@ public class Gamer implements Serializable, UserDetails {
 		return true;
 	}
 
+	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return this.authorities;
-	}
-
-	public List<Role> getAuthoritiesList() {
 		return this.authorities;
 	}
 
