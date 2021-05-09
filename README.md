@@ -36,8 +36,7 @@ List of features ready and TODOs for future development
 * Awesome feature 3
 
 To-do list:
-* Wow improvement to be done 1
-* Wow improvement to be done 2
+* Monetization :slightly_smiling_face:
 
 ## Getting Started
    
