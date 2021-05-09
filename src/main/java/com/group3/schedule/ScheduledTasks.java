@@ -13,6 +13,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import com.group3.beans.Gamer;
+import com.group3.data.EventRepository;
 import com.group3.data.GamerRepository;
 
 @Component
@@ -21,6 +22,8 @@ public class ScheduledTasks implements CommandLineRunner {
 	private Logger log = LoggerFactory.getLogger(ScheduledTasks.class);
 	@Autowired
 	private GamerRepository gamerRepo;
+	@Autowired
+	private EventRepository eventRepo;
 	// ScheduledTasks will begin a thread and run after the Driver finishes initialization
 	@Override
 	public void run(String... args) throws Exception {
@@ -37,7 +40,7 @@ public class ScheduledTasks implements CommandLineRunner {
 		.flatMap(gamers -> {							// get list of all gamers,
 			for(Gamer gg : gamers) {					// for each gamer in list
 				gg.setDailyRolls(10);					// set daily rolls to 10
-				gamerRepo.save(gg);						// save updated gamer
+				gamerRepo.save(gg).subscribe();						// save updated gamer
 			}
 			return null;								// no return needed for void
 		});
@@ -62,7 +65,7 @@ public class ScheduledTasks implements CommandLineRunner {
 					gg.setRole(Gamer.Role.GAMER);		// set the gamer role to Gamer
 					log.debug("User ban is lifted: "
 					+gg.getUsername());
-					gamerRepo.save(gg);					// save the updated Gamer info
+					gamerRepo.save(gg).subscribe();					// save the updated Gamer info
 				}
 			}
 			return null;								// no return needed for void
@@ -76,10 +79,21 @@ public class ScheduledTasks implements CommandLineRunner {
 		.flatMap(gamers -> {							// map them
 			for(Gamer gg : gamers) {					// for every gamer in the list
 				gg.setLoginBonusCollected(false);		// reset their login bonus flag
-				gamerRepo.save(gg);						// save the change
+				gamerRepo.save(gg).subscribe();						// save the change
 			}
 			return null;								// no return needed for void
 		});
+	}
+	
+	@Scheduled(cron="0 0 * * * *")
+	public void checkEventTrigger() {
+		log.debug("Checking event repository for active events :) ");
+		eventRepo.findAll().collectList()
+		.flatMap(events -> {
+			for(Event event : events) {
+				
+			}
+		})
 	}
 
 }

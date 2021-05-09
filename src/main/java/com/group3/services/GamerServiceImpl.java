@@ -53,7 +53,7 @@ public class GamerServiceImpl implements GamerService {
 				} else {gg.setRole(Gamer.Role.GAMER);}
 				perms.add(Gamer.Role.GAMER);
 				gg.setAuthorities(perms);
-				
+				gg.setLoginBonusCollected(false);
 				if(gg.getRolls() == 0) {gg.setRolls(10);}
 				if(gg.getDailyRolls() == 0) {gg.setDailyRolls(10);}
 				if(gg.getStardust() == 0) {gg.setStardust(10);}
