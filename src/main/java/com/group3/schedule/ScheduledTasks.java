@@ -12,6 +12,7 @@ import org.springframework.core.annotation.Order;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import com.group3.beans.Event;
 import com.group3.beans.Gamer;
 import com.group3.data.EventRepository;
 import com.group3.data.GamerRepository;
@@ -85,15 +86,42 @@ public class ScheduledTasks implements CommandLineRunner {
 		});
 	}
 	
-	@Scheduled(cron="0 0 * * * *")
-	public void checkEventTrigger() {
-		log.debug("Checking event repository for active events :) ");
+	@Scheduled(cron="*/10 * * * * *")
+	public void checkEventStartTrigger() {
+		Date current = Date.from(Instant.now());
 		eventRepo.findAll().collectList()
 		.flatMap(events -> {
 			for(Event event : events) {
-				
+				if(!event.isOngoing && current.after(event.getEventStart())) {
+					event.setOngoing(true);
+					log.debug("Event now live! "+event.getEventType().toString());
+					eventRepo.save(event).subscribe();
+				}
 			}
-		})
+			return null;
+		});
+	}
+	
+	@Scheduled(cron="*/10 * * * * *")
+	public void checkEventEndTrigger() {
+		log.debug("Checking event repository for active events :) ");
+		Date current = Date.from(Instant.now());
+		eventRepo.findAll().collectList()
+		.flatMap(events -> {
+			for(Event event : events) {
+				if(event.isOngoing && current.after(event.getEventEnd())) {
+					event.setOngoing(false);
+					log.debug("Event has ended. "+event.getEventType().toString());
+					eventRepo.save(event).subscribe();
+				}
+			}
+			return null;
+		});
+	}
+	
+	@Scheduled(cron="*/10 * * * * *")
+	public void eventLiveTrigger() {
+		
 	}
 
 }
