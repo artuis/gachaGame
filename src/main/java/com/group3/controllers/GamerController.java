@@ -114,9 +114,14 @@ public class GamerController {
 
 	@PreAuthorize("hasAuthority('MODERATOR')")
 	@PostMapping("{gamerId}")
-	public Publisher<Gamer> banGamer(@PathVariable("gamerId") UUID gamerId,
+	public Mono<ResponseEntity<Gamer>> banGamer(@PathVariable("gamerId") UUID gamerId,
 			@RequestParam("daysBanned") long daysBanned) {
-		return gamerService.banGamer(gamerId, daysBanned);
+		return gamerService.banGamer(gamerId, daysBanned).defaultIfEmpty(emptyGamer).map(gamer -> {
+			if (gamer.getGamerId() == null) {
+				return ResponseEntity.notFound().build();
+			}
+			return ResponseEntity.ok(gamer);
+		});
 	}
 
 	@PreAuthorize("hasAuthority('GAMER')")

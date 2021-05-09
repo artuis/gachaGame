@@ -61,23 +61,23 @@ Once the API is running, the following routes will be available to use
 
 PUT request that takes in a username and generates a [Gamer](src/main/java/com/group3/beans/Gamer.java), defaulting with a random ID, 10 Stardust, and 1000 Strings.
 
-Returns 409 error if username is in use
+Returns 409 error if username is in use.
 
 ```/login```
 
-POST request which logs user in, and is now authenticated to access other routes
+POST request which logs user in, and is now authenticated to access other routes.
 
-Returns 404 if username is not found
+Returns 404 if username is not found.
 
 ```/logout```
 
-DELETE request that signs out user
+DELETE request that signs out user.
 
 ```/gamer/{username}```
 
-GET request to get information about a specific gamer
+GET request to get information about a specific gamer.
 
-### ROUTES AVAILABE TO VERIFIED ACTUAL GAMERS
+### ROUTES AVAILABLE TO VERIFIED ACTUAL GAMERS
 
 ```/gamers/collectibles/roll```
 
@@ -89,19 +89,19 @@ Will take in descending order depending on what resources are available.
 
 ```/gamers```
 
-GET request will retrieve data on all available gamers
+GET request will retrieve data on all available gamers.
 
-PUT request will update any attribute of a gamer including roles. Please include all fields show in [Gamer](src/main/java/com/group3/beans/Gamer.java)
+PUT request will update any attribute of a gamer, including roles. Please include all fields shown in [Gamer](src/main/java/com/group3/beans/Gamer.java)
 
 ```/gamers/{gamerId}```
 
-POST request will ban a gamer for a specified amount of days depending on form input for ```daysBanned```
+POST request will ban a gamer for a specified amount of days depending on form input for ```daysBanned```.
 
 ```/collectibletypes```
 
 POST request will create a new [CollectibleType](src/main/java/com/group3/beans/CollectibleType.java).
 
-PUT request will update an existing CollectibleType. (As with PUT route for ```/gamer``` above, not including all fields will overwrite them with default values)
+PUT request will update an existing CollectibleType. (As with PUT route for ```/gamer``` above, not including all fields will overwrite them with default values).
 
 ## Contributors
 

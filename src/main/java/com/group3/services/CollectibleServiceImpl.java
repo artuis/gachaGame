@@ -18,6 +18,9 @@ import reactor.core.publisher.Mono;
 public class CollectibleServiceImpl implements CollectibleService {
 
 	private Logger log = LoggerFactory.getLogger(CollectibleServiceImpl.class);
+	
+	@Autowired
+	private Collectible emptyCollectible;
 
 	@Autowired
 	private CollectibleRepository repo;
@@ -45,12 +48,12 @@ public class CollectibleServiceImpl implements CollectibleService {
 	public Mono<Collectible> createCollectible(Collectible c) {
 		log.debug("creating collectible");
 		return repo.findByGamerId(c.getGamerId())
-				.switchIfEmpty(repo.insert(c)
-				.doOnSuccess(collected -> log.debug("collected")))
+				.defaultIfEmpty(emptyCollectible)
 				.collectList()
 				.flatMap(owned -> {
-					log.debug("looks like owned stuff was found");
 					if (owned.stream().anyMatch(collectible -> collectible.getTypeId() == c.getTypeId())) {
+						log.debug("looks like owned stuff was found");
+						log.debug(owned.toString());
 						return Mono.empty();
 					}
 					return repo.insert(c);
