@@ -101,7 +101,7 @@ public class GamerServiceImpl implements GamerService {
 				banDates = gg.getBanDates();									// if the set exists, load it
 			}
 			Date banLiftDate = Date.from(Instant.now()							// calculate date of ban lift from now +
-					.plus(daysBanned, ChronoUnit.MINUTES));						// how many days the gamer is banned
+					.plus(daysBanned, ChronoUnit.DAYS));						// how many days the gamer is banned
 			banDates.add(banLiftDate);											// add passed date to set
 			gg.setBanDates(banDates);											// assign ban date set to gamer												
 			return gamerRepo.save(gg);											// save updated gamer in repo

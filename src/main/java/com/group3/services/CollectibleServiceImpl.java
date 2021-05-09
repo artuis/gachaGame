@@ -78,8 +78,7 @@ public class CollectibleServiceImpl implements CollectibleService {
 						}
 						else {
 							gamer.setStrings(gamer.getStrings() - upgradeCost);
-							gamerRepo.save(gamer).subscribe();
-							return gamer;
+							return gamerRepo.save(gamer).subscribe();
 						}
 					}).hasElement() != null) {
 						collectible.setCurrentStat(collectible.getCurrentStat()+1);
