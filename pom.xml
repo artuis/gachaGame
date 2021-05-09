@@ -49,11 +49,10 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-log4j2</artifactId>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-simple</artifactId>
-			<version>1.7.30</version>
 		</dependency>
 
 		<dependency>
@@ -65,8 +64,8 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-aop</artifactId>
 		</dependency>
-		
-		<!--  spring-boot-devtools can be removed in final compile -->
+
+		<!-- spring-boot-devtools can be removed in final compile -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
@@ -76,7 +75,7 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>
 		</dependency>
-		
+
 		<!-- spring-boot-starter-test can be removed in final compile -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -93,7 +92,7 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-test</artifactId>
@@ -105,33 +104,28 @@
 			<artifactId>awaitility</artifactId>
 			<scope>test</scope>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>io.jsonwebtoken</groupId>
 			<artifactId>jjwt-api</artifactId>
 			<version>0.11.1</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>io.jsonwebtoken</groupId>
 			<artifactId>jjwt-impl</artifactId>
 			<version>0.11.1</version>
 			<scope>runtime</scope>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>io.jsonwebtoken</groupId>
 			<artifactId>jjwt-jackson</artifactId>
 			<version>0.11.1</version>
 			<scope>runtime</scope>
 		</dependency>
-		<!--  maybe use lombok?
-		<dependency>
-        	<groupId>org.projectlombok</groupId>
-   			<artifactId>lombok</artifactId>
-    	    <version>1.18.10</version>
-     	   <scope>provided</scope>
-   		</dependency>
-   		-->
+		<!-- maybe use lombok? <dependency> <groupId>org.projectlombok</groupId> 
+			<artifactId>lombok</artifactId> <version>1.18.10</version> <scope>provided</scope> 
+			</dependency> -->
 	</dependencies>
 </project>

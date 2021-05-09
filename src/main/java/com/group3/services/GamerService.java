@@ -1,5 +1,7 @@
 package com.group3.services;
 
+import java.util.UUID;
+
 import org.springframework.security.core.userdetails.ReactiveUserDetailsService;
 
 import com.group3.beans.Gamer;
@@ -9,7 +11,7 @@ import reactor.core.publisher.Mono;
 
 public interface GamerService extends ReactiveUserDetailsService {
 
-	Mono<Gamer> getGamer(int gamerId);
+	Mono<Gamer> getGamer(UUID gamerId);
 
 	Mono<Gamer> addGamer(Gamer gg);
 
@@ -19,7 +21,7 @@ public interface GamerService extends ReactiveUserDetailsService {
 
 	Flux<Gamer> getGamersByPvpScore();
 
-	Mono<Gamer> banGamer(int gamerId, long daysBanned);
+	Mono<Gamer> banGamer(UUID gamerId, long daysBanned);
 
 	Mono<Gamer> findGamerByUsername(String usernameFromToken);
 
