@@ -9,7 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.group3.beans.Collectible;
+import com.group3.beans.Gamer;
 import com.group3.data.CollectibleRepository;
+import com.group3.data.GamerRepository;
 
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -24,6 +26,9 @@ public class CollectibleServiceImpl implements CollectibleService {
 
 	@Autowired
 	private CollectibleRepository repo;
+	
+	@Autowired
+	private GamerRepository gamerRepo;
 
 	public CollectibleServiceImpl() {
 		super();
@@ -59,5 +64,29 @@ public class CollectibleServiceImpl implements CollectibleService {
 					return repo.insert(c);
 		});
 	}
-
+	
+	@Override
+	public Mono<Collectible> upgradeCollectible(UUID collectibleId) {
+		log.debug("Upgrading collectible");
+		return repo.findById(collectibleId)
+				.map(collectible -> {
+					if(gamerRepo.findById(collectible.getGamerId()).map(gamer -> {
+						int upgradeCost = collectible.getCurrentStat() * 1000;
+						if(gamer.getStrings() < upgradeCost) {
+							log.debug("Insufficient strings; upgrade cost: "+upgradeCost);
+							return Mono.empty();
+						}
+						else {
+							gamer.setStrings(gamer.getStrings() - upgradeCost);
+							gamerRepo.save(gamer).subscribe();
+							return gamer;
+						}
+					}).hasElement() != null) {
+						collectible.setCurrentStat(collectible.getCurrentStat()+1);
+					}
+				repo.save(collectible).subscribe();
+				return collectible;
+		});
+	}
+	
 }

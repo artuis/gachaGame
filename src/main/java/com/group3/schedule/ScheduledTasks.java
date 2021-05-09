@@ -4,6 +4,8 @@ import java.time.Instant;
 import java.util.Date;
 import java.util.Set;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.annotation.Order;
@@ -16,6 +18,7 @@ import com.group3.data.GamerRepository;
 @Component
 @Order(1)
 public class ScheduledTasks implements CommandLineRunner {
+	private Logger log = LoggerFactory.getLogger(ScheduledTasks.class);
 	@Autowired
 	private GamerRepository gamerRepo;
 	// ScheduledTasks will begin a thread and run after the Driver finishes initialization
@@ -29,6 +32,7 @@ public class ScheduledTasks implements CommandLineRunner {
 	
 	@Scheduled(cron="0 0 0 * * *")						// scheduled for 00:00:00 daily
 	public void dailyRollsReset() {
+		log.debug("Resetting daily free rolls");
 		gamerRepo.findAll().collectList()
 		.flatMap(gamers -> {							// get list of all gamers,
 			for(Gamer gg : gamers) {					// for each gamer in list
@@ -41,20 +45,23 @@ public class ScheduledTasks implements CommandLineRunner {
 	
 	@Scheduled(cron="0 * * * * *")						// checks for ban lifts every minute
 	public void dailyBanReset() {
-		Date today = Date.from(Instant.now());			// pull today's date for reference,
+		log.debug("Checking for gamer ban lifts");
+		Date current = Date.from(Instant.now());		// pull today's date for reference,
 		gamerRepo.findAllByRole(Gamer.Role.BANNED)		// get all gamers that are banned
 		.collectList().flatMap(gamers -> {				// collect them to a list, then map the contents;
 			for(Gamer gg : gamers) {					// for each gamer in the list
 				Set<Date> banDates = gg.getBanDates();	// pull their list of 'ban lift dates,'
 				boolean stillBanned = false;			// set a flag for the user still being banned,
 				for(Date date : banDates) {				// check every date in the gamer's list of ban lift dates,
-					if(date.after(today)) {				// if a ban date is found that falls after today
+					if(date.after(current)) {				// if a ban date is found that falls after today
 						stillBanned = true;				// the user is still banned							
 						break;							// stop checking
 					}
 				}
 				if(!stillBanned) {						// if the gamer is not still banned
 					gg.setRole(Gamer.Role.GAMER);		// set the gamer role to Gamer
+					log.debug("User ban is lifted: "
+					+gg.getUsername());
 					gamerRepo.save(gg);					// save the updated Gamer info
 				}
 			}
@@ -62,8 +69,9 @@ public class ScheduledTasks implements CommandLineRunner {
 		});
 	}
 	
-	@Scheduled(cron="0 0 0 * * *")
-	public void dailyLoginBonusReset() {				// every day at server midnight
+	@Scheduled(cron="0 0 0 * * *")						// every day at server midnight
+	public void dailyLoginBonusReset() {				
+		log.debug("Resetting daily login bonuses");
 		gamerRepo.findAll().collectList()				// collect all gamers to a list
 		.flatMap(gamers -> {							// map them
 			for(Gamer gg : gamers) {					// for every gamer in the list

@@ -1,5 +1,7 @@
 package com.group3.services;
 
+import java.util.UUID;
+
 import org.reactivestreams.Publisher;
 
 import com.group3.beans.Collectible;
@@ -16,5 +18,7 @@ public interface CollectibleService {
 	Publisher<Collectible> updateCollectible(Collectible c);
 
 	Mono<Collectible> createCollectible(Collectible c);
+	
+	Mono<Collectible> upgradeCollectible(UUID collectibleId);
 
 }
