@@ -3,13 +3,16 @@ package com.group3.services;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import com.datastax.oss.driver.api.core.uuid.Uuids;
 import com.group3.beans.Event;
 import com.group3.data.EventRepository;
 
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+@Service
 public class EventServiceImpl implements EventService {
 
 	@Autowired
@@ -31,13 +34,10 @@ public class EventServiceImpl implements EventService {
 			log.trace("invalid event start/end times");
 			return Mono.empty();
 		}
-		//TODO
-		return eventRepo.insert(event, event.getEventType())
-				.defaultIfEmpty(new Event()).flatMap(event -> {
-			if(event == null) {
-				event.
-			}
-		});
+		if(event != null) {
+			event.setEventId(Uuids.timeBased());
+		}
+		return eventRepo.insert(event);
 	}
 
 	@Override

@@ -1,13 +1,12 @@
 package com.group3.beans;
 
 import java.util.Date;
+import java.util.UUID;
 
 import org.springframework.data.cassandra.core.mapping.Column;
 import org.springframework.data.cassandra.core.mapping.PrimaryKey;
 import org.springframework.data.cassandra.core.mapping.Table;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 @Table("events")
 public class Event {
@@ -17,27 +16,30 @@ public class Event {
 	}
 	@Column
 	@PrimaryKey
-	private UUID 
-	
+	private UUID eventId;
 	
 	@Column
-	@JsonInclude(Include.NON_NULL)
 	private Type eventType;
 	
 	@Column
-	@JsonInclude(Include.NON_NULL)
 	private boolean isOngoing;
 	
 	@Column
-	@JsonInclude(Include.NON_NULL)
 	private Date eventStart;
 	
 	@Column
-	@JsonInclude(Include.NON_NULL)
 	private Date eventEnd;
 
 	public Event() {
 		// TODO Auto-generated constructor stub
+	}
+
+	public UUID getEventId() {
+		return eventId;
+	}
+
+	public void setEventId(UUID eventId) {
+		this.eventId = eventId;
 	}
 
 	public Type getEventType() {
@@ -77,6 +79,7 @@ public class Event {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((eventEnd == null) ? 0 : eventEnd.hashCode());
+		result = prime * result + ((eventId == null) ? 0 : eventId.hashCode());
 		result = prime * result + ((eventStart == null) ? 0 : eventStart.hashCode());
 		result = prime * result + ((eventType == null) ? 0 : eventType.hashCode());
 		result = prime * result + (isOngoing ? 1231 : 1237);
@@ -97,6 +100,11 @@ public class Event {
 				return false;
 		} else if (!eventEnd.equals(other.eventEnd))
 			return false;
+		if (eventId == null) {
+			if (other.eventId != null)
+				return false;
+		} else if (!eventId.equals(other.eventId))
+			return false;
 		if (eventStart == null) {
 			if (other.eventStart != null)
 				return false;
@@ -111,8 +119,8 @@ public class Event {
 
 	@Override
 	public String toString() {
-		return "Event [eventType=" + eventType + ", isOngoing=" + isOngoing + ", eventStart=" + eventStart
-				+ ", eventEnd=" + eventEnd + "]";
+		return "Event [eventId=" + eventId + ", eventType=" + eventType + ", isOngoing=" + isOngoing + ", eventStart="
+				+ eventStart + ", eventEnd=" + eventEnd + "]";
 	}
 
-}
+	}
