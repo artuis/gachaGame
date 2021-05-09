@@ -65,7 +65,8 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-aop</artifactId>
 		</dependency>
-
+		
+		<!--  spring-boot-devtools can be removed in final compile -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
@@ -75,7 +76,8 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>
 		</dependency>
-
+		
+		<!-- spring-boot-starter-test can be removed in final compile -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
@@ -91,6 +93,7 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
+		
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-test</artifactId>
@@ -122,6 +125,13 @@
 			<version>0.11.1</version>
 			<scope>runtime</scope>
 		</dependency>
-		
+		<!--  maybe use lombok?
+		<dependency>
+        	<groupId>org.projectlombok</groupId>
+   			<artifactId>lombok</artifactId>
+    	    <version>1.18.10</version>
+     	   <scope>provided</scope>
+   		</dependency>
+   		-->
 	</dependencies>
 </project>

@@ -1,11 +1,12 @@
 package com.group3.controllers;
 
-import java.time.Instant;
-import java.util.Date;
+import java.time.Duration;
 
 import org.reactivestreams.Publisher;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+import org.springframework.boot.web.servlet.server.Session.Cookie;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -17,7 +18,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.reactive.function.server.ServerResponse;
 import org.springframework.web.server.ServerWebExchange;
 
 import com.group3.beans.CollectibleType;
@@ -38,56 +41,70 @@ public class GamerController {
 	@Autowired
 	private CollectibleTypeService collectibleService;
 	
-	@PreAuthorize("hasRole('MODERATOR')")
+	private Logger log = LoggerFactory.getLogger(GamerController.class);
+
+	@PreAuthorize("hasAuthority('MODERATOR')")
 	@GetMapping
 	public Publisher<Gamer> getGamers() {
 		return gamerService.getGamers();
 	}
-	
+
 	@GetMapping("{name}")
 	public Mono<UserDetails> getGamerByUsername(@PathVariable("name") String name) {
 		return gamerService.findByUsername(name);
 	}
 
-	@PutMapping
+	@PutMapping("/register")
 	public Publisher<Gamer> registerGamer(@RequestBody Gamer gg) {
-		gg.setRegistrationDate(Date.from(Instant.now()));
 		return gamerService.addGamer(gg);
 	}
-	
+
 	@PostMapping("/login")
 	public Mono<ResponseEntity<?>> login(@RequestBody Gamer gg, ServerWebExchange exchange) {
-		System.out.println(gg.getUsername());
-		return gamerService.findByUsername(gg.getUsername())
-				.map(gamer -> {
-					System.out.println(gamer);
-					if (gamer != null) {
-						exchange.getResponse()
-								.addCookie(ResponseCookie
-									.from("token", jwtUtil
-									.generateToken((Gamer) gamer))
-									.httpOnly(true).build());
-						return ResponseEntity.ok(gamer);
-					} else {
-						return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-					}
-				});
+		 return gamerService.findByUsername(gg.getUsername())
+			.defaultIfEmpty(new Gamer())
+			.map(gamer -> {
+				if (gamer.getUsername() == null) {
+					return ResponseEntity.notFound().build();
+				} else {
+					exchange.getResponse()
+							.addCookie(ResponseCookie
+								.from("token", jwtUtil
+								.generateToken((Gamer) gamer))
+								.httpOnly(true).build());
+					return ResponseEntity.ok(gamer); //👌
+				}
+			});
 	}
 
-	@DeleteMapping
-	public ResponseEntity<Void> logout() {
-		return ResponseEntity.noContent().build();
+	@DeleteMapping("/logout")
+	public Mono<ServerResponse> logout(ServerWebExchange exchange) {
+		ResponseCookie cookie = ResponseCookie.from("token", "").maxAge(0).build();
+		exchange.getResponse().addCookie(cookie);
+		return ServerResponse.noContent().build();
 	}
 
+	@PreAuthorize("hasAuthority('MODERATOR')")
 	@PutMapping("{gamerId}")
 	public Publisher<Gamer> updateGamer(@PathVariable("gamerId") int gamerId, @RequestBody Gamer gg) {
 		return gamerService.updateGamer(gg);
 	}
-	
-	@PreAuthorize("hasRole('GAMER')")
+
+	@PreAuthorize("hasAuthority('MODERATOR')")
+	@PostMapping("{gamerId}")
+	public Publisher<Gamer> banGamer(@PathVariable("gamerId") int gamerId, @RequestParam("daysBanned") long daysBanned) {
+		return gamerService.banGamer(gamerId, daysBanned);
+	}
+
+	@PreAuthorize("hasAuthority('GAMER')")
 	@PutMapping("/collectibles/roll")
-	
-	public Mono<CollectibleType> rollNewCollectible() {
-		return collectibleService.rollCollectibleType();
+	public Mono<CollectibleType> rollNewCollectible(ServerWebExchange exchange) {
+		String token = exchange.getRequest().getCookies().getFirst("token").getValue();
+		return gamerService.getGamer((int) jwtUtil.getAllClaimsFromToken(token).get("id"))
+				.flatMap(gamer -> {
+					log.debug(""+gamer.getStardust());
+					
+					return collectibleService.rollCollectibleType();
+				});
 	}
 }

@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "56dc5f87-9d90-45a8-9f06-b55ba88ce6be",
+		"_postman_id": "541e5e74-9ddd-4810-a23b-bae14c80f367",
 		"name": "GachaGame",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -12,7 +12,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"gamerId\": 2,\r\n    \"role\": \"GAMER\",\r\n    \"rolls\": 5,\r\n    \"stardust\": 5000,\r\n    \"strings\": 100000\r\n}",
+					"raw": "{\r\n    \"gamerId\": 22\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -20,14 +20,157 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/gamers",
+					"raw": "http://localhost:8080/gamers/register",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
-						"gamers"
+						"gamers",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login Gamer 1337Gamer",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\" : \"1337Gamer\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/gamers/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"gamers",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login Moderator PhanniePack",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\" : \"1337Gamer\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/gamers/login",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"gamers",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Gamers",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/gamers/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"gamers",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Moderator Ban path gamer (borked)",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "daysBanned",
+							"value": "1",
+							"type": "text"
+						}
+					],
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/gamers/58",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"gamers",
+						"58"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Gamer",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"gamerId\": 2,\r\n    \"username\": \"1337Gamer\",\r\n    \"password\": null,\r\n    \"role\": \"GAMER\",\r\n    \"authorities\": [\"GAMER\", \"MODERATOR\"],\r\n    \"rolls\": 5,\r\n    \"dailyRolls\": 0,\r\n    \"stardust\": 5000,\r\n    \"strings\": 100000,\r\n    \"collectionSize\": 0,\r\n    \"collectionStrength\": 0,\r\n    \"pvpScore\": 0,\r\n    \"registrationDate\": \"2021-05-06T18:56:26.980+00:00\",\r\n    \"lastLogin\": \"2021-05-06T19:06:09.401+00:00\",\r\n    \"enabled\": false,\r\n    \"accountNonLocked\": false,\r\n    \"credentialsNonExpired\": false,\r\n    \"accountNonExpired\": false\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/gamers/32",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"gamers",
+						"32"
 					]
 				}
 			},
@@ -38,15 +181,24 @@
 			"request": {
 				"method": "POST",
 				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"stage\" : \"STAGE_3\",\r\n    \"collectibleId\" : 3,\r\n    \"name\" : \"Shiny Shungite\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
 				"url": {
-					"raw": "http://localhost:8080/collectibles",
+					"raw": "http://localhost:8080/collectibletypes",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
-						"collectibles"
+						"collectibletypes"
 					]
 				}
 			},
@@ -81,13 +233,13 @@
 			"response": []
 		},
 		{
-			"name": "Update Collectible Copy",
+			"name": "Let's Roll Roll",
 			"request": {
 				"method": "PUT",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"stage\" : \"STAGE_1\",\r\n    \"collectibleId\" : 1,\r\n    \"name\" : \"Shungite\",\r\n    \"nextStage\" : 2,\r\n    \"stat1Base\" : 5,\r\n    \"stat2Base\" : 5\r\n}",
+					"raw": "",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -95,14 +247,16 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/collectibles",
+					"raw": "http://localhost:8080/gamers/collectibles/roll",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
-						"collectibles"
+						"gamers",
+						"collectibles",
+						"roll"
 					]
 				}
 			},

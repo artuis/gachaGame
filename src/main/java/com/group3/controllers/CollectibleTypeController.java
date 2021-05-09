@@ -2,7 +2,7 @@ package com.group3.controllers;
 
 import org.reactivestreams.Publisher;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,11 +23,13 @@ public class CollectibleTypeController {
 		super();
 	}
 	
+	@PreAuthorize("hasAuthority('MODERATOR')")
 	@PostMapping
 	public Publisher<CollectibleType> addCollectibleType(@RequestBody CollectibleType c) {
 		return collectibleService.createCollectibleType(c);
 	}
 	
+	@PreAuthorize("hasAuthority('MODERATOR')")
 	@PutMapping
 	public Publisher<CollectibleType> updateCollectibleType(@RequestBody CollectibleType c) {
 		return collectibleService.updateCollectibleType(c);

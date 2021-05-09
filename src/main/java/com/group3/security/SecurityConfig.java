@@ -5,18 +5,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.config.annotation.method.configuration.EnableReactiveMethodSecurity;
 import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
 import org.springframework.security.config.web.server.ServerHttpSecurity;
+import org.springframework.security.core.userdetails.MapReactiveUserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.server.SecurityWebFilterChain;
 
 import com.group3.data.SecurityContextRepository;
+import com.group3.services.GamerService;
 import com.group3.util.AuthenticationManager;
 
 import reactor.core.publisher.Mono;
 
 @EnableWebFluxSecurity
+@EnableReactiveMethodSecurity
 public class SecurityConfig {
 	
 	@Autowired
@@ -24,6 +28,9 @@ public class SecurityConfig {
 	
 	@Autowired
 	private SecurityContextRepository securityContextRepository;
+	
+	@Autowired
+	private GamerService gamerService;
 	
 	@Bean
 	public SecurityWebFilterChain securitygWebFilterChain(ServerHttpSecurity http) {
@@ -46,13 +53,13 @@ public class SecurityConfig {
 			.authorizeExchange()
 			.pathMatchers(HttpMethod.OPTIONS).permitAll()
 			.pathMatchers("/gamers/login").permitAll()
-			.pathMatchers("/gamers/32").permitAll()
+			.pathMatchers("/gamers/register").permitAll()
 			.anyExchange().authenticated()
 			.and().build();
 	}
 	
-	@Bean
-	public PasswordEncoder encoder() {
-		return new BCryptPasswordEncoder();
-	}
+//	@Bean
+//	public PasswordEncoder encoder() {
+//		return new BCryptPasswordEncoder();
+//	}
 }

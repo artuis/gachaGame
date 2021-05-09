@@ -1,6 +1,5 @@
 package com.group3.services;
 
-
 import org.springframework.security.core.userdetails.ReactiveUserDetailsService;
 
 import com.group3.beans.Gamer;
@@ -20,5 +19,8 @@ public interface GamerService extends ReactiveUserDetailsService {
 
 	Flux<Gamer> getGamersByPvpScore();
 
+	Mono<Gamer> banGamer(int gamerId, long daysBanned);
+
+	Mono<Gamer> findGamerByUsername(String usernameFromToken);
 
 }
