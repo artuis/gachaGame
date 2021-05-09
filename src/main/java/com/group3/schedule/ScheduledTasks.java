@@ -96,11 +96,11 @@ public class ScheduledTasks implements CommandLineRunner {
 		eventRepo.findAll().collectList()
 		.flatMap(events -> {
 			for(Event event : events) {
-				if(!event.isOngoing 
+				if(!event.isOngoing() 
 						&& current.after(event.getEventStart()) 
 						&& current.before(event.getEventEnd())) {
 					event.setOngoing(true);
-					Event.Type type = getEventType();
+					Event.Type type = event.getEventType();
 					log.debug("Initializing event: "+type.toString());
 					switch(type) {
 						case DOUBLESTRINGS:
@@ -117,22 +117,31 @@ public class ScheduledTasks implements CommandLineRunner {
 			return null;
 		});
 	}
-//	
-//	@Scheduled(cron="*/10 * * * * *")
-//	public void checkEventEndTrigger() {
-//		log.debug("Checking event repository for active events :) ");
-//		Date current = Date.from(Instant.now());
-//		eventRepo.findAll().collectList()
-//		.flatMap(events -> {
-//			for(Event event : events) {
-//				if(event.isOngoing && current.after(event.getEventEnd())) {
-//					event.setOngoing(false);
-//					log.debug("Event has ended. "+event.getEventType().toString());
-//					eventRepo.save(event).subscribe();
-//				}
-//			}
-//			return null;
-//		});
-//	}
+	
+	@Scheduled(cron="*/10 * * * * *")
+	public void checkEventEndTrigger() {
+		log.debug("Checking event repository for active events :) ");
+		Date current = Date.from(Instant.now());
+		eventRepo.findAll().collectList()
+		.flatMap(events -> {
+			for(Event event : events) {
+				if(event.isOngoing() && current.after(event.getEventEnd())) {
+					event.setOngoing(false);
+					Event.Type type = event.getEventType();
+					switch(type) {
+						case DOUBLESTRINGS:
+							STRINGMOD = 1;
+							break;
+						case ROLLMOD:
+							ROLLMOD = 1;
+							break;
+					}
+					log.debug("Event has ended. "+type.toString());
+					eventRepo.save(event).subscribe();
+				}
+			}
+			return null;
+		});
+	}
 
 }
