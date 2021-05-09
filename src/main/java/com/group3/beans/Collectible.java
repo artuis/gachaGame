@@ -24,7 +24,6 @@ public class Collectible implements Serializable{
 	
 	public Collectible() {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 
 	public int getCurrentStat() {

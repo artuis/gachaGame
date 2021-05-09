@@ -29,7 +29,7 @@ public class EncounterServiceImpl implements EncounterService {
 	private EncounterRepository encounterRepo;
 	
 	public EncounterServiceImpl() {
-		// TODO Auto-generated constructor stub
+		super();
 	}
 
 	public RewardToken setEncounter(List<Integer> colIDs, Integer encID) {

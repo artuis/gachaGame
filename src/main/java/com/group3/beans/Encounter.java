@@ -10,7 +10,7 @@ public class Encounter {
 	int length;
 	
 	public Encounter() {
-		// TODO Auto-generated constructor stub
+		super();
 	}
 
 	public int getDifficulty() {
