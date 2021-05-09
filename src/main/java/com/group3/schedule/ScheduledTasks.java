@@ -27,9 +27,6 @@ public class ScheduledTasks implements CommandLineRunner {
 	private EventRepository eventRepo;
 	// ScheduledTasks will begin a thread and run after the Driver finishes initialization
 	
-	public static int STRINGMOD = 1;
-	public static int ROLLMOD = 1;
-	
 	@Override
 	public void run(String... args) throws Exception {
 		// intentionally blank, perhaps log later
@@ -104,10 +101,10 @@ public class ScheduledTasks implements CommandLineRunner {
 					log.debug("Initializing event: "+type.toString());
 					switch(type) {
 						case DOUBLESTRINGS:
-							STRINGMOD = 2;
+							Event.setSTRINGMOD(2f);
 							break;
 						case ROLLMOD:
-							ROLLMOD = 2;
+							Event.setROLLMOD(1.05f);;
 							break;
 					}
 					log.debug("Event now live! "+type.toString());
@@ -130,10 +127,10 @@ public class ScheduledTasks implements CommandLineRunner {
 					Event.Type type = event.getEventType();
 					switch(type) {
 						case DOUBLESTRINGS:
-							STRINGMOD = 1;
+							Event.setSTRINGMOD(1.0f);
 							break;
 						case ROLLMOD:
-							ROLLMOD = 1;
+							Event.setSTRINGMOD(1.0f);;
 							break;
 					}
 					log.debug("Event has ended. "+type.toString());
