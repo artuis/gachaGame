@@ -1,6 +1,5 @@
 package com.group3.controllers;
 
-
 import java.util.List;
 import java.util.UUID;
 
@@ -8,6 +7,7 @@ import org.reactivestreams.Publisher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
@@ -156,6 +156,7 @@ public class GamerController {
 							return gamerService.updateGamer(gamer).thenReturn(ResponseEntity.ok(rolled));
 						});
 					});
+
 				});
 	}
 }

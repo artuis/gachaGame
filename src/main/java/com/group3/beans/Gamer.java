@@ -62,6 +62,9 @@ public class Gamer implements Serializable, UserDetails {
 	private int strings;
 	@Column
 	@JsonInclude(Include.NON_ABSENT)
+	private boolean loginBonusCollected;
+	@Column
+	@JsonInclude(Include.NON_ABSENT)
 	private int collectionSize;
 	@Column
 	@JsonInclude(Include.NON_ABSENT)
@@ -159,6 +162,14 @@ public class Gamer implements Serializable, UserDetails {
 		this.strings = strings;
 	}
 
+	public boolean isLoginBonusCollected() {
+		return loginBonusCollected;
+	}
+
+	public void setLoginBonusCollected(boolean loginBonusCollected) {
+		this.loginBonusCollected = loginBonusCollected;
+	}
+
 	public int getCollectionSize() {
 		return collectionSize;
 	}
@@ -207,6 +218,58 @@ public class Gamer implements Serializable, UserDetails {
 		this.banDates = banDates;
 	}
 
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		return this.authorities;
+	}
+
+	public List<Role> getAuthoritiesList() {
+		return this.authorities;
+	}
+
+	@Override
+	public boolean isAccountNonExpired() {
+		return false;
+	}
+
+	@Override
+	public boolean isAccountNonLocked() {
+		return false;
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		return false;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		return this.enabled;
+	}
+
+	public void setIsEnabled(boolean enabled) {
+		this.enabled = enabled;
+	}
+
+	public void setAuthorities(List<Role> authorities) {
+		this.authorities = authorities;
+	}
+
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
+	}
+
+	public void setAccountNonLocked(boolean accountNonLocked) {
+		this.accountNonLocked = accountNonLocked;
+	}
+
+	public void setCredentialsNonExpired(boolean credentialsNonExpired) {
+		this.credentialsNonExpired = credentialsNonExpired;
+	}
+
+	public void setAccountNonExpired(boolean accountNonExpired) {
+		this.accountNonExpired = accountNonExpired;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -222,6 +285,7 @@ public class Gamer implements Serializable, UserDetails {
 		result = prime * result + (enabled ? 1231 : 1237);
 		result = prime * result + ((gamerId == null) ? 0 : gamerId.hashCode());
 		result = prime * result + ((lastLogin == null) ? 0 : lastLogin.hashCode());
+		result = prime * result + (loginBonusCollected ? 1231 : 1237);
 		result = prime * result + ((password == null) ? 0 : password.hashCode());
 		result = prime * result + pvpScore;
 		result = prime * result + ((registrationDate == null) ? 0 : registrationDate.hashCode());
@@ -276,6 +340,8 @@ public class Gamer implements Serializable, UserDetails {
 				return false;
 		} else if (!lastLogin.equals(other.lastLogin))
 			return false;
+		if (loginBonusCollected != other.loginBonusCollected)
+			return false;
 		if (password == null) {
 			if (other.password != null)
 				return false;
@@ -305,63 +371,14 @@ public class Gamer implements Serializable, UserDetails {
 	}
 
 	@Override
-	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return this.authorities;
-	}
-
-	@Override
-	public boolean isAccountNonExpired() {
-		return false;
-	}
-
-	@Override
-	public boolean isAccountNonLocked() {
-		return false;
-	}
-
-	@Override
-	public boolean isCredentialsNonExpired() {
-		return false;
-	}
-
-	@Override
-	public boolean isEnabled() {
-		return this.enabled;
-	}
-
-	public void setIsEnabled(boolean enabled) {
-		this.enabled = enabled;
-	}
-
-	public void setAuthorities(List<Role> authorities) {
-		this.authorities = authorities;
-	}
-
-	public void setEnabled(boolean enabled) {
-		this.enabled = enabled;
-	}
-
-	public void setAccountNonLocked(boolean accountNonLocked) {
-		this.accountNonLocked = accountNonLocked;
-	}
-
-	public void setCredentialsNonExpired(boolean credentialsNonExpired) {
-		this.credentialsNonExpired = credentialsNonExpired;
-	}
-
-	public void setAccountNonExpired(boolean accountNonExpired) {
-		this.accountNonExpired = accountNonExpired;
-	}
-
-	@Override
 	public String toString() {
 		return "Gamer [gamerId=" + gamerId + ", username=" + username + ", password=" + password + ", role=" + role
 				+ ", authorities=" + authorities + ", rolls=" + rolls + ", dailyRolls=" + dailyRolls + ", stardust="
-				+ stardust + ", strings=" + strings + ", collectionSize=" + collectionSize + ", collectionStrength="
-				+ collectionStrength + ", pvpScore=" + pvpScore + ", registrationDate=" + registrationDate
-				+ ", lastLogin=" + lastLogin + ", banDates=" + banDates + ", enabled=" + enabled + ", accountNonLocked="
-				+ accountNonLocked + ", credentialsNonExpired=" + credentialsNonExpired + ", accountNonExpired="
-				+ accountNonExpired + "]";
+				+ stardust + ", strings=" + strings + ", loginBonusCollected=" + loginBonusCollected
+				+ ", collectionSize=" + collectionSize + ", collectionStrength=" + collectionStrength + ", pvpScore="
+				+ pvpScore + ", registrationDate=" + registrationDate + ", lastLogin=" + lastLogin + ", banDates="
+				+ banDates + ", enabled=" + enabled + ", accountNonLocked=" + accountNonLocked
+				+ ", credentialsNonExpired=" + credentialsNonExpired + ", accountNonExpired=" + accountNonExpired + "]";
 	}
 
 }

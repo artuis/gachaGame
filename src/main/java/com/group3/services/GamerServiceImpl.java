@@ -26,6 +26,7 @@ import reactor.core.publisher.Mono;
 
 @Service
 public class GamerServiceImpl implements GamerService {
+	public static int bonusStrings = 1000;	// login bonus strings, global variable
 	@Autowired
 	private GamerRepository gamerRepo;
 	
@@ -91,7 +92,7 @@ public class GamerServiceImpl implements GamerService {
 	@Override
 //	@Moderator	// only moderators can perform this action
 	public Mono<Gamer> banGamer(UUID gamerId, long daysBanned) {
-		Mono<Gamer> gamer = gamerRepo.findById(gamerId).flatMap(gg -> {				// find the gamer
+		Mono<Gamer> gamer = gamerRepo.findById(gamerId).flatMap(gg -> {			// find the gamer
 			gg.setRole(Gamer.Role.BANNED);										// set gamer role to banned
 			Set<Date> banDates;													// declare set of ban dates
 			if(gg.getBanDates() == null) {										// check if the set is exists
@@ -99,12 +100,11 @@ public class GamerServiceImpl implements GamerService {
 			} else {
 				banDates = gg.getBanDates();									// if the set exists, load it
 			}
-			Date banLiftDate = Date.from(Instant.now()							// calculate date of ban lift from today +
+			Date banLiftDate = Date.from(Instant.now()							// calculate date of ban lift from now +
 					.plus(daysBanned, ChronoUnit.DAYS));						// how many days the gamer is banned
 			banDates.add(banLiftDate);											// add passed date to set
 			gg.setBanDates(banDates);											// assign ban date set to gamer												
-			// save updated gamer in repo
-			return gamerRepo.save(gg);											// return transormed gamer to mono
+			return gamerRepo.save(gg);											// save updated gamer in repo
 		});
 		return gamer;															// return Mono<Gamer> to controller
 	}
@@ -117,7 +117,12 @@ public class GamerServiceImpl implements GamerService {
 					if (gamer != null) {
 						log.debug("found a gamer: " + gamer.toString());
 						gamer.setLastLogin(Date.from(Instant.now()));
+						if(!gamer.isLoginBonusCollected()) {
+							gamer.setStrings(gamer.getStrings()+bonusStrings);
+							gamer.setLoginBonusCollected(true);
+						}
 						gamerRepo.save(gamer).subscribe();
+
 					} 
 				})
 				.map(gamer -> gamer);

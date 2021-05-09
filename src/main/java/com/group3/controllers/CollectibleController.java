@@ -1,5 +1,7 @@
 package com.group3.controllers;
 
+import java.util.UUID;
+
 import org.reactivestreams.Publisher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,6 +35,11 @@ public class CollectibleController {
 	@PutMapping
 	public Publisher<Collectible> updateCollectible(@RequestBody Collectible c) {
 		return collectibleService.updateCollectible(c);
+	}
+	
+	@PutMapping("/upgrade")
+	public Publisher<Collectible> upgradeCollectible(@RequestParam("collectibleId") UUID collectibleId) {
+		return collectibleService.upgradeCollectible(collectibleId);
 	}
 	
 	@GetMapping
