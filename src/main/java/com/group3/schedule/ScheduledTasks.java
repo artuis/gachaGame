@@ -101,10 +101,10 @@ public class ScheduledTasks implements CommandLineRunner {
 					log.debug("Initializing event: "+type.toString());
 					switch(type) {
 						case DOUBLESTRINGS:
-							Event.setSTRINGMOD(2);
+							Event.setStringMod(2);
 							break;
 						case ROLLMOD:
-							Event.setROLLMOD(1.05f);;
+							Event.setRollMod(1.05f);;
 							break;
 					}
 					log.debug("Event now live! "+type.toString());
@@ -127,10 +127,10 @@ public class ScheduledTasks implements CommandLineRunner {
 					Event.Type type = event.getEventType();
 					switch(type) {
 						case DOUBLESTRINGS:
-							Event.setSTRINGMOD(1);
+							Event.setStringMod(1);
 							break;
 						case ROLLMOD:
-							Event.setROLLMOD(1.0f);
+							Event.setRollMod(1.0f);
 							break;
 					}
 					log.debug("Event has ended. "+type.toString());

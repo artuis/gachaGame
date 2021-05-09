@@ -15,23 +15,23 @@ public class Event {
 		DOUBLESTRINGS, ROLLMOD;
 	}
 
-	private static int STRINGMOD = 1;
-	private static float ROLLMOD = 1.0f;
+	private static int stringMod = 1;
+	private static float rollMod = 1.0f;
 	
-	public static int getSTRINGMOD() {
-		return STRINGMOD;
+	public static int getStringMod() {
+		return stringMod;
 	}
 
-	public static void setSTRINGMOD(int sTRINGMOD) {
-		STRINGMOD = sTRINGMOD;
+	public static void setStringMod(int stringMOD) {
+		stringMod = stringMOD;
 	}
 
-	public static float getROLLMOD() {
-		return ROLLMOD;
+	public static float getRollMod() {
+		return rollMod;
 	}
 
-	public static void setROLLMOD(float rOLLMOD) {
-		ROLLMOD = rOLLMOD;
+	public static void setRollMod(float rollMOD) {
+		rollMod = rollMOD;
 	}
 
 	@Column
