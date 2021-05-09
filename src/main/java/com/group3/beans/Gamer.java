@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 
 import org.springframework.data.cassandra.core.mapping.Column;
 import org.springframework.data.cassandra.core.mapping.PrimaryKey;
@@ -32,7 +33,7 @@ public class Gamer implements Serializable, UserDetails {
 
 	@Column
 	@PrimaryKey
-	private int gamerId;
+	private UUID gamerId;
 	@Column
 	@JsonInclude(Include.NON_ABSENT)
 	private String username;
@@ -102,11 +103,11 @@ public class Gamer implements Serializable, UserDetails {
 		super();
 	}
 
-	public int getGamerId() {
+	public UUID getGamerId() {
 		return gamerId;
 	}
 
-	public void setGamerId(int gamerId) {
+	public void setGamerId(UUID gamerId) {
 		this.gamerId = gamerId;
 	}
 
@@ -219,7 +220,7 @@ public class Gamer implements Serializable, UserDetails {
 		result = prime * result + (credentialsNonExpired ? 1231 : 1237);
 		result = prime * result + dailyRolls;
 		result = prime * result + (enabled ? 1231 : 1237);
-		result = prime * result + gamerId;
+		result = prime * result + ((gamerId == null) ? 0 : gamerId.hashCode());
 		result = prime * result + ((lastLogin == null) ? 0 : lastLogin.hashCode());
 		result = prime * result + ((password == null) ? 0 : password.hashCode());
 		result = prime * result + pvpScore;
@@ -265,7 +266,10 @@ public class Gamer implements Serializable, UserDetails {
 			return false;
 		if (enabled != other.enabled)
 			return false;
-		if (gamerId != other.gamerId)
+		if (gamerId == null) {
+			if (other.gamerId != null)
+				return false;
+		} else if (!gamerId.equals(other.gamerId))
 			return false;
 		if (lastLogin == null) {
 			if (other.lastLogin != null)
@@ -300,11 +304,8 @@ public class Gamer implements Serializable, UserDetails {
 		return true;
 	}
 
+	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return this.authorities;
-	}
-
-	public List<Role> getAuthoritiesList() {
 		return this.authorities;
 	}
 
