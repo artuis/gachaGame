@@ -15,9 +15,12 @@ public class Event {
 	public enum Type {
 		DOUBLESTRINGS, ROLLMOD;
 	}
-	
 	@Column
 	@PrimaryKey
+	private UUID 
+	
+	
+	@Column
 	@JsonInclude(Include.NON_NULL)
 	private Type eventType;
 	

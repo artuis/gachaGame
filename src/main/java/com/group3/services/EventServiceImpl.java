@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.group3.beans.Event;
 import com.group3.data.EventRepository;
 
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 public class EventServiceImpl implements EventService {
@@ -27,11 +28,27 @@ public class EventServiceImpl implements EventService {
 	public Mono<Event> createEvent(Event event) {
 		//verify that event has start and end time before creating
 		if (event.getEventStart() == null | event.getEventEnd() == null) {
-			log.trace("invalid username");
+			log.trace("invalid event start/end times");
 			return Mono.empty();
 		}
 		//TODO
-		return null;
+		return eventRepo.insert(event, event.getEventType())
+				.defaultIfEmpty(new Event()).flatMap(event -> {
+			if(event == null) {
+				event.
+			}
+		});
 	}
 
+	@Override
+	public Mono<Event> updateEvent(Event event){
+		return eventRepo.save(event);
+		
+	}
+
+	@Override
+	public Flux<Event> getEvents(){
+		return eventRepo.findAll();
+	}
+	
 }

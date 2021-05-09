@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 
 import org.springframework.data.cassandra.core.mapping.Column;
 import org.springframework.data.cassandra.core.mapping.PrimaryKey;
@@ -30,7 +31,7 @@ public class Gamer implements Serializable, UserDetails {
 
 	@Column
 	@PrimaryKey
-	private int gamerId;
+	private UUID gamerId;
 	@Column
 	@JsonInclude(Include.NON_NULL)
 	private String username;
