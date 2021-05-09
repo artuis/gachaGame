@@ -130,7 +130,7 @@ public class ScheduledTasks implements CommandLineRunner {
 							Event.setSTRINGMOD(1);
 							break;
 						case ROLLMOD:
-							Event.setROLLMOD(1.0f);;
+							Event.setROLLMOD(1.0f);
 							break;
 					}
 					log.debug("Event has ended. "+type.toString());
