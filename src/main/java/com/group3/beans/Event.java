@@ -15,14 +15,14 @@ public class Event {
 		DOUBLESTRINGS, ROLLMOD;
 	}
 
-	private static float STRINGMOD = 1.0f;
+	private static int STRINGMOD = 1;
 	private static float ROLLMOD = 1.0f;
 	
-	public static float getSTRINGMOD() {
+	public static int getSTRINGMOD() {
 		return STRINGMOD;
 	}
 
-	public static void setSTRINGMOD(float sTRINGMOD) {
+	public static void setSTRINGMOD(int sTRINGMOD) {
 		STRINGMOD = sTRINGMOD;
 	}
 
