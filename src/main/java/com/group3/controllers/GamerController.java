@@ -101,8 +101,8 @@ public class GamerController {
 
 	//note that if you use this route, you must input the rest of the fields including the ones you dont want to update
 	@PreAuthorize("hasAuthority('MODERATOR')")
-	@PutMapping("{gamerId}")
-	public Mono<ResponseEntity<Gamer>> updateGamer(@PathVariable("gamerId") String gamerId, @RequestBody Gamer gg) {
+	@PutMapping
+	public Mono<ResponseEntity<Gamer>> updateGamer(@RequestBody Gamer gg) {
 		return gamerService.updateGamer(gg).defaultIfEmpty(emptyGamer).map(gamer -> {
 			if (gamer.getUsername() == null) {
 				return ResponseEntity.notFound().build();
@@ -131,9 +131,9 @@ public class GamerController {
 					if (gamer.getDailyRolls() > 0) {
 						gamer.setDailyRolls(gamer.getDailyRolls() - 1);
 					} else if (gamer.getStrings() >= 1000) {
-						gamer.setStrings(gamer.getStrings() - 1);
-					} else if (gamer.getStardust() >= 100) {
-						gamer.setStardust(gamer.getStardust() - 100);
+						gamer.setStrings(gamer.getStrings() - 1000);
+					} else if (gamer.getStardust() >= 10) {
+						gamer.setStardust(gamer.getStardust() - 10);
 					} else {
 						return Mono.just(ResponseEntity.badRequest().body("not enough money 5head"));
 					}
