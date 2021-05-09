@@ -98,12 +98,12 @@ public class ScheduledTasks implements CommandLineRunner {
 						&& current.before(event.getEventEnd())) {
 					event.setOngoing(true);
 					Event.Type type = event.getEventType();
-					log.debug("Initializing event: "+type.toString());
+					log.debug("Initializing event...");
 					if(type.equals(Event.Type.DOUBLESTRINGS)) {
 							Event.setStringMod(2);
 					}
 					if(type.equals(Event.Type.DOUBLESTRINGS)) {
-							Event.setRollMod(1.05f);;
+							Event.setRollMod(1.05f);
 					}
 					log.debug("Event now live!");
 					eventRepo.save(event).subscribe();
