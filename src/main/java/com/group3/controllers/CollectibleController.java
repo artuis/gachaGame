@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.group3.beans.Collectible;
-import com.group3.beans.CollectibleType;
 import com.group3.services.CollectibleService;
 
 @RestController
