@@ -26,6 +26,10 @@ public class ScheduledTasks implements CommandLineRunner {
 	@Autowired
 	private EventRepository eventRepo;
 	// ScheduledTasks will begin a thread and run after the Driver finishes initialization
+	
+	public static int STRINGMOD = 1;
+	public static int ROLLMOD = 1;
+	
 	@Override
 	public void run(String... args) throws Exception {
 		// intentionally blank, perhaps log later
@@ -66,7 +70,7 @@ public class ScheduledTasks implements CommandLineRunner {
 					gg.setRole(Gamer.Role.GAMER);		// set the gamer role to Gamer
 					log.debug("User ban is lifted: "
 					+gg.getUsername());
-					gamerRepo.save(gg).subscribe();					// save the updated Gamer info
+					gamerRepo.save(gg).subscribe();		// save the updated Gamer info
 				}
 			}
 			return null;								// no return needed for void
@@ -80,7 +84,7 @@ public class ScheduledTasks implements CommandLineRunner {
 		.flatMap(gamers -> {							// map them
 			for(Gamer gg : gamers) {					// for every gamer in the list
 				gg.setLoginBonusCollected(false);		// reset their login bonus flag
-				gamerRepo.save(gg).subscribe();						// save the change
+				gamerRepo.save(gg).subscribe();			// save the change
 			}
 			return null;								// no return needed for void
 		});
@@ -92,36 +96,43 @@ public class ScheduledTasks implements CommandLineRunner {
 		eventRepo.findAll().collectList()
 		.flatMap(events -> {
 			for(Event event : events) {
-				if(!event.isOngoing && current.after(event.getEventStart())) {
+				if(!event.isOngoing 
+						&& current.after(event.getEventStart()) 
+						&& current.before(event.getEventEnd())) {
 					event.setOngoing(true);
-					log.debug("Event now live! "+event.getEventType().toString());
+					Event.Type type = getEventType();
+					log.debug("Initializing event: "+type.toString());
+					switch(type) {
+						case DOUBLESTRINGS:
+							STRINGMOD = 2;
+							break;
+						case ROLLMOD:
+							ROLLMOD = 2;
+							break;
+					}
+					log.debug("Event now live! "+type.toString());
 					eventRepo.save(event).subscribe();
 				}
 			}
 			return null;
 		});
 	}
-	
-	@Scheduled(cron="*/10 * * * * *")
-	public void checkEventEndTrigger() {
-		log.debug("Checking event repository for active events :) ");
-		Date current = Date.from(Instant.now());
-		eventRepo.findAll().collectList()
-		.flatMap(events -> {
-			for(Event event : events) {
-				if(event.isOngoing && current.after(event.getEventEnd())) {
-					event.setOngoing(false);
-					log.debug("Event has ended. "+event.getEventType().toString());
-					eventRepo.save(event).subscribe();
-				}
-			}
-			return null;
-		});
-	}
-	
-	@Scheduled(cron="*/10 * * * * *")
-	public void eventLiveTrigger() {
-		
-	}
+//	
+//	@Scheduled(cron="*/10 * * * * *")
+//	public void checkEventEndTrigger() {
+//		log.debug("Checking event repository for active events :) ");
+//		Date current = Date.from(Instant.now());
+//		eventRepo.findAll().collectList()
+//		.flatMap(events -> {
+//			for(Event event : events) {
+//				if(event.isOngoing && current.after(event.getEventEnd())) {
+//					event.setOngoing(false);
+//					log.debug("Event has ended. "+event.getEventType().toString());
+//					eventRepo.save(event).subscribe();
+//				}
+//			}
+//			return null;
+//		});
+//	}
 
 }
