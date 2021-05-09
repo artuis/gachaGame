@@ -99,15 +99,13 @@ public class ScheduledTasks implements CommandLineRunner {
 					event.setOngoing(true);
 					Event.Type type = event.getEventType();
 					log.debug("Initializing event: "+type.toString());
-					switch(type) {
-						case DOUBLESTRINGS:
+					if(type.equals(Event.Type.DOUBLESTRINGS)) {
 							Event.setStringMod(2);
-							break;
-						case ROLLMOD:
-							Event.setRollMod(1.05f);;
-							break;
 					}
-					log.debug("Event now live! "+type.toString());
+					if(type.equals(Event.Type.DOUBLESTRINGS)) {
+							Event.setRollMod(1.05f);;
+					}
+					log.debug("Event now live!");
 					eventRepo.save(event).subscribe();
 				}
 			}
@@ -125,15 +123,13 @@ public class ScheduledTasks implements CommandLineRunner {
 				if(event.isOngoing() && current.after(event.getEventEnd())) {
 					event.setOngoing(false);
 					Event.Type type = event.getEventType();
-					switch(type) {
-						case DOUBLESTRINGS:
+					if(type.equals(Event.Type.DOUBLESTRINGS)) {
 							Event.setStringMod(1);
-							break;
-						case ROLLMOD:
-							Event.setRollMod(1.0f);
-							break;
 					}
-					log.debug("Event has ended. "+type.toString());
+					if(type.equals(Event.Type.ROLLMOD)) {
+							Event.setRollMod(1.0f);
+					}
+					log.debug("Event has ended.");
 					eventRepo.save(event).subscribe();
 				}
 			}
