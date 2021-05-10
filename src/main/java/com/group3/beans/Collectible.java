@@ -73,6 +73,7 @@ public class Collectible implements Serializable{
 		c.setGamerId(gamerId);
 		c.setCurrentStat(ct.getBaseStat());
 		c.setTypeId(ct.getId());
+		c.setCurrentStage(ct.getStage());
 		return c;
 	}
 
