@@ -35,61 +35,62 @@ public class Gamer implements Serializable, UserDetails {
 	@PrimaryKey
 	private UUID gamerId;
 	@Column
-	@JsonInclude(Include.NON_ABSENT)
+	@JsonInclude(Include.NON_NULL)
 	private String username;
 	@Column
-	@JsonInclude(Include.NON_ABSENT)
+	@JsonInclude(Include.NON_NULL)
 	private String password;
 	@Column
-	@JsonInclude(Include.NON_ABSENT)
+	@JsonInclude(Include.NON_NULL)
 	private Role role;
 	@Column
-	@JsonInclude(Include.NON_ABSENT)
+	@JsonInclude(Include.NON_NULL)
 	private List<Role> authorities;
 	@Column
-	@JsonInclude(Include.NON_ABSENT)
+	@JsonInclude(Include.NON_NULL)
 	private int rolls;
 	@Column
-	@JsonInclude(Include.NON_ABSENT)
+	@JsonInclude(Include.NON_NULL)
 	private int dailyRolls;
 	// daily free rolls, gets reset to 10 for every user on new day
 
 	@Column
-	@JsonInclude(Include.NON_ABSENT)
+	@JsonInclude(Include.NON_NULL)
 	private int stardust;
 	@Column
-	@JsonInclude(Include.NON_ABSENT)
+	@JsonInclude(Include.NON_NULL)
 	private int strings;
 	@Column
-	@JsonInclude(Include.NON_ABSENT)
+	@JsonInclude(Include.NON_NULL)
 	private int collectionSize;
 	@Column
-	@JsonInclude(Include.NON_ABSENT)
+	@JsonInclude(Include.NON_NULL)
 	private int collectionStrength;
 	@Column
-	@JsonInclude(Include.NON_ABSENT)
+	@JsonInclude(Include.NON_NULL)
 	private int pvpScore;
 	@Column
-	@JsonInclude(Include.NON_ABSENT)
+	@JsonInclude(Include.NON_NULL)
 	private Date registrationDate;
 	@Column
-	@JsonInclude(Include.NON_ABSENT)
+	@JsonInclude(Include.NON_NULL)
 	private Date lastLogin;
 	@Column
-	@JsonInclude(Include.NON_ABSENT)
+	@JsonInclude(Include.NON_NULL)
 	private Set<Date> banDates;
 	@Column
-	@JsonInclude(Include.NON_ABSENT)
+	@JsonInclude(Include.NON_NULL)
 	private boolean enabled;
 	@Column
-	@JsonInclude(Include.NON_ABSENT)
+	@JsonInclude(Include.NON_NULL)
 	private boolean accountNonLocked;
 	@Column
-	@JsonInclude(Include.NON_ABSENT)
+	@JsonInclude(Include.NON_NULL)
 	private boolean credentialsNonExpired;
 	@Column
-	@JsonInclude(Include.NON_ABSENT)
+	@JsonInclude(Include.NON_NULL)
 	private boolean accountNonExpired;
+
 
 	public Role getRole() {
 		return role;
@@ -311,26 +312,22 @@ public class Gamer implements Serializable, UserDetails {
 
 	@Override
 	public boolean isAccountNonExpired() {
-		return false;
+		return accountNonExpired;
 	}
 
 	@Override
 	public boolean isAccountNonLocked() {
-		return false;
+		return accountNonLocked;
 	}
 
 	@Override
 	public boolean isCredentialsNonExpired() {
-		return false;
+		return credentialsNonExpired;
 	}
 
 	@Override
 	public boolean isEnabled() {
 		return this.enabled;
-	}
-
-	public void setIsEnabled(boolean enabled) {
-		this.enabled = enabled;
 	}
 
 	public void setAuthorities(List<Role> authorities) {
