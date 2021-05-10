@@ -16,5 +16,7 @@ public interface CollectibleTypeService {
 	Publisher<CollectibleType> updateCollectibleType(CollectibleType c);
 
 	Flux<CollectibleType> getAllCollectibleTypes();
+
+	Mono<CollectibleType> getCollectibleType(int typeId);
 	
 }
