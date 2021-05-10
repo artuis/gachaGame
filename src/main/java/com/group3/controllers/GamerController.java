@@ -149,6 +149,9 @@ public class GamerController {
 							if (collected == emptyCollectible) {
 								log.debug("consolation prize");
 								gamer.setStrings(gamer.getStrings() + 100);
+							} else {
+								gamer.setCollectionSize(gamer.getCollectionSize() + 1);
+								gamer.setCollectionStrength(gamer.getCollectionStrength() + collected.getCurrentStat());
 							}
 							return gamerService.updateGamer(gamer).thenReturn(ResponseEntity.ok(rolled));
 						});
