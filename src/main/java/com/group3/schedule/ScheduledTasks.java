@@ -102,7 +102,7 @@ public class ScheduledTasks implements CommandLineRunner {
 							Event.setStringMod(2);
 					}
 					if(type.equals(Event.Type.DOUBLESTRINGS)) {
-							Event.setRollMod(1.05f);
+							Event.setRollMod(1.05d);
 					}
 					log.debug("Event now live!");
 					eventRepo.save(event).subscribe();
@@ -126,7 +126,7 @@ public class ScheduledTasks implements CommandLineRunner {
 							Event.setStringMod(1);
 					}
 					if(type.equals(Event.Type.ROLLMOD)) {
-							Event.setRollMod(1.0f);
+							Event.setRollMod(1.0d);
 					}
 					log.debug("Event has ended.");
 					eventRepo.save(event).subscribe();
