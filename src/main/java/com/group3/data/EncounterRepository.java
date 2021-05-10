@@ -7,7 +7,14 @@ import org.springframework.data.cassandra.repository.ReactiveCassandraRepository
 
 import com.group3.beans.Encounter;
 
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
+
 public interface EncounterRepository extends ReactiveCassandraRepository<Encounter, /*PRIMARY KEY DATATYPE REPLACES String PLACEHOLDER*/ String> {
 
+	@AllowFiltering
+	Flux<Encounter> findAllByLevel(int level);
+	@AllowFiltering
+	Mono<Encounter> findById(int encID);
 
 }

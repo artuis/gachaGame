@@ -1,5 +1,6 @@
 package com.group3.services;
 
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executor;
@@ -15,9 +16,12 @@ import org.springframework.stereotype.Service;
 import com.group3.beans.Collectible;
 import com.group3.beans.Encounter;
 import com.group3.beans.RewardToken;
+import com.group3.beans.Gamer;
 import com.group3.data.CollectibleRepository;
 import com.group3.data.EncounterRepository;
+import com.group3.data.GamerRepository;
 
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Service
@@ -27,27 +31,43 @@ public class EncounterServiceImpl implements EncounterService {
 	private CollectibleRepository collectibleRepo;
 	@Autowired
 	private EncounterRepository encounterRepo;
+	@Autowired
+	private GamerRepository gamerRepo;
 	
 	public EncounterServiceImpl() {
 		super();
 	}
-
-	public RewardToken setEncounter(List<Integer> colIDs, Integer encID) {
+	
+	public Flux<RewardToken> getRunningEncounters(int gamerID){
+		Gamer g = (Gamer) gamerRepo.findById(gamerID).subscribe();
+		return Flux.fromIterable(g.getActiveEncounters());
+	}
+	
+	public Mono<RewardToken> setEncounter(int gamerID, List<Integer> colIDs, Integer encID) {
 		
-		// TODO get collectible list from gamer
+		// Get the collectibles to send on the journey
 		List<Collectible> sent = new ArrayList<Collectible>();
-		//colIDs.forEach(x -> sent.add(collectibleRepo.));
+		colIDs.forEach(x -> sent.add(
+				(Collectible) collectibleRepo.findById(x).subscribe()));
 		
-		// TODO get encounter selection
+		// If some collectibles sent aren't owned by gamerID return null
+		if(!sent.stream().allMatch(x->x.getGamerId() == gamerID)) {
+			return null;
+		}
+		
+		// Get the journey to send on the collectibles
 		Encounter journey = new Encounter();
-		//journey = encounterRepo.getEncounter(encID);
+		journey = (Encounter) encounterRepo.findById(encID).subscribe();
 		
-		// TODO create reward token that contains the Mono
-		// of the Encounter the collectibles are sent on
-		RewardToken reward = new RewardToken();
-		reward.setRunningEncounter(runEncounter(sent, journey));
+		// Set the token to give to the Gamer
+		RewardToken rewardToken = new RewardToken();
+		rewardToken.setRunningEncounter(runEncounter(sent, journey));
 		
-		return reward;
+		Gamer gg = (Gamer) gamerRepo.findById(gamerID).subscribe();
+		gg.addActiveEncounter(rewardToken);
+		gamerRepo.save(gg);
+		
+		return Mono.just(rewardToken);
 		
 	}
 	
@@ -74,16 +94,30 @@ public class EncounterServiceImpl implements EncounterService {
 			reward = 10;
 		}
 		
-		// Pause for relevant length of time
-		try {
-			Thread.sleep(journey.getLength());
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		// Return Future
+		return Mono.just(reward).delayElement(Duration.ofMillis(journey.getLength()));
+	}
+	
+	public Flux<?> getEncounterReward(int gamerID) {
+		
+		Gamer gg = (Gamer) gamerRepo.findById(gamerID).subscribe();
+		
+		List<RewardToken> tokens = gg.getActiveEncounters();
+		
+		// Check if there are even any tokens
+		if(tokens.isEmpty()) {
+			// TODO return response
+			return null;
+		} else {
+			
+			tokens.stream().;
+			
+			
 		}
 		
-		// Return Future
-		return Mono.just(reward);
-		
+		return null;
 	}
+	
+	
+	
 }

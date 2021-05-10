@@ -182,6 +182,10 @@ public class Gamer implements Serializable, UserDetails {
 	public void setActiveEncounters(List<RewardToken> activeEncounters) {
 		this.activeEncounters = activeEncounters;
 	}
+	
+	public void addActiveEncounter(RewardToken token) {
+		this.activeEncounters.add(token);
+	}
 
 	public int getPvpScore() {
 		return pvpScore;

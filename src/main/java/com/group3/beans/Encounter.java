@@ -2,6 +2,7 @@ package com.group3.beans;
 
 public class Encounter {
 
+	int encounterID;
 	// Target number the collectibles have to beat to succeed vs encounter
 	int difficulty;
 	// Amount of 'reward' returned when successful vs encounter
@@ -11,6 +12,14 @@ public class Encounter {
 	
 	public Encounter() {
 		super();
+	}
+
+	public int getEncounterID() {
+		return encounterID;
+	}
+
+	public void setEncounterID(int encounterID) {
+		this.encounterID = encounterID;
 	}
 
 	public int getDifficulty() {

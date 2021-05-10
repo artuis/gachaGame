@@ -2,14 +2,22 @@ package com.group3.controllers;
 
 import java.util.List;
 
+import org.reactivestreams.Publisher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ServerWebExchange;
 
+import com.group3.beans.CollectibleType;
 import com.group3.services.EncounterService;
+import com.group3.services.GamerService;
+import com.group3.util.JWTUtil;
 
 import reactor.core.publisher.Mono;
 
@@ -18,24 +26,37 @@ import reactor.core.publisher.Mono;
 public class EncounterController {
 
 	@Autowired
+	private JWTUtil jwtUtil;
+	@Autowired
 	private EncounterService encounterService;
-
+	@Autowired
+	private GamerService gamerService;
 
 	public EncounterController() {
 		super();
 	}
 
+	// TODO Get: view available encounters
+
+	@PreAuthorize("hasAuthority('GAMER')")
 	@PostMapping
-	public Mono<ResponseEntity<?>> startEncounter(
-			@RequestParam("collectibleIDList") List<Integer> colIDs,
-			@RequestParam("encounterID") Integer encounterID) {
-		// TODO connect to EncounterServiceImpl
-		// get current user
-		// attach RewardToken to user's list of encounters
-		encounterService.setEncounter(colIDs, encounterID);
-		
+	public Mono<ResponseEntity<?>> startEncounter(@RequestParam("collectibleIDList") List<Integer> colIDs,
+			@RequestParam("encounterID") Integer encounterID, ServerWebExchange exchange) {
+
+		String token = exchange.getRequest().getCookies().getFirst("token").getValue();
+		encounterService.setEncounter((int) jwtUtil.getAllClaimsFromToken(token).get("id"), colIDs, encounterID);
+
 		// return something?
 		return null;
 	}
+
+	@PreAuthorize("hasAuthority('GAMER')")
+	@GetMapping("{gamerId}")
+	public Publisher<?> viewRunningEncounters(ServerWebExchange exchange) {
+		String token = exchange.getRequest().getCookies().getFirst("token").getValue();
+		return encounterService.getRunningEncounters((int) jwtUtil.getAllClaimsFromToken(token).get("id"));
+	}
+
+	// TODO Get: receive reward if encounter is completed
 
 }
