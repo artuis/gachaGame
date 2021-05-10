@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -42,7 +43,7 @@ public class CollectibleController {
 		return collectibleService.upgradeCollectible(collectibleId);
 	}
 	
-	@GetMapping
+	@GetMapping(params = {"filter"})
 	public Publisher<Collectible> getCollectibles(@RequestParam("filter") String filter) {
 		switch(filter.toLowerCase()) {
 		case "all":
@@ -50,5 +51,10 @@ public class CollectibleController {
 		default:
 			return collectibleService.getCollectibles(filter);
 		}
+	}
+	
+	@GetMapping(params = {"id"})
+	public Publisher<Collectible> getCollectible(@RequestParam("id") String id) {
+		return collectibleService.getCollectible(id);
 	}
 }

@@ -87,5 +87,10 @@ public class CollectibleServiceImpl implements CollectibleService {
 				return collectible;
 		});
 	}
+
+	@Override
+	public Publisher<Collectible> getCollectible(String id) {
+		return repo.findById(UUID.fromString(id));
+	}
 	
 }
