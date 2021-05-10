@@ -7,17 +7,16 @@ import org.springframework.data.cassandra.core.mapping.Column;
 import org.springframework.data.cassandra.core.mapping.PrimaryKey;
 import org.springframework.data.cassandra.core.mapping.Table;
 
-
 @Table("events")
 public class Event {
-	
+
 	public enum Type {
 		DOUBLESTRINGS, ROLLMOD;
 	}
 
 	private static int stringMod = 1;
-	private static float rollMod = 1.0f;
-	
+	private static double rollMod = 1.0d;
+
 	public static int getStringMod() {
 		return stringMod;
 	}
@@ -26,27 +25,27 @@ public class Event {
 		stringMod = stringMOD;
 	}
 
-	public static float getRollMod() {
+	public static double getRollMod() {
 		return rollMod;
 	}
 
-	public static void setRollMod(float rollMOD) {
+	public static void setRollMod(double rollMOD) {
 		rollMod = rollMOD;
 	}
 
 	@Column
 	@PrimaryKey
 	private UUID eventId;
-	
+
 	@Column
 	private Type eventType;
-	
+
 	@Column
 	private boolean isOngoing;
-	
+
 	@Column
 	private Date eventStart;
-	
+
 	@Column
 	private Date eventEnd;
 
@@ -143,4 +142,4 @@ public class Event {
 				+ eventStart + ", eventEnd=" + eventEnd + "]";
 	}
 
-	}
+}
