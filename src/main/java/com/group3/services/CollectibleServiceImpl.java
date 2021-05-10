@@ -89,7 +89,7 @@ public class CollectibleServiceImpl implements CollectibleService {
 	}
 
 	@Override
-	public Publisher<Collectible> getCollectible(String id) {
+	public Mono<Collectible> getCollectible(String id) {
 		return repo.findById(UUID.fromString(id));
 	}
 	

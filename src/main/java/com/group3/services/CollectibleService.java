@@ -21,6 +21,6 @@ public interface CollectibleService {
 	
 	Mono<Collectible> upgradeCollectible(UUID collectibleId);
 
-	Publisher<Collectible> getCollectible(String id);
+	Mono<Collectible> getCollectible(String id);
 
 }
