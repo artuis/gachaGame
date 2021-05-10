@@ -5,17 +5,20 @@ import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 
 import org.springframework.data.cassandra.core.mapping.Column;
 import org.springframework.data.cassandra.core.mapping.PrimaryKey;
 import org.springframework.data.cassandra.core.mapping.Table;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 @Table("gamers")
+@Component
 public class Gamer implements Serializable, UserDetails {
 	private static final long serialVersionUID = 4447548260627752098L;
 
@@ -30,7 +33,7 @@ public class Gamer implements Serializable, UserDetails {
 
 	@Column
 	@PrimaryKey
-	private int gamerId;
+	private UUID gamerId;
 	@Column
 	@JsonInclude(Include.NON_NULL)
 	private String username;
@@ -57,6 +60,9 @@ public class Gamer implements Serializable, UserDetails {
 	@Column
 	@JsonInclude(Include.NON_NULL)
 	private int strings;
+	@Column
+	@JsonInclude(Include.NON_NULL)
+	private boolean loginBonusCollected;
 	@Column
 	@JsonInclude(Include.NON_NULL)
 	private int collectionSize;
@@ -91,6 +97,7 @@ public class Gamer implements Serializable, UserDetails {
 	@JsonInclude(Include.NON_NULL)
 	private boolean accountNonExpired;
 
+
 	public Role getRole() {
 		return role;
 	}
@@ -103,11 +110,11 @@ public class Gamer implements Serializable, UserDetails {
 		super();
 	}
 
-	public int getGamerId() {
+	public UUID getGamerId() {
 		return gamerId;
 	}
 
-	public void setGamerId(int gamerId) {
+	public void setGamerId(UUID gamerId) {
 		this.gamerId = gamerId;
 	}
 
@@ -157,6 +164,14 @@ public class Gamer implements Serializable, UserDetails {
 
 	public void setStrings(int strings) {
 		this.strings = strings;
+	}
+
+	public boolean isLoginBonusCollected() {
+		return loginBonusCollected;
+	}
+
+	public void setLoginBonusCollected(boolean loginBonusCollected) {
+		this.loginBonusCollected = loginBonusCollected;
 	}
 
 	public int getCollectionSize() {
@@ -219,6 +234,30 @@ public class Gamer implements Serializable, UserDetails {
 		this.banDates = banDates;
 	}
 
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		return this.authorities;
+	}
+	
+	@Override
+	public boolean isAccountNonExpired() {
+		return false;
+	}
+
+	@Override
+	public boolean isAccountNonLocked() {
+		return false;
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		return false;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		return this.enabled;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -232,8 +271,9 @@ public class Gamer implements Serializable, UserDetails {
 		result = prime * result + (credentialsNonExpired ? 1231 : 1237);
 		result = prime * result + dailyRolls;
 		result = prime * result + (enabled ? 1231 : 1237);
-		result = prime * result + gamerId;
+		result = prime * result + ((gamerId == null) ? 0 : gamerId.hashCode());
 		result = prime * result + ((lastLogin == null) ? 0 : lastLogin.hashCode());
+		result = prime * result + (loginBonusCollected ? 1231 : 1237);
 		result = prime * result + ((password == null) ? 0 : password.hashCode());
 		result = prime * result + pvpScore;
 		result = prime * result + ((registrationDate == null) ? 0 : registrationDate.hashCode());
@@ -278,12 +318,17 @@ public class Gamer implements Serializable, UserDetails {
 			return false;
 		if (enabled != other.enabled)
 			return false;
-		if (gamerId != other.gamerId)
+		if (gamerId == null) {
+			if (other.gamerId != null)
+				return false;
+		} else if (!gamerId.equals(other.gamerId))
 			return false;
 		if (lastLogin == null) {
 			if (other.lastLogin != null)
 				return false;
 		} else if (!lastLogin.equals(other.lastLogin))
+			return false;
+		if (loginBonusCollected != other.loginBonusCollected)
 			return false;
 		if (password == null) {
 			if (other.password != null)
@@ -313,38 +358,6 @@ public class Gamer implements Serializable, UserDetails {
 		return true;
 	}
 
-	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return this.authorities;
-	}
-
-	public List<Role> getAuthoritiesList() {
-		return this.authorities;
-	}
-
-	@Override
-	public boolean isAccountNonExpired() {
-		return false;
-	}
-
-	@Override
-	public boolean isAccountNonLocked() {
-		return false;
-	}
-
-	@Override
-	public boolean isCredentialsNonExpired() {
-		return false;
-	}
-
-	@Override
-	public boolean isEnabled() {
-		return this.enabled;
-	}
-
-	public void setIsEnabled(boolean enabled) {
-		this.enabled = enabled;
-	}
-
 	public void setAuthorities(List<Role> authorities) {
 		this.authorities = authorities;
 	}
@@ -369,11 +382,11 @@ public class Gamer implements Serializable, UserDetails {
 	public String toString() {
 		return "Gamer [gamerId=" + gamerId + ", username=" + username + ", password=" + password + ", role=" + role
 				+ ", authorities=" + authorities + ", rolls=" + rolls + ", dailyRolls=" + dailyRolls + ", stardust="
-				+ stardust + ", strings=" + strings + ", collectionSize=" + collectionSize + ", collectionStrength="
-				+ collectionStrength + ", pvpScore=" + pvpScore + ", registrationDate=" + registrationDate
-				+ ", lastLogin=" + lastLogin + ", banDates=" + banDates + ", enabled=" + enabled + ", accountNonLocked="
-				+ accountNonLocked + ", credentialsNonExpired=" + credentialsNonExpired + ", accountNonExpired="
-				+ accountNonExpired + "]";
+				+ stardust + ", strings=" + strings + ", loginBonusCollected=" + loginBonusCollected
+				+ ", collectionSize=" + collectionSize + ", collectionStrength=" + collectionStrength + ", pvpScore="
+				+ pvpScore + ", registrationDate=" + registrationDate + ", lastLogin=" + lastLogin + ", banDates="
+				+ banDates + ", enabled=" + enabled + ", accountNonLocked=" + accountNonLocked
+				+ ", credentialsNonExpired=" + credentialsNonExpired + ", accountNonExpired=" + accountNonExpired + "]";
 	}
 
 }

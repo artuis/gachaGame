@@ -1,7 +1,5 @@
 package com.group3.services;
 
-import java.util.List;
-
 import org.reactivestreams.Publisher;
 
 import com.group3.beans.CollectibleType;
@@ -18,5 +16,7 @@ public interface CollectibleTypeService {
 	Publisher<CollectibleType> updateCollectibleType(CollectibleType c);
 
 	Flux<CollectibleType> getAllCollectibleTypes();
+
+	Mono<CollectibleType> getCollectibleType(int typeId);
 	
 }
