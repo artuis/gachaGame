@@ -56,4 +56,9 @@ public class CollectibleTypeServiceImpl implements CollectibleTypeService {
 	public Flux<CollectibleType> getAllCollectibleTypes() {
 		return collectibleTypeRepo.findAll();
 	}
+
+	@Override
+	public Mono<CollectibleType> getCollectibleType(int typeId) {
+		return collectibleTypeRepo.findById(typeId);
+	}
 }

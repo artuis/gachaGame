@@ -71,7 +71,7 @@ public class GamerController {
 		return gamerService.addGamer(gg).defaultIfEmpty(emptyGamer).map(gamer -> {
 			if (gamer.getUsername() == null || gamer.getGamerId() == null) {
 				return ResponseEntity.status(HttpStatus.CONFLICT).body(gg);
-			}
+			} 
 			return ResponseEntity.ok(gamer);
 		});
 	}
@@ -139,11 +139,11 @@ public class GamerController {
 					} else {
 						return Mono.just(ResponseEntity.badRequest().body("not enough money 5head"));
 					}
-					log.debug("" + gamer.getStardust());
-					log.debug("" + gamer.getStrings());
-					log.debug("" + gamer.getDailyRolls());
+					log.debug("Stardust: {}", gamer.getStardust());
+					log.debug("Strings: {}", gamer.getStrings());
+					log.debug("Daily Rolls: {}", gamer.getDailyRolls());
 					return collectibleTypeService.rollCollectibleType().flatMap(rolled -> {
-						log.debug("rolled: " + rolled.toString());
+						log.debug("rolled: {}", rolled);
 						Collectible collectible = Collectible.fromCollectibleTypeAndId(rolled, gamer.getGamerId());
 						return collectibleService.createCollectible(collectible).defaultIfEmpty(emptyCollectible).flatMap(collected -> {
 							if (collected == emptyCollectible) {

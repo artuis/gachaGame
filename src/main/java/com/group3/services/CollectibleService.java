@@ -22,4 +22,6 @@ public interface CollectibleService {
 	
 	Mono<ResponseEntity<?>> upgradeCollectible(UUID collectibleId);
 
+	Mono<Collectible> getCollectible(String id);
+
 }
