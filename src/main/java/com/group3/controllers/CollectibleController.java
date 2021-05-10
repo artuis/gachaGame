@@ -10,17 +10,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.group3.beans.Collectible;
-import com.group3.beans.CollectibleType;
 import com.group3.beans.CombinedCollectible;
 import com.group3.services.CollectibleService;
 import com.group3.services.CollectibleTypeService;
-
-import reactor.core.publisher.Mono;
 
 import reactor.core.publisher.Mono;
 
@@ -66,8 +62,6 @@ public class CollectibleController {
 	@GetMapping(params = { "id" })
 	public Mono<CombinedCollectible> getCollectible(@RequestParam("id") String id) {
 		Mono<Collectible> collectible = collectibleService.getCollectible(id);
-		Mono<CombinedCollectible> cc = collectible
-				.flatMap(c -> collectibleTypeService.get(c.getTypeId()).map(t -> new CombinedCollectible(c, t)));
-		return cc;
+		return collectible.flatMap(c -> collectibleTypeService.getCollectibleType(c.getTypeId()).map(t -> new CombinedCollectible(c, t)));
 	}
 }

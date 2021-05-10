@@ -58,7 +58,7 @@ public class CollectibleTypeServiceImpl implements CollectibleTypeService {
 	}
 
 	@Override
-	public Mono<CollectibleType> get(int typeId) {
+	public Mono<CollectibleType> getCollectibleType(int typeId) {
 		return collectibleTypeRepo.findById(typeId);
 	}
 }
