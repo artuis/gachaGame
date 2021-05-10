@@ -23,6 +23,10 @@ public class EventServiceImpl implements EventService {
 	public EventServiceImpl() {
 		// TODO Auto-generated constructor stub
 	}
+	
+	public Flux<Event> viewOngoingEvents(){
+		return eventRepo.findAllByOngoing(true);
+	}
 
 	/*do we want to be able to make more events or are we 
 	 * good with just double strings and 
