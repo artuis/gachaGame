@@ -50,7 +50,6 @@ public class ScheduledTasks implements CommandLineRunner {
 	
 	@Scheduled(cron="0 * * * * *")						// checks for ban lifts every minute
 	public void dailyBanReset() {
-		log.debug("Checking for gamer ban lifts");
 		Date current = Date.from(Instant.now());		// pull today's date for reference,
 		gamerRepo.findAllByRole(Gamer.Role.BANNED)		// get all gamers that are banned
 		.collectList().flatMap(gamers -> {				// collect them to a list, then map the contents;
@@ -115,12 +114,12 @@ public class ScheduledTasks implements CommandLineRunner {
 	
 	@Scheduled(cron="*/10 * * * * *")
 	public void checkEventEndTrigger() {
-		log.debug("Checking event repository for active events :) ");
 		Date current = Date.from(Instant.now());
 		eventRepo.findAll().collectList()
 		.flatMap(events -> {
 			for(Event event : events) {
-				if(event.isOngoing() && current.after(event.getEventEnd())) {
+				if(event.isOngoing() 
+						&& current.after(event.getEventEnd())) {
 					event.setOngoing(false);
 					Event.Type type = event.getEventType();
 					if(type.equals(Event.Type.DOUBLESTRINGS)) {
