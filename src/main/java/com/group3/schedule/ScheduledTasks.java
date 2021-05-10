@@ -145,10 +145,10 @@ public class ScheduledTasks implements CommandLineRunner {
 							Event.setRollMod(1.05d);
 					}
 					log.debug("Event now live!");
-					eventRepo.save(event).subscribe();
+					eventRepo.save(event).subscribe();				// save the changes to the event
 				}
 			}
-			return null;
+			return null;											// no return needed for void
 		});
 	}
 	/*
@@ -179,11 +179,10 @@ public class ScheduledTasks implements CommandLineRunner {
 							Event.setRollMod(1.0d);
 					}
 					log.debug("Event has ended.");
-					eventRepo.save(event).subscribe();
+					eventRepo.save(event).subscribe();				// save the changes to the event
 				}
 			}
-			return null;
+			return null;											// no return needed for void
 		});
 	}
-
 }

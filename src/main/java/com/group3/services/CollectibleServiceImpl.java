@@ -85,5 +85,10 @@ public class CollectibleServiceImpl implements CollectibleService {
 							});
 				});
 	}
+
+	@Override
+	public Mono<Collectible> getCollectible(String id) {
+		return repo.findById(UUID.fromString(id));
+	}
 	
 }
