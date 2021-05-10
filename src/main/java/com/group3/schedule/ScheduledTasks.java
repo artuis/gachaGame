@@ -12,7 +12,9 @@ import org.springframework.core.annotation.Order;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import com.group3.beans.Event;
 import com.group3.beans.Gamer;
+import com.group3.data.EventRepository;
 import com.group3.data.GamerRepository;
 
 @Component
@@ -21,7 +23,10 @@ public class ScheduledTasks implements CommandLineRunner {
 	private Logger log = LoggerFactory.getLogger(ScheduledTasks.class);
 	@Autowired
 	private GamerRepository gamerRepo;
+	@Autowired
+	private EventRepository eventRepo;
 	// ScheduledTasks will begin a thread and run after the Driver finishes initialization
+	
 	@Override
 	public void run(String... args) throws Exception {
 		// intentionally blank, perhaps log later
@@ -37,7 +42,7 @@ public class ScheduledTasks implements CommandLineRunner {
 		.flatMap(gamers -> {							// get list of all gamers,
 			for(Gamer gg : gamers) {					// for each gamer in list
 				gg.setDailyRolls(10);					// set daily rolls to 10
-				gamerRepo.save(gg);						// save updated gamer
+				gamerRepo.save(gg).subscribe();						// save updated gamer
 			}
 			return null;								// no return needed for void
 		});
@@ -45,7 +50,6 @@ public class ScheduledTasks implements CommandLineRunner {
 	
 	@Scheduled(cron="0 * * * * *")						// checks for ban lifts every minute
 	public void dailyBanReset() {
-		log.debug("Checking for gamer ban lifts");
 		Date current = Date.from(Instant.now());		// pull today's date for reference,
 		gamerRepo.findAllByRole(Gamer.Role.BANNED)		// get all gamers that are banned
 		.collectList().flatMap(gamers -> {				// collect them to a list, then map the contents;
@@ -62,7 +66,7 @@ public class ScheduledTasks implements CommandLineRunner {
 					gg.setRole(Gamer.Role.GAMER);		// set the gamer role to Gamer
 					log.debug("User ban is lifted: "
 					+gg.getUsername());
-					gamerRepo.save(gg);					// save the updated Gamer info
+					gamerRepo.save(gg).subscribe();		// save the updated Gamer info
 				}
 			}
 			return null;								// no return needed for void
@@ -76,9 +80,59 @@ public class ScheduledTasks implements CommandLineRunner {
 		.flatMap(gamers -> {							// map them
 			for(Gamer gg : gamers) {					// for every gamer in the list
 				gg.setLoginBonusCollected(false);		// reset their login bonus flag
-				gamerRepo.save(gg);						// save the change
+				gamerRepo.save(gg).subscribe();			// save the change
 			}
 			return null;								// no return needed for void
+		});
+	}
+	
+	@Scheduled(cron="*/10 * * * * *")
+	public void checkEventStartTrigger() {
+		Date current = Date.from(Instant.now());
+		eventRepo.findAll().collectList()
+		.flatMap(events -> {
+			for(Event event : events) {
+				if(!event.isOngoing() 
+						&& current.after(event.getEventStart()) 
+						&& current.before(event.getEventEnd())) {
+					event.setOngoing(true);
+					Event.Type type = event.getEventType();
+					log.debug("Initializing event...");
+					if(type.equals(Event.Type.DOUBLESTRINGS)) {
+							Event.setStringMod(2);
+					}
+					if(type.equals(Event.Type.DOUBLESTRINGS)) {
+							Event.setRollMod(1.05f);
+					}
+					log.debug("Event now live!");
+					eventRepo.save(event).subscribe();
+				}
+			}
+			return null;
+		});
+	}
+	
+	@Scheduled(cron="*/10 * * * * *")
+	public void checkEventEndTrigger() {
+		Date current = Date.from(Instant.now());
+		eventRepo.findAll().collectList()
+		.flatMap(events -> {
+			for(Event event : events) {
+				if(event.isOngoing() 
+						&& current.after(event.getEventEnd())) {
+					event.setOngoing(false);
+					Event.Type type = event.getEventType();
+					if(type.equals(Event.Type.DOUBLESTRINGS)) {
+							Event.setStringMod(1);
+					}
+					if(type.equals(Event.Type.ROLLMOD)) {
+							Event.setRollMod(1.0f);
+					}
+					log.debug("Event has ended.");
+					eventRepo.save(event).subscribe();
+				}
+			}
+			return null;
 		});
 	}
 

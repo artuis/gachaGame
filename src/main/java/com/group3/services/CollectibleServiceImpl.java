@@ -2,14 +2,13 @@ package com.group3.services;
 
 import java.util.UUID;
 
-import org.reactivestreams.Publisher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.group3.beans.Collectible;
-import com.group3.beans.Gamer;
 import com.group3.data.CollectibleRepository;
 import com.group3.data.GamerRepository;
 
@@ -45,7 +44,7 @@ public class CollectibleServiceImpl implements CollectibleService {
 	}
 
 	@Override
-	public Publisher<Collectible> updateCollectible(Collectible c) {
+	public Mono<Collectible> updateCollectible(Collectible c) {
 		return repo.save(c);
 	}
 
@@ -66,26 +65,25 @@ public class CollectibleServiceImpl implements CollectibleService {
 	}
 	
 	@Override
-	public Mono<Collectible> upgradeCollectible(UUID collectibleId) {
-		log.debug("Upgrading collectible");
+	public Mono<ResponseEntity<?>> upgradeCollectible(UUID collectibleId) {
 		return repo.findById(collectibleId)
-				.map(collectible -> {
-					if(gamerRepo.findById(collectible.getGamerId()).map(gamer -> {
-						int upgradeCost = collectible.getCurrentStat() * 1000;
-						if(gamer.getStrings() < upgradeCost) {
-							log.debug("Insufficient strings; upgrade cost: "+upgradeCost);
-							return Mono.empty();
-						}
-						else {
-							gamer.setStrings(gamer.getStrings() - upgradeCost);
-							return gamerRepo.save(gamer).subscribe();
-						}
-					}).hasElement() != null) {
-						collectible.setCurrentStat(collectible.getCurrentStat()+1);
-					}
-				repo.save(collectible).subscribe();
-				return collectible;
-		});
+				.flatMap(collectible -> {
+					return gamerRepo.findById(collectible.getGamerId())
+							.flatMap(gamer -> {
+								int upgradeCost = collectible.getCurrentStat() * 1000;
+								if(gamer.getStrings() < upgradeCost) {
+									return Mono.just(ResponseEntity.badRequest()
+											.body("Insufficient strings to upgrade."));
+								} else {
+									gamer.setStrings(gamer.getStrings() - upgradeCost);
+									return gamerRepo.save(gamer).flatMap(gg -> {
+										collectible.setCurrentStat(collectible.getCurrentStat() + 1);
+										return updateCollectible(collectible)
+												.thenReturn(ResponseEntity.ok(collectible));
+									});
+								}
+							});
+				});
 	}
 	
 }
