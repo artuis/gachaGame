@@ -42,7 +42,7 @@ public class ScheduledTasks implements CommandLineRunner {
 		.flatMap(gamers -> {							// get list of all gamers,
 			for(Gamer gg : gamers) {					// for each gamer in list
 				gg.setDailyRolls(10);					// set daily rolls to 10
-				gamerRepo.save(gg).subscribe();						// save updated gamer
+				gamerRepo.save(gg).subscribe();			// save updated gamer
 			}
 			return null;								// no return needed for void
 		});
@@ -86,53 +86,53 @@ public class ScheduledTasks implements CommandLineRunner {
 		});
 	}
 	
-	@Scheduled(cron="*/10 * * * * *")
-	public void checkEventStartTrigger() {
-		Date current = Date.from(Instant.now());
-		eventRepo.findAll().collectList()
-		.flatMap(events -> {
-			for(Event event : events) {
-				if(!event.isOngoing() 
-						&& current.after(event.getEventStart()) 
-						&& current.before(event.getEventEnd())) {
-					event.setOngoing(true);
-					Event.Type type = event.getEventType();
-					log.debug("Initializing event...");
-					if(type.equals(Event.Type.DOUBLESTRINGS)) {
-							Event.setStringMod(2);
+	@Scheduled(cron="*/10 * * * * *")								// every 10 seconds check for events
+	public void checkEventStartTrigger() {							// that are starting and need initialized
+		Date current = Date.from(Instant.now());					// grab the current timestamp
+		eventRepo.findAll().collectList()							// get all events, put in a list
+		.flatMap(events -> {										// map the list of events;
+			for(Event event : events) {								// for each event
+				if(!event.isOngoing() 								// if it's not listed as ongoing
+						&& current.after(event.getEventStart()) 	// and current time is after its start
+						&& current.before(event.getEventEnd())) {	// and current time is before its end
+					event.setOngoing(true);							// mark it as an ongoing event
+					Event.Type type = event.getEventType();			// get the type of event
+					log.debug("Initializing event...");				
+					if(type.equals(Event.Type.DOUBLESTRINGS)) {		// if the type is doublestrings
+							Event.setStringMod(2);					// set the global variable stringmod to 2x
 					}
-					if(type.equals(Event.Type.DOUBLESTRINGS)) {
-							Event.setRollMod(1.05d);
+					if(type.equals(Event.Type.ROLLMOD)) {			// if the type is rollmod
+							Event.setRollMod(1.05d);				// set the global variable rollmod to +5%
 					}
 					log.debug("Event now live!");
-					eventRepo.save(event).subscribe();
+					eventRepo.save(event).subscribe();				// save the changes to the event
 				}
 			}
-			return null;
+			return null;											// no return needed for void
 		});
 	}
 	
-	@Scheduled(cron="*/10 * * * * *")
-	public void checkEventEndTrigger() {
-		Date current = Date.from(Instant.now());
-		eventRepo.findAll().collectList()
-		.flatMap(events -> {
-			for(Event event : events) {
-				if(event.isOngoing() 
-						&& current.after(event.getEventEnd())) {
-					event.setOngoing(false);
-					Event.Type type = event.getEventType();
-					if(type.equals(Event.Type.DOUBLESTRINGS)) {
-							Event.setStringMod(1);
+	@Scheduled(cron="*/10 * * * * *")								// every 10 seconds check for events
+	public void checkEventEndTrigger() {							// that are ending and need teardown
+		Date current = Date.from(Instant.now());					// grab the current timestamp
+		eventRepo.findAll().collectList()							// get all events, put in a list
+		.flatMap(events -> {										// map the list of events;
+			for(Event event : events) {								// for each event
+				if(event.isOngoing() 								// if it is listed as ongoing
+						&& current.after(event.getEventEnd())) {	// and the current time is after its end
+					event.setOngoing(false);						// mark it as NOT an ongoing event
+					Event.Type type = event.getEventType();			// get the type of event
+					if(type.equals(Event.Type.DOUBLESTRINGS)) {		// if the type is doublestrings
+							Event.setStringMod(1);					// set the global variable stringmod to 1x
 					}
-					if(type.equals(Event.Type.ROLLMOD)) {
-							Event.setRollMod(1.0d);
+					if(type.equals(Event.Type.ROLLMOD)) {			// if the type is rollmod
+							Event.setRollMod(1.0d);					// set the global variable rollmod to 1x
 					}
 					log.debug("Event has ended.");
-					eventRepo.save(event).subscribe();
+					eventRepo.save(event).subscribe();				// save the changes to the event
 				}
 			}
-			return null;
+			return null;											// no return needed for void
 		});
 	}
 
