@@ -4,6 +4,7 @@ import java.util.UUID;
 
 import org.reactivestreams.Publisher;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -18,6 +19,8 @@ import com.group3.beans.CollectibleType;
 import com.group3.beans.CombinedCollectible;
 import com.group3.services.CollectibleService;
 import com.group3.services.CollectibleTypeService;
+
+import reactor.core.publisher.Mono;
 
 import reactor.core.publisher.Mono;
 
@@ -46,7 +49,7 @@ public class CollectibleController {
 	}
 
 	@PutMapping("/upgrade")
-	public Publisher<Collectible> upgradeCollectible(@RequestParam("collectibleId") UUID collectibleId) {
+	public Mono<ResponseEntity<?>> upgradeCollectible(@RequestParam("collectibleId") UUID collectibleId) {
 		return collectibleService.upgradeCollectible(collectibleId);
 	}
 

@@ -13,7 +13,6 @@ import java.util.UUID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -53,7 +52,7 @@ public class GamerServiceImpl implements GamerService {
 				} else {gg.setRole(Gamer.Role.GAMER);}
 				perms.add(Gamer.Role.GAMER);
 				gg.setAuthorities(perms);
-				
+				gg.setLoginBonusCollected(false);
 				if(gg.getRolls() == 0) {gg.setRolls(10);}
 				if(gg.getDailyRolls() == 0) {gg.setDailyRolls(10);}
 				if(gg.getStardust() == 0) {gg.setStardust(10);}

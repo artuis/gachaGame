@@ -14,6 +14,26 @@ public class Event {
 	public enum Type {
 		DOUBLESTRINGS, ROLLMOD;
 	}
+
+	private static int stringMod = 1;
+	private static float rollMod = 1.0f;
+	
+	public static int getStringMod() {
+		return stringMod;
+	}
+
+	public static void setStringMod(int stringMOD) {
+		stringMod = stringMOD;
+	}
+
+	public static float getRollMod() {
+		return rollMod;
+	}
+
+	public static void setRollMod(float rollMOD) {
+		rollMod = rollMOD;
+	}
+
 	@Column
 	@PrimaryKey
 	private UUID eventId;

@@ -1,7 +1,5 @@
 package com.group3.services;
 
-import java.util.List;
-
 import org.reactivestreams.Publisher;
 
 import com.group3.beans.CollectibleType;

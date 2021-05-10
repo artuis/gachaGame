@@ -3,6 +3,7 @@ package com.group3.services;
 import java.util.UUID;
 
 import org.reactivestreams.Publisher;
+import org.springframework.http.ResponseEntity;
 
 import com.group3.beans.Collectible;
 
@@ -19,7 +20,7 @@ public interface CollectibleService {
 
 	Mono<Collectible> createCollectible(Collectible c);
 	
-	Mono<Collectible> upgradeCollectible(UUID collectibleId);
+	Mono<ResponseEntity<?>> upgradeCollectible(UUID collectibleId);
 
 	Mono<Collectible> getCollectible(String id);
 
