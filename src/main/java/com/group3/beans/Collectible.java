@@ -11,6 +11,7 @@ import org.springframework.data.cassandra.core.mapping.Table;
 import org.springframework.stereotype.Component;
 
 import com.datastax.oss.driver.api.core.uuid.Uuids;
+import com.group3.beans.CollectibleType.Stage;
 
 @Component
 @Table("collectibles")
@@ -25,7 +26,9 @@ public class Collectible implements Serializable{
 	private int typeId; 
 	@Column
 	private int currentStat;
-	
+	@Column
+	private Stage currentStage;
+
 	public int getCurrentStat() {
 		return currentStat;
 	}
@@ -70,6 +73,15 @@ public class Collectible implements Serializable{
 		c.setGamerId(gamerId);
 		c.setCurrentStat(ct.getBaseStat());
 		c.setTypeId(ct.getId());
+		c.setCurrentStage(ct.getStage());
 		return c;
+	}
+
+	public Stage getCurrentStage() {
+		return currentStage;
+	}
+
+	public void setCurrentStage(Stage currentStage) {
+		this.currentStage = currentStage;
 	}
 }
