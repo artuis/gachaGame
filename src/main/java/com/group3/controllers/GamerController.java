@@ -139,11 +139,11 @@ public class GamerController {
 					} else {
 						return Mono.just(ResponseEntity.badRequest().body("not enough money 5head"));
 					}
-					log.debug("Stardust: ", Integer.toString(gamer.getStardust()));
-					log.debug("Strings: ", Integer.toString(gamer.getStrings()));
-					log.debug("Daily Rolls: ", Integer.toString(gamer.getDailyRolls()));
+					log.debug("Stardust: {}", gamer.getStardust());
+					log.debug("Strings: {}", gamer.getStrings());
+					log.debug("Daily Rolls: {}", gamer.getDailyRolls());
 					return collectibleTypeService.rollCollectibleType().flatMap(rolled -> {
-						log.debug("rolled: ", rolled.toString());
+						log.debug("rolled: {}", rolled);
 						Collectible collectible = Collectible.fromCollectibleTypeAndId(rolled, gamer.getGamerId());
 						return collectibleService.createCollectible(collectible).defaultIfEmpty(emptyCollectible).flatMap(collected -> {
 							if (collected == emptyCollectible) {
