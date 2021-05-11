@@ -19,8 +19,7 @@ import reactor.core.publisher.Mono;
 @RestController
 @RequestMapping(value = "/events")
 public class EventController {
-	@Autowired
-	private JWTUtil jwtUtil;
+
 	@Autowired
 	private EventService eventService;
 	@Autowired
