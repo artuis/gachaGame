@@ -1,6 +1,7 @@
 package com.group3.beans;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -199,6 +200,9 @@ public class Gamer implements Serializable, UserDetails {
 	}
 	
 	public void addActiveEncounter(RewardToken token) {
+		if(this.activeEncounters == null) {
+			this.activeEncounters = new ArrayList<RewardToken>();
+		}
 		this.activeEncounters.add(token);
 	}
 
@@ -383,10 +387,13 @@ public class Gamer implements Serializable, UserDetails {
 		return "Gamer [gamerId=" + gamerId + ", username=" + username + ", password=" + password + ", role=" + role
 				+ ", authorities=" + authorities + ", rolls=" + rolls + ", dailyRolls=" + dailyRolls + ", stardust="
 				+ stardust + ", strings=" + strings + ", loginBonusCollected=" + loginBonusCollected
-				+ ", collectionSize=" + collectionSize + ", collectionStrength=" + collectionStrength + ", pvpScore="
-				+ pvpScore + ", registrationDate=" + registrationDate + ", lastLogin=" + lastLogin + ", banDates="
-				+ banDates + ", enabled=" + enabled + ", accountNonLocked=" + accountNonLocked
-				+ ", credentialsNonExpired=" + credentialsNonExpired + ", accountNonExpired=" + accountNonExpired + "]";
+				+ ", collectionSize=" + collectionSize + ", collectionStrength=" + collectionStrength
+				+ ", activeEncounters=" + activeEncounters + ", pvpScore=" + pvpScore + ", registrationDate="
+				+ registrationDate + ", lastLogin=" + lastLogin + ", banDates=" + banDates + ", enabled=" + enabled
+				+ ", accountNonLocked=" + accountNonLocked + ", credentialsNonExpired=" + credentialsNonExpired
+				+ ", accountNonExpired=" + accountNonExpired + "]";
 	}
+
+	
 
 }

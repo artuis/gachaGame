@@ -1,8 +1,10 @@
 package com.group3.beans;
 
+import java.util.UUID;
+
 public class Encounter {
 
-	int encounterID;
+	UUID encounterID;
 	// Target number the collectibles have to beat to succeed vs encounter
 	int difficulty;
 	// Amount of 'reward' returned when successful vs encounter
@@ -14,11 +16,11 @@ public class Encounter {
 		super();
 	}
 
-	public int getEncounterID() {
+	public UUID getEncounterID() {
 		return encounterID;
 	}
 
-	public void setEncounterID(int encounterID) {
+	public void setEncounterID(UUID encounterID) {
 		this.encounterID = encounterID;
 	}
 

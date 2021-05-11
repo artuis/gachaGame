@@ -1,6 +1,7 @@
 package com.group3.data;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.data.cassandra.repository.AllowFiltering;
 import org.springframework.data.cassandra.repository.ReactiveCassandraRepository;
@@ -15,6 +16,6 @@ public interface EncounterRepository extends ReactiveCassandraRepository<Encount
 	@AllowFiltering
 	Flux<Encounter> findAllByLevel(int level);
 	@AllowFiltering
-	Mono<Encounter> findById(int encID);
+	Mono<Encounter> findById(UUID encID);
 
 }

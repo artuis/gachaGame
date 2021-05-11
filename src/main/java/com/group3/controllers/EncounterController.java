@@ -1,6 +1,7 @@
 package com.group3.controllers;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.reactivestreams.Publisher;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,11 +41,11 @@ public class EncounterController {
 
 	@PreAuthorize("hasAuthority('GAMER')")
 	@PostMapping
-	public Mono<ResponseEntity<?>> startEncounter(@RequestParam("collectibleIDList") List<Integer> colIDs,
-			@RequestParam("encounterID") Integer encounterID, ServerWebExchange exchange) {
+	public Mono<ResponseEntity<?>> startEncounter(@RequestParam("collectibleIDList") List<UUID> colIDs,
+			@RequestParam("encounterID") UUID encounterID, ServerWebExchange exchange) {
 
 		String token = exchange.getRequest().getCookies().getFirst("token").getValue();
-		encounterService.setEncounter((int) jwtUtil.getAllClaimsFromToken(token).get("id"), colIDs, encounterID);
+		encounterService.setEncounter((UUID) jwtUtil.getAllClaimsFromToken(token).get("id"), colIDs, encounterID);
 
 		// return something?
 		return null;
@@ -54,7 +55,7 @@ public class EncounterController {
 	@GetMapping("{gamerId}")
 	public Publisher<?> viewRunningEncounters(ServerWebExchange exchange) {
 		String token = exchange.getRequest().getCookies().getFirst("token").getValue();
-		return encounterService.getRunningEncounters((int) jwtUtil.getAllClaimsFromToken(token).get("id"));
+		return encounterService.getRunningEncounters((UUID) jwtUtil.getAllClaimsFromToken(token).get("id"));
 	}
 
 	// TODO Get: receive reward if encounter is completed

@@ -3,6 +3,7 @@ package com.group3.services;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -21,6 +22,7 @@ import com.group3.data.CollectibleRepository;
 import com.group3.data.EncounterRepository;
 import com.group3.data.GamerRepository;
 
+import reactor.core.Disposable;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -38,34 +40,37 @@ public class EncounterServiceImpl implements EncounterService {
 		super();
 	}
 	
-	public Flux<RewardToken> getRunningEncounters(int gamerID){
+	public Flux<RewardToken> getRunningEncounters(UUID gamerID){
 		Gamer g = (Gamer) gamerRepo.findById(gamerID).subscribe();
 		return Flux.fromIterable(g.getActiveEncounters());
 	}
 	
-	public Mono<RewardToken> setEncounter(int gamerID, List<Integer> colIDs, Integer encID) {
+	public Mono<RewardToken> setEncounter(UUID gamerID, List<UUID> colIDs, UUID encID) {
 		
 		// Get the collectibles to send on the journey
 		List<Collectible> sent = new ArrayList<Collectible>();
-		colIDs.forEach(x -> sent.add(
-				(Collectible) collectibleRepo.findById(x).subscribe()));
+		colIDs.forEach(x -> 
+		collectibleRepo.findById(x)
+		.doOnNext(y -> sent.add(y)).subscribe());
 		
 		// If some collectibles sent aren't owned by gamerID return null
 		if(!sent.stream().allMatch(x->x.getGamerId() == gamerID)) {
 			return null;
 		}
 		
-		// Get the journey to send on the collectibles
-		Encounter journey = new Encounter();
-		journey = (Encounter) encounterRepo.findById(encID).subscribe();
-		
-		// Set the token to give to the Gamer
 		RewardToken rewardToken = new RewardToken();
-		rewardToken.setRunningEncounter(runEncounter(sent, journey));
-		
-		Gamer gg = (Gamer) gamerRepo.findById(gamerID).subscribe();
-		gg.addActiveEncounter(rewardToken);
-		gamerRepo.save(gg);
+		// Get the journey to send on the collectibles
+		encounterRepo.findById(encID)
+		// Set the token to give to the Gamer
+		.doOnNext( x -> rewardToken.setRunningEncounter(runEncounter(sent, x)))
+		.subscribe();
+
+		// Give the token to gamer
+		gamerRepo.findById(gamerID)
+		.doOnNext(gg -> gg.addActiveEncounter(rewardToken))
+		.doOnNext(gg -> gamerRepo.save(gg))
+		.subscribe();
+
 		
 		return Mono.just(rewardToken);
 		
@@ -98,7 +103,7 @@ public class EncounterServiceImpl implements EncounterService {
 		return Mono.just(reward).delayElement(Duration.ofMillis(journey.getLength()));
 	}
 	
-	public Flux<?> getEncounterReward(int gamerID) {
+	public Flux<?> getEncounterReward(UUID gamerID) {
 		
 		Gamer gg = (Gamer) gamerRepo.findById(gamerID).subscribe();
 		
@@ -109,8 +114,9 @@ public class EncounterServiceImpl implements EncounterService {
 			// TODO return response
 			return null;
 		} else {
-			
-			tokens.stream().;
+			// TODO check if encounters are done
+			// and get rewards from the ones that are
+			//tokens.stream().;
 			
 			
 		}
@@ -118,6 +124,12 @@ public class EncounterServiceImpl implements EncounterService {
 		return null;
 	}
 	
-	
+	// Constructor for testing
+	public EncounterServiceImpl(CollectibleRepository cMock, EncounterRepository eMock, GamerRepository gMock) {
+		this.collectibleRepo = cMock;
+		this.encounterRepo = eMock;
+		this.gamerRepo = gMock;
+	}
+
 	
 }
