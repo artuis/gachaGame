@@ -27,14 +27,13 @@ public class EventServiceImpl implements EventService {
 	public Flux<Event> viewOngoingEvents(){
 		return eventRepo.findAllByOngoing(true);
 	}
-
 	/*do we want to be able to make more events or are we 
 	 * good with just double strings and 
 	 * turn it on and off/schedule it*/
 	@Override
 	public Mono<Event> createEvent(Event event) {
 		//verify that event has start and end time before creating
-		if (event.getEventStart() == null | event.getEventEnd() == null) {
+		if (event.getEventStart() == null || event.getEventEnd() == null) {
 			log.trace("invalid event start/end times");
 			return Mono.empty();
 		}
