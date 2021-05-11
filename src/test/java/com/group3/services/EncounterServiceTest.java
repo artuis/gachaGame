@@ -102,7 +102,7 @@ class EncounterServiceTest {
 		// Establish Mock behaviors
 		doReturn(Mono.just(mol1)).when(collectibleMock).findById(eq(id1));
 		doReturn(Mono.just(mol2)).when(collectibleMock).findById(eq(id2));
-		doReturn(Mono.just(journey1)).when(encounterMock).findById(eq(id1));
+		doReturn(Mono.just(journey1)).when(encounterMock).findByEncounterID(eq(id1));
 		doReturn(Mono.just(gamer1)).when(gamerMock).findById(eq(id1));
 
 		List<UUID> sentIDs = new ArrayList<UUID>();

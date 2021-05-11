@@ -60,7 +60,7 @@ public class EncounterServiceImpl implements EncounterService {
 		
 		RewardToken rewardToken = new RewardToken();
 		// Get the journey to send on the collectibles
-		encounterRepo.findById(encID)
+		encounterRepo.findByEncounterID(encID)
 		// Set the token to give to the Gamer
 		.doOnNext( x -> rewardToken.setRunningEncounter(runEncounter(sent, x)))
 		.subscribe();
