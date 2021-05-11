@@ -15,4 +15,6 @@ public interface EventService {
 
 	Flux<Event> getEvents();
 
+	Flux<Event> viewOngoingEvents();
+
 }

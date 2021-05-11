@@ -41,7 +41,7 @@ public class Event {
 	private Type eventType;
 
 	@Column
-	private boolean isOngoing;
+	private boolean ongoing;
 
 	@Column
 	private Date eventStart;
@@ -70,11 +70,11 @@ public class Event {
 	}
 
 	public boolean isOngoing() {
-		return isOngoing;
+		return ongoing;
 	}
 
-	public void setOngoing(boolean isOngoing) {
-		this.isOngoing = isOngoing;
+	public void setOngoing(boolean ongoing) {
+		this.ongoing = ongoing;
 	}
 
 	public Date getEventStart() {
@@ -101,7 +101,7 @@ public class Event {
 		result = prime * result + ((eventId == null) ? 0 : eventId.hashCode());
 		result = prime * result + ((eventStart == null) ? 0 : eventStart.hashCode());
 		result = prime * result + ((eventType == null) ? 0 : eventType.hashCode());
-		result = prime * result + (isOngoing ? 1231 : 1237);
+		result = prime * result + (ongoing ? 1231 : 1237);
 		return result;
 	}
 
@@ -131,14 +131,14 @@ public class Event {
 			return false;
 		if (eventType != other.eventType)
 			return false;
-		if (isOngoing != other.isOngoing)
+		if (ongoing != other.ongoing)
 			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "Event [eventId=" + eventId + ", eventType=" + eventType + ", isOngoing=" + isOngoing + ", eventStart="
+		return "Event [eventId=" + eventId + ", eventType=" + eventType + ", ongoing=" + ongoing + ", eventStart="
 				+ eventStart + ", eventEnd=" + eventEnd + "]";
 	}
 

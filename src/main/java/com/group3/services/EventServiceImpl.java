@@ -55,4 +55,8 @@ public class EventServiceImpl implements EventService {
 		return eventRepo.findAll();
 	}
 	
+	@Override
+	public Flux<Event> viewOngoingEvents() {
+		return eventRepo.findAllByOngoing(true);
+	}
 }
