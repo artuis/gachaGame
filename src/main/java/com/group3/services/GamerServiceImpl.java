@@ -83,6 +83,11 @@ public class GamerServiceImpl implements GamerService {
 	}
 	
 	@Override
+	public Flux<Gamer> getGamersByRole(Gamer.Role role) {
+		return gamerRepo.findAllByRole(role);
+	}
+	
+	@Override
 	public Flux<Gamer> getGamersByPvpScore() {
 		// TODO Auto-generated method stub
 		return null;
