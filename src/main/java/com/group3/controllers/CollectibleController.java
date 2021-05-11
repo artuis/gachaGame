@@ -5,6 +5,8 @@ import java.util.UUID;
 import org.reactivestreams.Publisher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -63,5 +65,11 @@ public class CollectibleController {
 	public Mono<CombinedCollectible> getCollectible(@RequestParam("id") String id) {
 		Mono<Collectible> collectible = collectibleService.getCollectible(id);
 		return collectible.flatMap(c -> collectibleTypeService.getCollectibleType(c.getTypeId()).map(t -> new CombinedCollectible(c, t)));
+	}
+	
+	@PreAuthorize("hasAuthority('MODERATOR')")
+	@DeleteMapping
+	public Mono<ResponseEntity<?>> removeCollectible(@RequestParam("collectibleId") UUID collectibleId, @RequestParam("gamerId") UUID gamerId) {
+		return collectibleService.removeCollectible(collectibleId, gamerId);
 	}
 }

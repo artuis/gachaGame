@@ -6,7 +6,65 @@
 	},
 	"item": [
 		{
-			"name": "Register Gamer",
+			"name": "Register Gamer moneyBags",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"moneyBags\",\r\n    \"password\": \"bigMoneyHoney\",\r\n    \"strings\": 1000000\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/gamers/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"gamers",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Register Gamer phanniepack MOD",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"phanniepack\",\r\n    \"password\": \"hunter2\",\r\n    \"role\": \"MODERATOR\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/gamers/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"gamers",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Register Gamer 1337Gamer",
 			"request": {
 				"method": "PUT",
 				"header": [],
@@ -64,13 +122,13 @@
 			"response": []
 		},
 		{
-			"name": "Login Moderator PhanniePack",
+			"name": "Login Gamer moneyBags",
 			"request": {
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"username\" : \"1337Gamer\"\r\n}",
+					"raw": "{\r\n    \"username\" : \"moneyBags\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -93,12 +151,21 @@
 			"response": []
 		},
 		{
-			"name": "Get Gamers",
+			"name": "Login Moderator PhanniePack",
 			"request": {
-				"method": "GET",
+				"method": "POST",
 				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\" : \"phanniepack\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
 				"url": {
-					"raw": "http://localhost:8080/gamers/",
+					"raw": "http://localhost:8080/gamers/login",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -106,7 +173,26 @@
 					"port": "8080",
 					"path": [
 						"gamers",
-						""
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Moderator Get Gamers",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/gamers",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"gamers"
 					]
 				}
 			},
@@ -127,7 +213,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/gamers/58?daysBanned=1",
+					"raw": "http://localhost:8080/gamers/ban/35c45100-b0cb-11eb-aac2-97bd40d131e5?daysBanned=3",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -135,12 +221,13 @@
 					"port": "8080",
 					"path": [
 						"gamers",
-						"58"
+						"ban",
+						"35c45100-b0cb-11eb-aac2-97bd40d131e5"
 					],
 					"query": [
 						{
 							"key": "daysBanned",
-							"value": "1"
+							"value": "3"
 						}
 					]
 				}
@@ -177,7 +264,7 @@
 			"response": []
 		},
 		{
-			"name": "Create Collectible",
+			"name": "Create CollectibleType",
 			"request": {
 				"method": "POST",
 				"header": [],
@@ -257,6 +344,156 @@
 						"gamers",
 						"collectibles",
 						"roll"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All collectibles",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/collectibles?filter=2e3f6790-b0f7-11eb-a080-d596cea99295",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"collectibles"
+					],
+					"query": [
+						{
+							"key": "filter",
+							"value": "all",
+							"disabled": true
+						},
+						{
+							"key": "filter",
+							"value": "2c8119c0-b0cb-11eb-aac2-97bd40d131e5",
+							"description": "all collectibles for phanniepack",
+							"disabled": true
+						},
+						{
+							"key": "filter",
+							"value": "2e3f6790-b0f7-11eb-a080-d596cea99295",
+							"description": "all collectibles for moneyBags"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Upgrade collectible for moneyBags",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/collectibles/upgrade?collectibleId=c9a997d0-b135-11eb-aec8-893a4063def3",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"collectibles",
+						"upgrade"
+					],
+					"query": [
+						{
+							"key": "collectibleId",
+							"value": "c9a997d0-b135-11eb-aec8-893a4063def3"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create event doubleStrings",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"eventType\": \"DOUBLESTRINGS\",\r\n    \"ongoing\": \"false\",\r\n    \"eventStart\": \"2021-05-09T00:33:43.644+04:00\",\r\n    \"eventEnd\": \"2021-05-10T21:02:43.644+04:00\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/events",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"events"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Moderator delete collectible",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"eventType\": \"DOUBLESTRINGS\",\r\n    \"ongoing\": \"false\",\r\n    \"eventStart\": \"2021-05-09T00:33:43.644+04:00\",\r\n    \"eventEnd\": \"2021-05-10T21:02:43.644+04:00\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/collectibles?collectibleId=2a6a3440-b216-11eb-8d94-5d0b1831e989&gamerId=30f0a3a0-b1a1-11eb-86b6-535137db729a",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"collectibles"
+					],
+					"query": [
+						{
+							"key": "collectibleId",
+							"value": "2a6a3440-b216-11eb-8d94-5d0b1831e989"
+						},
+						{
+							"key": "gamerId",
+							"value": "30f0a3a0-b1a1-11eb-86b6-535137db729a"
+						}
 					]
 				}
 			},
