@@ -1,5 +1,7 @@
 package com.group3.services;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import org.slf4j.Logger;
@@ -8,8 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import com.datastax.oss.driver.api.core.uuid.Uuids;
 import com.group3.beans.Collectible;
 import com.group3.data.CollectibleRepository;
+import com.group3.data.CollectibleTypeRepository;
 import com.group3.data.GamerRepository;
 
 import reactor.core.publisher.Flux;
@@ -25,6 +29,9 @@ public class CollectibleServiceImpl implements CollectibleService {
 
 	@Autowired
 	private CollectibleRepository repo;
+	
+	@Autowired
+	private CollectibleTypeRepository typeRepo;
 	
 	@Autowired
 	private GamerRepository gamerRepo;
@@ -98,11 +105,54 @@ public class CollectibleServiceImpl implements CollectibleService {
 			log.debug("Collectible's gamerId: {}", collectible.getGamerId());
 			log.debug("GamerId: {}", gamerId);
 			if(!collectible.getGamerId().equals(gamerId)) {
-				return Mono.just(ResponseEntity.badRequest().body("Collectible does not belong to the specified gamer."));
+				return Mono.just(ResponseEntity.badRequest()
+						.body("Collectible does not belong to the specified gamer."));
 			} else {
 				return repo.delete(collectible).thenReturn(ResponseEntity.ok(collectible));
 			}
 		});
+	}
+
+	@Override
+	public Mono<ResponseEntity<?>> collectibleFusion(List<UUID> collectibleIds) {
+		// if minimum quantity of collectible IDs needed to fuse is not met, return badRequest
+		int fusionQuantity = 5;
+		if(collectibleIds.size() != fusionQuantity) {
+			return Mono.just(ResponseEntity.badRequest()
+					.body("You need to sacrifice "
+			+fusionQuantity+" collectibles to fuse them into the next stage :) "));
+		}
+		// create a list of collectibles from the given collectible IDs
+		List<Collectible> collectibles = new ArrayList<Collectible>();
+		for(UUID id : collectibleIds) {
+			repo.findById(id).subscribe(collectibles::add);
+		}
+		// if the collectibles in the list aren't all of the same type, return badRequest
+		int type = collectibles.get(0).getTypeId();
+		for(Collectible collectible : collectibles) {
+			if(collectible.getTypeId() != type) {
+				return Mono.just(ResponseEntity.badRequest()
+						.body("You can only fuse 5 collectibles of the same type!"));
+			}
+		}
+		// if there is no next stage, return a badRequest
+		if(typeRepo.findById(type).block().getNextStage().equals(null)) {
+			return Mono.just(ResponseEntity.badRequest().body("These collectibles are already at the final stage!"));
+		}
+		// if everything checks out, build the next stage collectible
+		UUID gamerId = collectibles.get(0).getGamerId();
+		int nextStageId = typeRepo.findById(type).block().getNextStage();
+		
+		Collectible nextStage = new Collectible();
+		nextStage.setGamerId(gamerId);
+		nextStage.setId(Uuids.timeBased());
+		nextStage.setTypeId(nextStageId);
+		nextStage.setCurrentStage(typeRepo.findById(nextStageId).block().getStage());
+		nextStage.setCurrentStat(typeRepo.findById(nextStageId).block().getBaseStat());
+
+		return repo.deleteAll(collectibles)
+				.thenReturn(repo.insert(nextStage))
+				.thenReturn(ResponseEntity.ok(nextStage));
 	}
 	
 }

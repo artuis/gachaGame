@@ -1,5 +1,6 @@
 package com.group3.controllers;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.reactivestreams.Publisher;
@@ -72,4 +73,14 @@ public class CollectibleController {
 	public Mono<ResponseEntity<?>> removeCollectible(@RequestParam("collectibleId") UUID collectibleId, @RequestParam("gamerId") UUID gamerId) {
 		return collectibleService.removeCollectible(collectibleId, gamerId);
 	}
+	
+	@PostMapping("/fusion")
+	public Mono<ResponseEntity<?>> collectibleFusion(@RequestBody List<UUID> collectibleIds) {
+		return collectibleService.collectibleFusion(collectibleIds);
+	}
+//			(@RequestParam("collectibleId1") UUID collectibleId1, 
+//			@RequestParam("collectibleId2") UUID collectibleId2,
+//			@RequestParam("collectibleId3") UUID collectibleId3,
+//			@RequestParam("collectibleId4") UUID collectibleId4,
+//			@RequestParam("collectibleId5") UUID collectibleId5)
 }

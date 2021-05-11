@@ -1,5 +1,6 @@
 package com.group3.services;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.reactivestreams.Publisher;
@@ -26,4 +27,5 @@ public interface CollectibleService {
 	
 	Mono<ResponseEntity<?>> removeCollectible(UUID collectibleId, UUID gamerId);
 
+	Mono<ResponseEntity<?>> collectibleFusion(List<UUID> collectibleIds);
 }
