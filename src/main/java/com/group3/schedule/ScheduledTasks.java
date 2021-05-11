@@ -87,7 +87,8 @@ public class ScheduledTasks implements CommandLineRunner {
 	}
 	
 	@Scheduled(cron="*/10 * * * * *")								// every 10 seconds check for events
-	public void checkEventStartTrigger() {							// that are starting and need initialized
+	public void checkEventStartTrigger() {		
+		log.debug("current stringMod:{}", Event.getStringMod());	// that are starting and need initialized
 		Date current = Date.from(Instant.now());					// grab the current timestamp
 		eventRepo.findAll().collectList()							// get all events, put in a list
 		.flatMap(events -> {										// map the list of events;
