@@ -21,7 +21,7 @@ public class EventServiceImpl implements EventService {
 	private Logger log = LoggerFactory.getLogger(GamerServiceImpl.class);
 	
 	public EventServiceImpl() {
-		
+		super();
 	}
 	
 	public Flux<Event> viewOngoingEvents(){
