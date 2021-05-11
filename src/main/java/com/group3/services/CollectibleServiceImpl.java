@@ -90,5 +90,19 @@ public class CollectibleServiceImpl implements CollectibleService {
 	public Mono<Collectible> getCollectible(String id) {
 		return repo.findById(UUID.fromString(id));
 	}
+
+	@Override
+	public Mono<ResponseEntity<?>> removeCollectible(UUID collectibleId, UUID gamerId) {
+		return repo.findById(collectibleId).flatMap(collectible -> {
+			log.debug("CollectibleId: {} ", collectibleId);
+			log.debug("Collectible's gamerId: {}", collectible.getGamerId());
+			log.debug("GamerId: {}", gamerId);
+			if(!collectible.getGamerId().equals(gamerId)) {
+				return Mono.just(ResponseEntity.badRequest().body("Collectible does not belong to the specified gamer."));
+			} else {
+				return repo.delete(collectible).thenReturn(ResponseEntity.ok(collectible));
+			}
+		});
+	}
 	
 }
