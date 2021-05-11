@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.group3.beans.Event;
 import com.group3.services.EventService;
-import com.group3.util.JWTUtil;
+
 
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
