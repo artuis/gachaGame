@@ -6,7 +6,9 @@ import java.util.UUID;
 import org.springframework.data.cassandra.core.mapping.Column;
 import org.springframework.data.cassandra.core.mapping.PrimaryKey;
 import org.springframework.data.cassandra.core.mapping.Table;
+import org.springframework.stereotype.Component;
 
+@Component
 @Table("events")
 public class Event {
 
@@ -16,22 +18,6 @@ public class Event {
 
 	private static int stringMod = 1;
 	private static double rollMod = 1.0d;
-
-	public static int getStringMod() {
-		return stringMod;
-	}
-
-	public static void setStringMod(int stringMOD) {
-		stringMod = stringMOD;
-	}
-
-	public static double getRollMod() {
-		return rollMod;
-	}
-
-	public static void setRollMod(double rollMOD) {
-		rollMod = rollMOD;
-	}
 
 	@Column
 	@PrimaryKey
@@ -48,9 +34,26 @@ public class Event {
 
 	@Column
 	private Date eventEnd;
-
+	
 	public Event() {
-		// TODO Auto-generated constructor stub
+		super();
+
+	}
+
+	public static int getStringMod() {
+		return stringMod;
+	}
+
+	public static void setStringMod(int stringMod) {
+		Event.stringMod = stringMod;
+	}
+
+	public static double getRollMod() {
+		return rollMod;
+	}
+
+	public static void setRollMod(double rollMod) {
+		Event.rollMod = rollMod;
 	}
 
 	public UUID getEventId() {
@@ -142,4 +145,5 @@ public class Event {
 				+ eventStart + ", eventEnd=" + eventEnd + "]";
 	}
 
+	
 }
