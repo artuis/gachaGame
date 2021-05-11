@@ -29,9 +29,6 @@ public class SecurityConfig {
 	@Autowired
 	private SecurityContextRepository securityContextRepository;
 	
-	@Autowired
-	private GamerService gamerService;
-	
 	@Bean
 	public SecurityWebFilterChain securitygWebFilterChain(ServerHttpSecurity http) {
 		return http

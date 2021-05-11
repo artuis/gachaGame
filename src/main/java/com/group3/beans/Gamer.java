@@ -14,11 +14,13 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 @Table("gamers")
 @Component
+@JsonIgnoreProperties(value = { "password" })
 public class Gamer implements Serializable, UserDetails {
 	private static final long serialVersionUID = 4447548260627752098L;
 
