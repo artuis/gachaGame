@@ -120,6 +120,7 @@ public class ScheduledTasks implements CommandLineRunner {
 	public void checkEventStartTrigger() {
 		log.debug("Current stringMod: {}",Event.getStringMod());
 		Date current = Date.from(Instant.now());
+		log.debug("Current timestamp: {}", current);
 		List<Event> updatedEvents = new ArrayList<Event>();
 		List<Event> eventList = eventService.getEvents()
 				.collectList().block();
