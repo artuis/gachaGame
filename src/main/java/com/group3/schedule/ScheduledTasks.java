@@ -140,6 +140,7 @@ public class ScheduledTasks implements CommandLineRunner {
 				eventService.updateEvent(event)
 				.subscribe(updatedEvents::add);
 			}
+
 		}
 	}
 	/*

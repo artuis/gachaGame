@@ -71,7 +71,7 @@ public class GamerController {
 		return gamerService.addGamer(gg).defaultIfEmpty(emptyGamer).map(gamer -> {
 			if (gamer.getUsername() == null || gamer.getGamerId() == null) {
 				return ResponseEntity.status(HttpStatus.CONFLICT).body(gg);
-			}
+			} 
 			return ResponseEntity.ok(gamer);
 		});
 	}
