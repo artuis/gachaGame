@@ -118,9 +118,7 @@ public class ScheduledTasks implements CommandLineRunner {
 	
 	@Scheduled(cron="*/10 * * * * *")
 	public void checkEventStartTrigger() {
-		log.debug("Current stringMod: {}",Event.getStringMod());
 		Date current = Date.from(Instant.now());
-		log.debug("Current timestamp: {}", current);
 		List<Event> updatedEvents = new ArrayList<Event>();
 		List<Event> eventList = eventService.getEvents()
 				.collectList().block();
@@ -195,11 +193,12 @@ public class ScheduledTasks implements CommandLineRunner {
 			Event.Type type = event.getEventType();
 			if(type.equals(Event.Type.DOUBLESTRINGS)) {
 				Event.setStringMod(2);
+				log.debug("Current stringMod: {}", Event.getStringMod());
 			}
 			if(type.equals(Event.Type.ROLLMOD)) {
 				Event.setRollMod(1.05d);
+				log.debug("Current rollMod: {}", Event.getRollMod());
 			}
-			log.debug("Current stringMod: {}", Event.getStringMod());
 		}
 	}
 }
