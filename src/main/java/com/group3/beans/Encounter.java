@@ -12,7 +12,6 @@ import org.springframework.stereotype.Component;
 @Component
 @Table("encounters")
 public class Encounter {
-	private static final long serialVersionUID = 4776899515170739875L;
 
 	@PrimaryKeyColumn(name = "encounterID", ordinal = 0, type = PrimaryKeyType.PARTITIONED)
 	UUID encounterID;
