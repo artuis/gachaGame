@@ -127,16 +127,18 @@ public class CollectibleServiceImpl implements CollectibleService {
 				return Mono.empty();
 			}
 		}
-		// if there is no next stage, return empty
-		if(typeServ.getCollectibleType(type).block().getNextStage() == null 
-				|| typeServ.getCollectibleType(type).block().getNextStage() == 0) {
-			return Mono.empty();
-		}
 		// if everything checks out, build the next stage collectible
 		UUID gamerId = collectibles.get(0).getGamerId();
 		CollectibleType nextStageBase = typeServ.getCollectibleType(type).map(currentType -> {
-			return typeServ.getCollectibleType(currentType.getNextStage());
+			return typeServ.getCollectibleType(currentType.getNextStage()).map(nextType -> {
+				if(nextType != null) {
+					return nextType;
+				} else { return currentType;}
+			});
 		}).block().block();
+		if(nextStageBase.getId() == type) {
+			return Mono.empty();
+		}
 		Collectible nextStage = Collectible.fromCollectibleTypeAndId(nextStageBase, gamerId);
 		return repo.deleteAll(collectibles).then(repo.save(nextStage));
 	}
