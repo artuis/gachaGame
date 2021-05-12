@@ -118,7 +118,9 @@ public class CollectibleServiceImpl implements CollectibleService {
 		List<Collectible> collectibles = getAllCollectibles().filter(collectible -> {
 			return collectibleIds.contains(collectible.getId());
 		}).collectList().block();
-		
+		if(collectibles.isEmpty()) {
+			return Mono.empty();
+		}
 		// if the collectibles in the list aren't all of the same type, return empty
 		int type = collectibles.get(0).getTypeId();
 		for(Collectible collectible : collectibles) {
@@ -127,7 +129,7 @@ public class CollectibleServiceImpl implements CollectibleService {
 			}
 		}
 		// if there is no next stage, return empty
-		if(typeRepo.findById(type).block().getNextStage().equals(null)) {
+		if(typeRepo.findById(type).block().getNextStage() == null) {
 			return Mono.empty();
 		}
 		// if everything checks out, build the next stage collectible
