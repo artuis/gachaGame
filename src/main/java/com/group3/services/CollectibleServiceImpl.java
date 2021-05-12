@@ -1,5 +1,6 @@
 package com.group3.services;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -115,12 +116,11 @@ public class CollectibleServiceImpl implements CollectibleService {
 	@Override
 	public Mono<Collectible> collectibleFusion(List<UUID> collectibleIds) {
 		// create a list of collectibles from the given collectible IDs
+		List<Collectible> defaultEmpty = new ArrayList<Collectible>();
+		defaultEmpty.add(emptyCollectible);
 		List<Collectible> collectibles = getAllCollectibles().filter(collectible -> {
 			return collectibleIds.contains(collectible.getId());
-		}).collectList().block();
-		if(collectibles == null | collectibles.isEmpty()) {
-			return Mono.empty();
-		}
+		}).collectList().defaultIfEmpty(defaultEmpty).block();
 		// if the collectibles in the list aren't all of the same type, return empty
 		int type = collectibles.get(0).getTypeId();
 		for(Collectible collectible : collectibles) {
@@ -129,7 +129,8 @@ public class CollectibleServiceImpl implements CollectibleService {
 			}
 		}
 		// if there is no next stage, return empty
-		if(typeRepo.findById(type).block().getNextStage() == null) {
+		if(typeRepo.findById(type).block().getNextStage() == null 
+				| typeRepo.findById(type).block().getNextStage() == 0) {
 			return Mono.empty();
 		}
 		// if everything checks out, build the next stage collectible
