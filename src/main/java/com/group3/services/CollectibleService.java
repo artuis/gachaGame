@@ -20,12 +20,13 @@ public interface CollectibleService {
 	Publisher<Collectible> updateCollectible(Collectible c);
 
 	Mono<Collectible> createCollectible(Collectible c);
-	
+
 	Mono<ResponseEntity<?>> upgradeCollectible(UUID collectibleId);
 
 	Mono<Collectible> getCollectible(String id);
-	
+
 	Mono<ResponseEntity<?>> removeCollectible(UUID collectibleId, UUID gamerId);
 
-	Mono<ResponseEntity<?>> collectibleFusion(List<UUID> collectibleIds);
+	Mono<Collectible> collectibleFusion(List<UUID> collectibleIds);
+
 }
