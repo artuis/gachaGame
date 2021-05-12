@@ -30,6 +30,9 @@ public class CollectibleServiceImpl implements CollectibleService {
 	
 	@Autowired
 	private CollectibleType emptyCollectibleType;
+	
+	@Autowired
+	private CollectibleTypeServiceImpl typeServ;
 
 	@Autowired
 	private CollectibleRepository repo;
@@ -136,21 +139,14 @@ public class CollectibleServiceImpl implements CollectibleService {
 			}
 		}
 		// if there is no next stage, return empty
-		if(typeRepo.findById(type).defaultIfEmpty(emptyCollectibleType).block().getNextStage() == null 
-				|| typeRepo.findById(type).defaultIfEmpty(emptyCollectibleType).block().getNextStage() == 0) {
+		if(typeServ.getCollectibleType(type).defaultIfEmpty(emptyCollectibleType).block().getNextStage() == null 
+				|| typeServ.getCollectibleType(type).defaultIfEmpty(emptyCollectibleType).block().getNextStage() == 0) {
 			return Mono.empty();
 		}
 		// if everything checks out, build the next stage collectible
 		UUID gamerId = collectibles.get(0).getGamerId();
-		int nextStageId = typeRepo.findById(type).block().getNextStage();
-		
-		Collectible nextStage = new Collectible();
-		nextStage.setGamerId(gamerId);
-		nextStage.setId(Uuids.timeBased());
-		nextStage.setTypeId(nextStageId);
-		nextStage.setCurrentStage(typeRepo.findById(nextStageId).block().getStage());
-		nextStage.setCurrentStat(typeRepo.findById(nextStageId).block().getBaseStat());
-
+		CollectibleType nextStageBase = typeServ.getCollectibleType(type).block();
+		Collectible nextStage = Collectible.fromCollectibleTypeAndId(nextStageBase, gamerId);
 		return repo.deleteAll(collectibles).then(repo.save(nextStage));
 	}
 	
