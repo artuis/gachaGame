@@ -200,7 +200,7 @@ public class Gamer implements Serializable, UserDetails {
 
 	public void addActiveEncounter(UUID token) {
 		if (this.activeEncounters == null) {
-			this.activeEncounters = new ArrayList<UUID>();
+			this.activeEncounters = new ArrayList<>();
 		}
 		this.activeEncounters.add(token);
 	}

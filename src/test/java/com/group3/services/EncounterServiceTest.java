@@ -1,13 +1,9 @@
 package com.group3.services;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import static org.mockito.Mockito.argThat;
+import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.eq;
-
-import org.mockito.junit.jupiter.MockitoExtension;
+import static org.mockito.Mockito.verify;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,10 +15,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import com.group3.beans.Collectible;
 import com.group3.beans.Encounter;
@@ -92,25 +86,24 @@ class EncounterServiceTest {
 	}
 
 	/*
-	 * Test gives two collectibles from the same user
-	 * the collectibles are sent on their journey and the
-	 * reward token is given to the gamer
-	 * Passes if gamer has a token
+	 * Test gives two collectibles from the same user the collectibles are sent on
+	 * their journey and the reward token is given to the gamer Passes if gamer has
+	 * a token
 	 */
 	@Test
 	void testGoodSetEncounter() {
 		// Establish Mock behaviors
-		doReturn(Mono.just(mol1)).when(collectibleMock).findById(eq(id1));
-		doReturn(Mono.just(mol2)).when(collectibleMock).findById(eq(id2));
-		doReturn(Mono.just(journey1)).when(encounterMock).findByEncounterID(eq(id1));
-		doReturn(Mono.just(gamer1)).when(gamerMock).findById(eq(id1));
+		doReturn(Mono.just(mol1)).when(collectibleMock).findById(id1);
+		doReturn(Mono.just(mol2)).when(collectibleMock).findById(id2);
+		doReturn(Mono.just(journey1)).when(encounterMock).findByEncounterID(id1);
+		doReturn(Mono.just(gamer1)).when(gamerMock).findById(id1);
 
 		List<UUID> sentIDs = new ArrayList<UUID>();
 		sentIDs.add(id1);
 		sentIDs.add(id2);
 
 		esi.setEncounter(id1, sentIDs, id1);
-		
+
 		verify(gamerMock).save(argThat(gamer -> gamer.getActiveEncounters().size() > 0));
 	}
 
@@ -121,8 +114,8 @@ class EncounterServiceTest {
 	@Test
 	void testBadSetEncounter() {
 		// Establish Mock behaviors
-		doReturn(Mono.just(mol1)).when(collectibleMock).findById(eq(id1));
-		doReturn(Mono.just(mol3)).when(collectibleMock).findById(eq(id2));
+		doReturn(Mono.just(mol1)).when(collectibleMock).findById(id1);
+		doReturn(Mono.just(mol3)).when(collectibleMock).findById(id2);
 
 		List<UUID> sentIDs = new ArrayList<UUID>();
 		sentIDs.add(id1);
@@ -130,7 +123,7 @@ class EncounterServiceTest {
 
 		Mono<RewardToken> testResult = esi.setEncounter(id1, sentIDs, id1);
 
-		assertEquals(testResult, null);
+		assertEquals(null, testResult);
 	}
 
 	@Test
@@ -138,7 +131,7 @@ class EncounterServiceTest {
 		// Inputting strong team
 		int result = esi.runEncounter(inputC, inputE);
 		// Should return 33 reward
-		assertEquals(result, 33);
+		assertEquals(33, result);
 	}
 
 	@Test
@@ -148,7 +141,7 @@ class EncounterServiceTest {
 		// Inputting weak team
 		int result = esi.runEncounter(inputC, inputE);
 		// Should return 10 reward
-		assertEquals(result, 10);
+		assertEquals(10, result);
 	}
 
 }

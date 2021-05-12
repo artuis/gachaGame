@@ -1,28 +1,20 @@
 package com.group3.services;
 
-import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import java.util.concurrent.Executor;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Async;
-import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Service;
 
 import com.group3.beans.Collectible;
 import com.group3.beans.Encounter;
-import com.group3.beans.RewardToken;
 import com.group3.beans.Gamer;
+import com.group3.beans.RewardToken;
 import com.group3.data.CollectibleRepository;
 import com.group3.data.EncounterRepository;
 import com.group3.data.GamerRepository;
 
-import reactor.core.Disposable;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
@@ -48,7 +40,7 @@ public class EncounterServiceImpl implements EncounterService {
 	public Mono<RewardToken> setEncounter(UUID gamerID, List<UUID> colIDs, UUID encID) {
 		
 		// Get the collectibles to send on the journey
-		List<Collectible> sent = new ArrayList<Collectible>();
+		List<Collectible> sent = new ArrayList<>();
 		colIDs.forEach(x -> 
 		collectibleRepo.findById(x)
 		.doOnNext(y -> sent.add(y)).subscribe());
