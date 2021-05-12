@@ -123,6 +123,7 @@ public class ScheduledTasks implements CommandLineRunner {
 	 rollmod to +5%; save the changes to the event
 	 */
 	
+
 	@Scheduled(cron="*/10 * * * * *")
 	public void checkEventStartTrigger() {
 		Date current = Date.from(Instant.now());

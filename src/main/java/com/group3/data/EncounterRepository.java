@@ -16,6 +16,7 @@ public interface EncounterRepository extends ReactiveCassandraRepository<Encount
 
 	@AllowFiltering
 	Flux<Encounter> findAllByLevel(int level);
+
 	@AllowFiltering
 	Mono<Encounter> findByEncounterID(UUID encID);
 
