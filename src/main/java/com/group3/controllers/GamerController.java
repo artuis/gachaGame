@@ -1,6 +1,5 @@
 package com.group3.controllers;
 
-import java.util.List;
 import java.util.UUID;
 
 import org.slf4j.Logger;
@@ -31,38 +30,67 @@ import com.group3.services.EmailService;
 import com.group3.services.GamerService;
 import com.group3.util.JWTUtil;
 
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
 
 @RestController
 @RequestMapping(value = "/gamers")
 public class GamerController {
-	@Autowired
 	private Gamer emptyGamer;
-	@Autowired
 	private Collectible emptyCollectible;
-	@Autowired
 	private JWTUtil jwtUtil;
-	@Autowired
 	private GamerService gamerService;
-	@Autowired
 	private CollectibleTypeService collectibleTypeService;
-	@Autowired
 	private CollectibleService collectibleService;
 	@Autowired
 	private EmailService emailService;
 
 	private Logger log = LoggerFactory.getLogger(GamerController.class);
 
+	public GamerController() {
+		super();
+	}
+
+	@Autowired
+	public void setEmptyGamer(Gamer g) {
+		this.emptyGamer = g;
+	}
+
+	@Autowired
+	public void setEmptyCollectible(Collectible c) {
+		this.emptyCollectible = c;
+	}
+
+	@Autowired
+	public void setJWTUtil(JWTUtil jwtUtil) {
+		this.jwtUtil = jwtUtil;
+	}
+
+	@Autowired
+	public void setGamerService(GamerService gs) {
+		this.gamerService = gs;
+	}
+
+	@Autowired
+	public void setCollectibleTypeService(CollectibleTypeService cts) {
+		this.collectibleTypeService = cts;
+	}
+
+	@Autowired
+	public void setCollectibleService(CollectibleService gs) {
+		this.collectibleService = gs;
+	}
+
 	@PreAuthorize("hasAuthority('MODERATOR')")
 	@GetMapping
-	public Mono<ResponseEntity<List<Gamer>>> getGamers() {
-		return gamerService.getGamers().collectList().map(gamers -> ResponseEntity.ok(gamers));
+	public Flux<Gamer> getGamers() {
+		return gamerService.getGamers();
 	}
-	
-	//more human readable way of obtaining a stored gamer
+
+	// more human readable way of obtaining a stored gamer
 	@GetMapping("{name}")
-	public Mono<ResponseEntity<?>> getGamerByUsername(@PathVariable("name") String name) {
+	public Mono<ResponseEntity<Gamer>> getGamerByUsername(@PathVariable("name") String name) {
 		return gamerService.findGamerByUsername(name).defaultIfEmpty(emptyGamer).map(gamer -> {
 			if (gamer.getUsername() != null) {
 				return ResponseEntity.ok(gamer);
@@ -72,7 +100,7 @@ public class GamerController {
 	}
 
 	@PutMapping("/register")
-	public Mono<ResponseEntity<?>> registerGamer(@RequestBody Gamer gg) {
+	public Mono<ResponseEntity<Gamer>> registerGamer(@RequestBody Gamer gg) {
 		return gamerService.addGamer(gg).defaultIfEmpty(emptyGamer).map(gamer -> {
 			if (gamer.getUsername() == null || gamer.getGamerId() == null) {
 				return ResponseEntity.status(HttpStatus.CONFLICT).body(gg);
@@ -87,20 +115,20 @@ public class GamerController {
 			    .subscribeOn(Schedulers.boundedElastic())
 			    .subscribe();
 			}
-			return ResponseEntity.ok(gamer);
+			return ResponseEntity.status(HttpStatus.CREATED).body(gamer);
 		});
 	}
 
 	@PostMapping("/login")
-	public Mono<ResponseEntity<?>> login(@RequestBody Gamer gg, ServerWebExchange exchange) {
-		return gamerService.findByUsername(gg.getUsername()).defaultIfEmpty(emptyGamer).map(gamer -> {
+	public Mono<ResponseEntity<Gamer>> login(@RequestBody Gamer gg, ServerWebExchange exchange) {
+		return gamerService.findByUsername(gg.getUsername()).defaultIfEmpty(emptyGamer).cast(Gamer.class).map(gamer -> {
 			if (gamer.getUsername() == null) {
 				return ResponseEntity.status(HttpStatus.NOT_FOUND).body(gg);
-			} else {
-				exchange.getResponse().addCookie(ResponseCookie.from("token", jwtUtil.generateToken((Gamer) gamer))
-						.path("/").httpOnly(true).build());
-				return ResponseEntity.ok(gamer); // 👌
 			}
+			exchange.getResponse().addCookie(ResponseCookie.from("token", jwtUtil.generateToken(gamer))
+					.path("/").httpOnly(true).build());
+			return ResponseEntity.ok(gamer); // 👌
+
 		});
 	}
 
@@ -111,7 +139,8 @@ public class GamerController {
 		return ServerResponse.noContent().build();
 	}
 
-	//note that if you use this route, you must input the rest of the fields including the ones you dont want to update
+	// note that if you use this route, you must input the rest of the fields
+	// including the ones you dont want to update
 	@PreAuthorize("hasAuthority('MODERATOR')")
 	@PutMapping
 	public Mono<ResponseEntity<Gamer>> updateGamer(@RequestBody Gamer gg) {
@@ -146,7 +175,7 @@ public class GamerController {
 
 	@PreAuthorize("hasAuthority('GAMER')")
 	@PutMapping("/collectibles/roll")
-	public Mono<ResponseEntity<?>> rollNewCollectible(ServerWebExchange exchange) {
+	public Mono<ResponseEntity<Object>> rollNewCollectible(ServerWebExchange exchange) {
 		String token = exchange.getRequest().getCookies().getFirst("token").getValue();
 		return gamerService.getGamer(UUID.fromString((String) jwtUtil.getAllClaimsFromToken(token).get("id")))
 				.flatMap(gamer -> {
@@ -168,13 +197,18 @@ public class GamerController {
 					return collectibleTypeService.rollCollectibleType().flatMap(rolled -> {
 						log.debug("rolled: {}", rolled);
 						Collectible collectible = Collectible.fromCollectibleTypeAndId(rolled, gamer.getGamerId());
-						return collectibleService.createCollectible(collectible).defaultIfEmpty(emptyCollectible).flatMap(collected -> {
-							if (collected == emptyCollectible) {
-								log.debug("consolation prize");
-								gamer.setStrings(gamer.getStrings() + 100);
-							}
-							return gamerService.updateGamer(gamer).thenReturn(ResponseEntity.ok(rolled));
-						});
+						return collectibleService.createCollectible(collectible).defaultIfEmpty(emptyCollectible)
+								.flatMap(collected -> {
+									if (collected == emptyCollectible) {
+										log.debug("consolation prize");
+										gamer.setStrings(gamer.getStrings() + 100);
+									} else {
+										gamer.setCollectionSize(gamer.getCollectionSize() + 1);
+										gamer.setCollectionStrength(
+												gamer.getCollectionStrength() + collected.getCurrentStat());
+									}
+									return gamerService.updateGamer(gamer).thenReturn(ResponseEntity.ok(rolled));
+								});
 					});
 
 				});
