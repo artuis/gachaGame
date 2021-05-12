@@ -23,5 +23,7 @@ public interface CollectibleService {
 	Mono<ResponseEntity<?>> upgradeCollectible(UUID collectibleId);
 
 	Mono<Collectible> getCollectible(String id);
+	
+	Mono<ResponseEntity<?>> removeCollectible(UUID collectibleId, UUID gamerId);
 
 }

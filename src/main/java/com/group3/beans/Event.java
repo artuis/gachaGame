@@ -6,7 +6,9 @@ import java.util.UUID;
 import org.springframework.data.cassandra.core.mapping.Column;
 import org.springframework.data.cassandra.core.mapping.PrimaryKey;
 import org.springframework.data.cassandra.core.mapping.Table;
+import org.springframework.stereotype.Component;
 
+@Component
 @Table("events")
 public class Event {
 
@@ -17,22 +19,6 @@ public class Event {
 	private static int stringMod = 1;
 	private static double rollMod = 1.0d;
 
-	public static int getStringMod() {
-		return stringMod;
-	}
-
-	public static void setStringMod(int stringMOD) {
-		stringMod = stringMOD;
-	}
-
-	public static double getRollMod() {
-		return rollMod;
-	}
-
-	public static void setRollMod(double rollMOD) {
-		rollMod = rollMOD;
-	}
-
 	@Column
 	@PrimaryKey
 	private UUID eventId;
@@ -41,16 +27,33 @@ public class Event {
 	private Type eventType;
 
 	@Column
-	private boolean isOngoing;
+	private boolean ongoing;
 
 	@Column
 	private Date eventStart;
 
 	@Column
 	private Date eventEnd;
-
+	
 	public Event() {
-		// TODO Auto-generated constructor stub
+		super();
+
+	}
+
+	public static int getStringMod() {
+		return stringMod;
+	}
+
+	public static void setStringMod(int stringMod) {
+		Event.stringMod = stringMod;
+	}
+
+	public static double getRollMod() {
+		return rollMod;
+	}
+
+	public static void setRollMod(double rollMod) {
+		Event.rollMod = rollMod;
 	}
 
 	public UUID getEventId() {
@@ -70,11 +73,11 @@ public class Event {
 	}
 
 	public boolean isOngoing() {
-		return isOngoing;
+		return ongoing;
 	}
 
-	public void setOngoing(boolean isOngoing) {
-		this.isOngoing = isOngoing;
+	public void setOngoing(boolean ongoing) {
+		this.ongoing = ongoing;
 	}
 
 	public Date getEventStart() {
@@ -101,7 +104,7 @@ public class Event {
 		result = prime * result + ((eventId == null) ? 0 : eventId.hashCode());
 		result = prime * result + ((eventStart == null) ? 0 : eventStart.hashCode());
 		result = prime * result + ((eventType == null) ? 0 : eventType.hashCode());
-		result = prime * result + (isOngoing ? 1231 : 1237);
+		result = prime * result + (ongoing ? 1231 : 1237);
 		return result;
 	}
 
@@ -131,15 +134,16 @@ public class Event {
 			return false;
 		if (eventType != other.eventType)
 			return false;
-		if (isOngoing != other.isOngoing)
+		if (ongoing != other.ongoing)
 			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "Event [eventId=" + eventId + ", eventType=" + eventType + ", isOngoing=" + isOngoing + ", eventStart="
+		return "Event [eventId=" + eventId + ", eventType=" + eventType + ", ongoing=" + ongoing + ", eventStart="
 				+ eventStart + ", eventEnd=" + eventEnd + "]";
 	}
 
+	
 }

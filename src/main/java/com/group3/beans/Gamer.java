@@ -1,6 +1,7 @@
 package com.group3.beans;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -71,6 +72,9 @@ public class Gamer implements Serializable, UserDetails {
 	@Column
 	@JsonInclude(Include.NON_NULL)
 	private int collectionStrength;
+	@JsonInclude(Include.NON_NULL)
+	@Column
+	private List<UUID> activeEncounters;
 	@Column
 	@JsonInclude(Include.NON_NULL)
 	private int pvpScore;
@@ -95,7 +99,6 @@ public class Gamer implements Serializable, UserDetails {
 	@Column
 	@JsonInclude(Include.NON_NULL)
 	private boolean accountNonExpired;
-
 
 	public Role getRole() {
 		return role;
@@ -189,6 +192,21 @@ public class Gamer implements Serializable, UserDetails {
 		this.collectionStrength = collectionStrength;
 	}
 
+	public List<UUID> getActiveEncounters() {
+		return activeEncounters;
+	}
+
+	public void setActiveEncounters(List<UUID> activeEncounters) {
+		this.activeEncounters = activeEncounters;
+	}
+
+	public void addActiveEncounter(UUID token) {
+		if (this.activeEncounters == null) {
+			this.activeEncounters = new ArrayList<>();
+		}
+		this.activeEncounters.add(token);
+	}
+
 	public int getPvpScore() {
 		return pvpScore;
 	}
@@ -224,7 +242,7 @@ public class Gamer implements Serializable, UserDetails {
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		return this.authorities;
 	}
-	
+
 	@Override
 	public boolean isAccountNonExpired() {
 		return false;
@@ -245,12 +263,33 @@ public class Gamer implements Serializable, UserDetails {
 		return this.enabled;
 	}
 
+	public void setAuthorities(List<Role> authorities) {
+		this.authorities = authorities;
+	}
+
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
+	}
+
+	public void setAccountNonLocked(boolean accountNonLocked) {
+		this.accountNonLocked = accountNonLocked;
+	}
+
+	public void setCredentialsNonExpired(boolean credentialsNonExpired) {
+		this.credentialsNonExpired = credentialsNonExpired;
+	}
+
+	public void setAccountNonExpired(boolean accountNonExpired) {
+		this.accountNonExpired = accountNonExpired;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + (accountNonExpired ? 1231 : 1237);
 		result = prime * result + (accountNonLocked ? 1231 : 1237);
+		result = prime * result + ((activeEncounters == null) ? 0 : activeEncounters.hashCode());
 		result = prime * result + ((authorities == null) ? 0 : authorities.hashCode());
 		result = prime * result + ((banDates == null) ? 0 : banDates.hashCode());
 		result = prime * result + collectionSize;
@@ -284,6 +323,11 @@ public class Gamer implements Serializable, UserDetails {
 		if (accountNonExpired != other.accountNonExpired)
 			return false;
 		if (accountNonLocked != other.accountNonLocked)
+			return false;
+		if (activeEncounters == null) {
+			if (other.activeEncounters != null)
+				return false;
+		} else if (!activeEncounters.equals(other.activeEncounters))
 			return false;
 		if (authorities == null) {
 			if (other.authorities != null)
@@ -345,35 +389,16 @@ public class Gamer implements Serializable, UserDetails {
 		return true;
 	}
 
-	public void setAuthorities(List<Role> authorities) {
-		this.authorities = authorities;
-	}
-
-	public void setEnabled(boolean enabled) {
-		this.enabled = enabled;
-	}
-
-	public void setAccountNonLocked(boolean accountNonLocked) {
-		this.accountNonLocked = accountNonLocked;
-	}
-
-	public void setCredentialsNonExpired(boolean credentialsNonExpired) {
-		this.credentialsNonExpired = credentialsNonExpired;
-	}
-
-	public void setAccountNonExpired(boolean accountNonExpired) {
-		this.accountNonExpired = accountNonExpired;
-	}
-
 	@Override
 	public String toString() {
 		return "Gamer [gamerId=" + gamerId + ", username=" + username + ", password=" + password + ", role=" + role
 				+ ", authorities=" + authorities + ", rolls=" + rolls + ", dailyRolls=" + dailyRolls + ", stardust="
 				+ stardust + ", strings=" + strings + ", loginBonusCollected=" + loginBonusCollected
-				+ ", collectionSize=" + collectionSize + ", collectionStrength=" + collectionStrength + ", pvpScore="
-				+ pvpScore + ", registrationDate=" + registrationDate + ", lastLogin=" + lastLogin + ", banDates="
-				+ banDates + ", enabled=" + enabled + ", accountNonLocked=" + accountNonLocked
-				+ ", credentialsNonExpired=" + credentialsNonExpired + ", accountNonExpired=" + accountNonExpired + "]";
+				+ ", collectionSize=" + collectionSize + ", collectionStrength=" + collectionStrength
+				+ ", activeEncounters=" + activeEncounters + ", pvpScore=" + pvpScore + ", registrationDate="
+				+ registrationDate + ", lastLogin=" + lastLogin + ", banDates=" + banDates + ", enabled=" + enabled
+				+ ", accountNonLocked=" + accountNonLocked + ", credentialsNonExpired=" + credentialsNonExpired
+				+ ", accountNonExpired=" + accountNonExpired + "]";
 	}
 
 }
