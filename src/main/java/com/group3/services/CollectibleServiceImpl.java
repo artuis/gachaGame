@@ -10,11 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import com.datastax.oss.driver.api.core.uuid.Uuids;
 import com.group3.beans.Collectible;
 import com.group3.beans.CollectibleType;
 import com.group3.data.CollectibleRepository;
-import com.group3.data.CollectibleTypeRepository;
 import com.group3.data.GamerRepository;
 
 import reactor.core.publisher.Flux;
@@ -29,16 +27,10 @@ public class CollectibleServiceImpl implements CollectibleService {
 	private Collectible emptyCollectible;
 	
 	@Autowired
-	private CollectibleType emptyCollectibleType;
-	
-	@Autowired
 	private CollectibleTypeServiceImpl typeServ;
 
 	@Autowired
 	private CollectibleRepository repo;
-	
-	@Autowired
-	private CollectibleTypeRepository typeRepo;
 	
 	@Autowired
 	private GamerRepository gamerRepo;
@@ -107,9 +99,6 @@ public class CollectibleServiceImpl implements CollectibleService {
 	@Override
 	public Mono<ResponseEntity<?>> removeCollectible(UUID collectibleId, UUID gamerId) {
 		return repo.findById(collectibleId).flatMap(collectible -> {
-			log.debug("CollectibleId: {} ", collectibleId);
-			log.debug("Collectible's gamerId: {}", collectible.getGamerId());
-			log.debug("GamerId: {}", gamerId);
 			if(!collectible.getGamerId().equals(gamerId)) {
 				return Mono.just(ResponseEntity.badRequest()
 						.body("Collectible does not belong to the specified gamer."));
@@ -139,13 +128,15 @@ public class CollectibleServiceImpl implements CollectibleService {
 			}
 		}
 		// if there is no next stage, return empty
-		if(typeServ.getCollectibleType(type).defaultIfEmpty(emptyCollectibleType).block().getNextStage() == null 
-				|| typeServ.getCollectibleType(type).defaultIfEmpty(emptyCollectibleType).block().getNextStage() == 0) {
+		if(typeServ.getCollectibleType(type).block().getNextStage() == null 
+				|| typeServ.getCollectibleType(type).block().getNextStage() == 0) {
 			return Mono.empty();
 		}
 		// if everything checks out, build the next stage collectible
 		UUID gamerId = collectibles.get(0).getGamerId();
-		CollectibleType nextStageBase = typeServ.getCollectibleType(type).block();
+		CollectibleType nextStageBase = typeServ.getCollectibleType(type).map(currentType -> {
+			return typeServ.getCollectibleType(currentType.getNextStage());
+		}).block().block();
 		Collectible nextStage = Collectible.fromCollectibleTypeAndId(nextStageBase, gamerId);
 		return repo.deleteAll(collectibles).then(repo.save(nextStage));
 	}
