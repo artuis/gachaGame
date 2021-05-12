@@ -110,7 +110,7 @@ public class GamerController {
 			if (gamer.getUsername() == null) {
 				return ResponseEntity.status(HttpStatus.NOT_FOUND).body(gg);
 			}
-			exchange.getResponse().addCookie(ResponseCookie.from("token", jwtUtil.generateToken((Gamer) gamer))
+			exchange.getResponse().addCookie(ResponseCookie.from("token", jwtUtil.generateToken(gamer))
 					.path("/").httpOnly(true).build());
 			return ResponseEntity.ok(gamer); // 👌
 

@@ -90,7 +90,7 @@ public class GamerControllerTest {
 	private CollectibleService cs;
 	
 	@Test
-	public void testRegisterGamerReturnesEntityWithStatus201() {
+	void testRegisterGamerReturnesEntityWithStatus201() {
 		Gamer gamer = new Gamer();
 		gamer.setUsername("test");
 		gamer.setGamerId(Uuids.timeBased());
@@ -100,7 +100,7 @@ public class GamerControllerTest {
 	}
 	
 	@Test
-	public void testGetGamersReturnsGamers() {
+	void testGetGamersReturnsGamers() {
 		Gamer gamer = new Gamer();
 		Mockito.when(gs.getGamers()).thenReturn(Flux.just(gamer));
 		Flux<Gamer> result = gc.getGamers();
@@ -108,7 +108,7 @@ public class GamerControllerTest {
 	}
 	
 	@Test
-	public void testValidLoginLogsReturns200() {
+	void testValidLoginLogsReturns200() {
 		MockServerWebExchange exchange = MockServerWebExchange.from(MockServerHttpRequest.post("/gamers/login"));
 		Gamer gamer = new Gamer();
 		gamer.setUsername("test");
@@ -118,7 +118,7 @@ public class GamerControllerTest {
 	}
 	
 	@Test
-	public void testLogoutAdds0AgeToken() {
+	void testLogoutAdds0AgeToken() {
 		MockServerWebExchange exchange = MockServerWebExchange.from(MockServerHttpRequest.delete("/gamers/logout"));
 		Mono<ServerResponse> result = gc.logout(exchange);
 		result.subscribe();
@@ -127,7 +127,7 @@ public class GamerControllerTest {
 	}
 	
 	@Test
-	public void getGamerByUsernameGetsGamer() {
+	void getGamerByUsernameGetsGamer() {
 		
 	}
 }
