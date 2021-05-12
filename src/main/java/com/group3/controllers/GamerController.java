@@ -81,6 +81,12 @@ public class GamerController {
 	public void setCollectibleService(CollectibleService gs) {
 		this.collectibleService = gs;
 	}
+	
+
+	@Autowired
+	public void setEmailService(EmailService es) {
+		this.emailService = es;
+	}
 
 	@PreAuthorize("hasAuthority('MODERATOR')")
 	@GetMapping

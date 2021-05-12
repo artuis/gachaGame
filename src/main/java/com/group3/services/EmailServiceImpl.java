@@ -1,14 +1,12 @@
 package com.group3.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.annotation.Order;
 import org.springframework.core.env.Environment;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-@Component
-@Order(1)
+@Service
 public class EmailServiceImpl implements EmailService {
 
     @Autowired
