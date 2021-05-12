@@ -1,5 +1,7 @@
 package com.group3.controllers;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import org.reactivestreams.Publisher;
@@ -25,7 +27,9 @@ import reactor.core.publisher.Mono;
 @RestController
 @RequestMapping(value = "/collectibles")
 public class CollectibleController {
-
+	@Autowired
+	private Collectible emptyCollectible;
+	
 	@Autowired
 	private CollectibleService collectibleService;
 
@@ -71,5 +75,26 @@ public class CollectibleController {
 	@DeleteMapping
 	public Mono<ResponseEntity<?>> removeCollectible(@RequestParam("collectibleId") UUID collectibleId, @RequestParam("gamerId") UUID gamerId) {
 		return collectibleService.removeCollectible(collectibleId, gamerId);
+	}
+	
+	@PostMapping("/fusion")
+	public Mono<ResponseEntity<Collectible>> collectibleFusion(
+			@RequestParam("collectibleId1") UUID collectibleId1, 
+			@RequestParam("collectibleId2") UUID collectibleId2,
+			@RequestParam("collectibleId3") UUID collectibleId3,
+			@RequestParam("collectibleId4") UUID collectibleId4,
+			@RequestParam("collectibleId5") UUID collectibleId5) {
+		List<UUID> collectibleIds = new ArrayList<>();
+		collectibleIds.add(collectibleId1);
+		collectibleIds.add(collectibleId2);
+		collectibleIds.add(collectibleId3);
+		collectibleIds.add(collectibleId4);
+		collectibleIds.add(collectibleId5);
+		return collectibleService.collectibleFusion(collectibleIds).defaultIfEmpty(emptyCollectible).map(collectible -> {
+			if(collectible.getId() != null) {
+				return ResponseEntity.ok(collectible);
+			}
+			return ResponseEntity.notFound().build();
+		});
 	}
 }

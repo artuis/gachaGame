@@ -498,6 +498,86 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "Collectible fusion :)",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/collectibles/fusion?collectibleId1=1a8f0130-b32a-11eb-bc9d-cd246fa8807f&collectibleId2=1a05acf0-b32a-11eb-bc9d-cd246fa8807f&collectibleId3=197b6e50-b32a-11eb-bc9d-cd246fa8807f&collectibleId4=18ec74c0-b32a-11eb-bc9d-cd246fa8807f&collectibleId5=181bde50-b32a-11eb-bc9d-cd246fa8807f",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"collectibles",
+						"fusion"
+					],
+					"query": [
+						{
+							"key": "collectibleId1",
+							"value": "1a8f0130-b32a-11eb-bc9d-cd246fa8807f"
+						},
+						{
+							"key": "collectibleId2",
+							"value": "1a05acf0-b32a-11eb-bc9d-cd246fa8807f"
+						},
+						{
+							"key": "collectibleId3",
+							"value": "197b6e50-b32a-11eb-bc9d-cd246fa8807f"
+						},
+						{
+							"key": "collectibleId4",
+							"value": "18ec74c0-b32a-11eb-bc9d-cd246fa8807f"
+						},
+						{
+							"key": "collectibleId5",
+							"value": "181bde50-b32a-11eb-bc9d-cd246fa8807f"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get a List",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"collectibleIds\": [\"bdf823c0-b2b6-11eb-9020-cd24d47af2af\", \"bc830ff0-b2b6-11eb-9020-cd24d47af2af\", \"bb43d930-b2b6-11eb-9020-cd24d47af2af\", \"a83a7f10-b2b6-11eb-9020-cd24d47af2af\", \"471e6b60-b2b6-11eb-9020-cd24d47af2af\"]\r\n}\r\n\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/collectibles/fusion",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"collectibles",
+						"fusion"
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }
