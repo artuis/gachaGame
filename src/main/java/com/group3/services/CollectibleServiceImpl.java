@@ -121,6 +121,10 @@ public class CollectibleServiceImpl implements CollectibleService {
 		List<Collectible> collectibles = getAllCollectibles().filter(collectible -> {
 			return collectibleIds.contains(collectible.getId());
 		}).collectList().defaultIfEmpty(defaultEmpty).block();
+		// null check
+		if(collectibles == null || collectibles.isEmpty() || collectibles.get(0).equals(emptyCollectible)) {
+			return Mono.empty();
+		}
 		// if the collectibles in the list aren't all of the same type, return empty
 		int type = collectibles.get(0).getTypeId();
 		for(Collectible collectible : collectibles) {
