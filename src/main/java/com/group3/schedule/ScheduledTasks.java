@@ -52,10 +52,17 @@ public class ScheduledTasks implements CommandLineRunner {
 				gamer.setDailyRolls(10);
 				gamerService.updateGamer(gamer).subscribe(gamersReset::add);
 		}
+		
+		/*
+		gamerService.getGamers()
+		.doOnNext(gg -> gg.setDailyRolls(10))
+		.doOnNext(gg -> gamerService.updateGamer(gg))
+		.subscribe();
+		*/
 	}
 
 	/*
-	 Check Ban Resetter
+	 Check Ban Reseter
 	 checks for ban lifts every minute, pull today's date for reference, 
 	 get all gamers that are banned, collect them to a list, for each gamer 
 	 in the list pull their list of 'ban lift dates,' start a flag for the 

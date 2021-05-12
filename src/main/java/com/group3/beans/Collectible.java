@@ -3,6 +3,7 @@ package com.group3.beans;
 import java.io.Serializable;
 import java.util.UUID;
 
+
 import org.springframework.data.cassandra.core.cql.Ordering;
 import org.springframework.data.cassandra.core.cql.PrimaryKeyType;
 import org.springframework.data.cassandra.core.mapping.Column;
@@ -28,6 +29,22 @@ public class Collectible implements Serializable{
 	private int currentStat;
 	@Column
 	private Stage currentStage;
+	@Column
+	private boolean onEncounter;
+	
+	public Collectible() {
+		super();
+	}
+
+	public static Collectible fromCollectibleTypeAndId(CollectibleType ct, UUID gamerId) {
+		Collectible c = new Collectible();
+		c.setId(Uuids.timeBased());
+		c.setGamerId(gamerId);
+		c.setCurrentStat(ct.getBaseStat());
+		c.setTypeId(ct.getId());
+		c.setCurrentStage(ct.getStage());
+		return c;
+	}
 
 	public int getCurrentStat() {
 		return currentStat;
@@ -45,12 +62,6 @@ public class Collectible implements Serializable{
 		this.gamerId = gamerId;
 	}
 
-	@Override
-	public String toString() {
-		return "Collectible [id=" + id.toString() + ", gamerId=" + gamerId.toString() + ", typeId=" + typeId + ", currentStat=" + currentStat
-				+ "]";
-	}
-
 	public UUID getId() {
 		return id;
 	}
@@ -65,18 +76,9 @@ public class Collectible implements Serializable{
 
 	public void setTypeId(int typeId) {
 		this.typeId = typeId;
+
 	}
 	
-	public static Collectible fromCollectibleTypeAndId(CollectibleType ct, UUID gamerId) {
-		Collectible c = new Collectible();
-		c.setId(Uuids.timeBased());
-		c.setGamerId(gamerId);
-		c.setCurrentStat(ct.getBaseStat());
-		c.setTypeId(ct.getId());
-		c.setCurrentStage(ct.getStage());
-		return c;
-	}
-
 	public Stage getCurrentStage() {
 		return currentStage;
 	}
@@ -84,4 +86,20 @@ public class Collectible implements Serializable{
 	public void setCurrentStage(Stage currentStage) {
 		this.currentStage = currentStage;
 	}
+
+	public boolean isOnEncounter() {
+		return onEncounter;
+	}
+
+	public void setOnEncounter(boolean onEncounter) {
+		this.onEncounter = onEncounter;
+	}
+
+	@Override
+	public String toString() {
+		return "Collectible [id=" + id.toString() + ", gamerId=" + gamerId.toString() + ", typeId=" + typeId + ", currentStat=" + currentStat
+				+ "]";
+	}
+	
+	
 }
