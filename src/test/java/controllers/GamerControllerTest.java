@@ -64,7 +64,7 @@ class GamerControllerTest {
 		}
 		
 		@Bean JWTUtil getJWTUtil() {
-			return Mockito.mock(JWTUtil.class);
+			return Mockito.mock(JWTUtil.class, Mockito.RETURNS_DEEP_STUBS);
 		}
 
 		@Bean
@@ -124,6 +124,7 @@ class GamerControllerTest {
 		MockServerWebExchange exchange = MockServerWebExchange.from(MockServerHttpRequest.post("/gamers/login"));
 		Gamer gamer = new Gamer();
 		gamer.setUsername("test");
+		gamer.setRole(Gamer.Role.GAMER);
 		Mockito.when(gs.findByUsername(gamer.getUsername())).thenReturn(Mono.just(gamer));
 		Mono<ResponseEntity<Gamer>> result = gc.login(gamer, exchange);
 		StepVerifier.create(result).expectNext(ResponseEntity.ok(gamer)).verifyComplete();
@@ -169,7 +170,7 @@ class GamerControllerTest {
 		StepVerifier.create(result).expectNext(ResponseEntity.ok(gamer)).verifyComplete();
 	}
 	
-	
+	@Test
 	void rollNewCollectibleRollsCollectible() {
 		JWTUtil generator = new JWTUtil();
 		generator.setExpirationTime("28800");
@@ -185,8 +186,8 @@ class GamerControllerTest {
 		Gamer after = new Gamer();
 		after.setUsername("test");
 		after.setGamerId(gamer.getGamerId());
-		gamer.setAuthorities(Arrays.asList(Gamer.Role.GAMER));
-		gamer.setDailyRolls(0);
+		after.setAuthorities(Arrays.asList(Gamer.Role.GAMER));
+		after.setDailyRolls(0);
 		
 		CollectibleType collectibleType = new CollectibleType();
 		collectibleType.setBaseStat(5);
@@ -195,16 +196,15 @@ class GamerControllerTest {
 		collectibleType.setStage(Stage.STAGE_1);
 		
 		Collectible collectible = Collectible.fromCollectibleTypeAndId(collectibleType, gamer.getGamerId());
-		MockServerWebExchange exchange = MockServerWebExchange.from(MockServerHttpRequest.put("/ganers/collectibles/roll"));
 		HttpCookie hc = new HttpCookie("token", generator.generateToken(gamer));
-		
-		Mockito.when(exchange.getRequest().getCookies().getFirst("token")).thenReturn(hc);
+		MockServerWebExchange exchange = MockServerWebExchange.from(MockServerHttpRequest.put("/ganers/collectibles/roll").cookie(hc));
+
 		Mockito.when(gs.getGamer(gamer.getGamerId())).thenReturn(Mono.just(gamer));
+		Mockito.when(jwtUtil.getAllClaimsFromToken(Mockito.anyString()).get(Mockito.anyString())).thenReturn(gamer.getGamerId().toString());
 		Mockito.when(cts.rollCollectibleType()).thenReturn(Mono.just(collectibleType));
-		Mockito.when(Collectible.fromCollectibleTypeAndId(collectibleType, gamer.getGamerId())).thenReturn(collectible);
-		Mockito.when(cs.createCollectible(collectible)).thenReturn(Mono.just(collectible));
-		Mockito.when(gs.updateGamer(after)).thenReturn(Mono.just(after));
+		Mockito.when(cs.createCollectible(Mockito.any())).thenReturn(Mono.just(collectible));
+		Mockito.when(gs.updateGamer(Mockito.any())).thenReturn(Mono.just(after));
 		Mono<ResponseEntity<Object>> result = gc.rollNewCollectible(exchange);
-		StepVerifier.create(result).expectNext(ResponseEntity.ok(collectibleType));
+		StepVerifier.create(result).expectNext(ResponseEntity.ok(collectibleType)).verifyComplete();
 	}
 }
