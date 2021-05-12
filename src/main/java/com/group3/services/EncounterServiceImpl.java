@@ -41,8 +41,8 @@ public class EncounterServiceImpl implements EncounterService {
 	}
 	
 	public Flux<RewardToken> getRunningEncounters(UUID gamerID){
-		Gamer g = (Gamer) gamerRepo.findById(gamerID).subscribe();
-		return Flux.fromIterable(g.getActiveEncounters());
+		// TODO get currently running encounters per gamer
+		return null;
 	}
 	
 	public Mono<RewardToken> setEncounter(UUID gamerID, List<UUID> colIDs, UUID encID) {
@@ -62,6 +62,7 @@ public class EncounterServiceImpl implements EncounterService {
 		}
 		
 		RewardToken rewardToken = new RewardToken();
+		rewardToken.setTokenID(UUID.randomUUID());
 		rewardToken.setActiveEncounter(encID);
 		rewardToken.setCollectiblesOnEncounter(colIDs);
 		// Get the journey to send on the collectibles
@@ -75,7 +76,7 @@ public class EncounterServiceImpl implements EncounterService {
 		
 		// Give the token to gamer
 		gamerRepo.findById(gamerID)
-		.doOnNext(gg -> gg.addActiveEncounter(rewardToken))
+		.doOnNext(gg -> gg.addActiveEncounter(rewardToken.getTokenID()))
 		.doOnNext(gg -> gamerRepo.save(gg))
 		.subscribe();
 
@@ -117,9 +118,12 @@ public class EncounterServiceImpl implements EncounterService {
 	
 	public Flux<?> getEncounterReward(UUID gamerID) {
 		
+		// THIS IS WRONG: FIX THIS GAMER DECLARATION
 		Gamer gg = (Gamer) gamerRepo.findById(gamerID).subscribe();
 		
-		List<RewardToken> tokens = gg.getActiveEncounters();
+		List<UUID> tokens = gg.getActiveEncounters();
+		
+		// TODO get tokens from rewardTokenRepo
 		
 		// Check if there are even any tokens
 		if(tokens.isEmpty()) {
