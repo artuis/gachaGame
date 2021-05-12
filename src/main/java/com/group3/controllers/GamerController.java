@@ -25,11 +25,13 @@ import com.group3.beans.Collectible;
 import com.group3.beans.Gamer;
 import com.group3.services.CollectibleService;
 import com.group3.services.CollectibleTypeService;
+import com.group3.services.EmailService;
 import com.group3.services.GamerService;
 import com.group3.util.JWTUtil;
 
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import reactor.core.scheduler.Schedulers;
 
 @RestController
 @RequestMapping(value = "/gamers")
@@ -40,6 +42,8 @@ public class GamerController {
 	private GamerService gamerService;
 	private CollectibleTypeService collectibleTypeService;
 	private CollectibleService collectibleService;
+	@Autowired
+	private EmailService emailService;
 
 	private Logger log = LoggerFactory.getLogger(GamerController.class);
 
@@ -76,6 +80,12 @@ public class GamerController {
 	public void setCollectibleService(CollectibleService gs) {
 		this.collectibleService = gs;
 	}
+	
+
+	@Autowired
+	public void setEmailService(EmailService es) {
+		this.emailService = es;
+	}
 
 	@PreAuthorize("hasAuthority('MODERATOR')")
 	@GetMapping
@@ -99,6 +109,15 @@ public class GamerController {
 		return gamerService.addGamer(gg).defaultIfEmpty(emptyGamer).map(gamer -> {
 			if (gamer.getUsername() == null || gamer.getGamerId() == null) {
 				return ResponseEntity.status(HttpStatus.CONFLICT).body(gg);
+			} 
+
+			if(gamer.getEmail() != null) {
+				Mono.fromRunnable(()-> emailService.sendEmail(
+						gamer.getEmail(),
+						"Welcome to GachaGame!",
+						"We hope you enjoy your time here!"))
+			    .subscribeOn(Schedulers.boundedElastic())
+			    .subscribe();
 			}
 			return ResponseEntity.status(HttpStatus.CREATED).body(gamer);
 		});
@@ -147,6 +166,14 @@ public class GamerController {
 		return gamerService.banGamer(gamerId, daysBanned).defaultIfEmpty(emptyGamer).map(gamer -> {
 			if (gamer.getGamerId() == null) {
 				return ResponseEntity.notFound().build();
+			}
+			if(gamer.getEmail() != null) {
+				Mono.fromRunnable(()-> emailService.sendEmail(
+						gamer.getEmail(), 
+						"BANNED from GachaGame!",
+						"Scram you little rat!"))
+				.subscribeOn(Schedulers.boundedElastic())
+			    .subscribe();
 			}
 			return ResponseEntity.ok(gamer);
 		});

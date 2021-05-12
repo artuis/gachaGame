@@ -34,7 +34,7 @@ public class CollectibleServiceImpl implements CollectibleService {
 	
 	@Autowired
 	private GamerRepository gamerRepo;
-
+	
 	public CollectibleServiceImpl() {
 		super();
 	}
