@@ -26,10 +26,6 @@ public class SecurityConfig {
 	
 	@Autowired
 	private SecurityContextRepository securityContextRepository;
-<<<<<<< HEAD
-=======
-
->>>>>>> dev
 	
 	@Bean
 	public SecurityWebFilterChain securitygWebFilterChain(ServerHttpSecurity http) {

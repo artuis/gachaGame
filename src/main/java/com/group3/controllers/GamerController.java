@@ -29,6 +29,7 @@ import com.group3.services.CollectibleTypeService;
 import com.group3.services.GamerService;
 import com.group3.util.JWTUtil;
 
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @RestController
@@ -79,8 +80,8 @@ public class GamerController {
 
 	@PreAuthorize("hasAuthority('MODERATOR')")
 	@GetMapping
-	public Mono<ResponseEntity<List<Gamer>>> getGamers() {
-		return gamerService.getGamers().collectList().map(gamers -> ResponseEntity.ok(gamers));
+	public Flux<Gamer> getGamers() {
+		return gamerService.getGamers();
 	}
 
 	// more human readable way of obtaining a stored gamer
