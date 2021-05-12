@@ -1,5 +1,6 @@
 package com.group3.services;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.mail.SimpleMailMessage;
@@ -18,7 +19,11 @@ public class EmailServiceImpl implements EmailService {
 	public void sendEmail(String to, String subject,  String text) {
 		SimpleMailMessage message = new SimpleMailMessage();
 		message.setTo(to);
-		message.setFrom(env.getProperty("EMAIL_USER"));
+		String emailuser = env.getProperty("EMAIL_USER");
+		if(emailuser == null) {
+			throw new RuntimeException("EMAIL_USER env variable not set");
+		}
+		message.setFrom(emailuser);
 		message.setSubject(subject);
 		message.setText(text);
 		jms.send(message);
