@@ -32,6 +32,7 @@ import com.group3.services.GamerService;
 import com.group3.util.JWTUtil;
 
 import reactor.core.publisher.Mono;
+import reactor.core.scheduler.Schedulers;
 
 @RestController
 @RequestMapping(value = "/gamers")
@@ -76,8 +77,15 @@ public class GamerController {
 			if (gamer.getUsername() == null || gamer.getGamerId() == null) {
 				return ResponseEntity.status(HttpStatus.CONFLICT).body(gg);
 			} 
+
 			if(gamer.getEmail() != null) {
-				emailService.sendEmail(gamer.getEmail(), "Welcome to GachaGame!", "We hope you enjoy your time here!");
+				System.out.println(gamer.getEmail());
+				Mono.fromRunnable(()-> emailService.sendEmail(
+						gamer.getEmail(),
+						"Welcome to GachaGame!",
+						"We hope you enjoy your time here!"))
+			    .subscribeOn(Schedulers.boundedElastic())
+			    .subscribe();
 			}
 			return ResponseEntity.ok(gamer);
 		});
@@ -125,7 +133,12 @@ public class GamerController {
 				return ResponseEntity.notFound().build();
 			}
 			if(gamer.getEmail() != null) {
-				emailService.sendEmail(gamer.getEmail(), "BANNED from GachaGame!", "Scram you little rat!");
+				Mono.fromRunnable(()-> emailService.sendEmail(
+						gamer.getEmail(), 
+						"BANNED from GachaGame!",
+						"Scram you little rat!"))
+				.subscribeOn(Schedulers.boundedElastic())
+			    .subscribe();
 			}
 			return ResponseEntity.ok(gamer);
 		});
