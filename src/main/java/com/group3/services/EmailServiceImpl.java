@@ -17,12 +17,13 @@ public class EmailServiceImpl implements EmailService {
 	
 	@Override
 	public void sendEmail(String to, String subject,  String text) {
-		SimpleMailMessage message = new SimpleMailMessage();
-		message.setTo(to);
 		String emailuser = env.getProperty("EMAIL_USER");
 		if(emailuser == null) {
-			throw new RuntimeException("EMAIL_USER env variable not set");
+			return;
 		}
+
+		SimpleMailMessage message = new SimpleMailMessage();
+		message.setTo(to);
 		message.setFrom(emailuser);
 		message.setSubject(subject);
 		message.setText(text);
