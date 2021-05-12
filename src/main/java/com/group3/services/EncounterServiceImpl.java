@@ -53,30 +53,40 @@ public class EncounterServiceImpl implements EncounterService {
 		collectibleRepo.findById(x)
 		.doOnNext(y -> sent.add(y)).subscribe());
 		
-		// If some collectibles sent aren't owned by gamerID return null
-		if(!sent.stream().allMatch(x->x.getGamerId() == gamerID)) {
+		// If any of the collectibles sent
+		// are on an encounter
+		// or owned by a different gamer
+		if(sent.stream().anyMatch(x->x.isOnEncounter()) ||
+				sent.stream().anyMatch(x->x.getGamerId()!=gamerID)) {
 			return null;
 		}
 		
 		RewardToken rewardToken = new RewardToken();
+		rewardToken.setActiveEncounter(encID);
+		rewardToken.setCollectiblesOnEncounter(colIDs);
 		// Get the journey to send on the collectibles
 		encounterRepo.findByEncounterID(encID)
-		// Set the token to give to the Gamer
-		.doOnNext( x -> rewardToken.setRunningEncounter(runEncounter(sent, x)))
+		.doOnNext( e -> rewardToken.setReward(runEncounter(sent, e)))
+		.doOnNext( e -> rewardToken.setEncounterTimes(e.getLength()))
 		.subscribe();
 
+		// Set the collectibles as unavailable to go on further encounters
+		sent.forEach(c -> c.setOnEncounter(true));
+		
 		// Give the token to gamer
 		gamerRepo.findById(gamerID)
 		.doOnNext(gg -> gg.addActiveEncounter(rewardToken))
 		.doOnNext(gg -> gamerRepo.save(gg))
 		.subscribe();
 
+		// TODO give rewardToken to scheduler to send alert to gamer when ready
+		
 		
 		return Mono.just(rewardToken);
 		
 	}
 	
-	public Mono<?> runEncounter(List<Collectible> sent, Encounter journey) {
+	public int runEncounter(List<Collectible> sent, Encounter journey) {
 		// The deterministic version of the encounter runner.
 		// A random version can be made later. (this is simpler to test)
 		
@@ -99,8 +109,10 @@ public class EncounterServiceImpl implements EncounterService {
 			reward = 10;
 		}
 		
-		// Return Future
-		return Mono.just(reward).delayElement(Duration.ofMillis(journey.getLength()));
+		// Return Mono
+		// return Mono.just(reward).delayElement(Duration.ofMillis(journey.getLength()));
+		// Return just int reward
+		return reward;
 	}
 	
 	public Flux<?> getEncounterReward(UUID gamerID) {

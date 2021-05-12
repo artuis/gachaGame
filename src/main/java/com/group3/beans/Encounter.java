@@ -27,7 +27,7 @@ public class Encounter {
 	int reward;
 	// Length of time (in milliseconds) the encounter should last
 	@Column
-	int length;
+	long length;
 	
 	public Encounter() {
 		super();
@@ -54,10 +54,10 @@ public class Encounter {
 	public void setReward(int reward) {
 		this.reward = reward;
 	}
-	public int getLength() {
+	public long getLength() {
 		return length;
 	}
-	public void setLength(int length) {
+	public void setLength(long length) {
 		this.length = length;
 	}
 }

@@ -12,7 +12,7 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Repository
-public interface EncounterRepository extends ReactiveCassandraRepository<Encounter, /*PRIMARY KEY DATATYPE REPLACES String PLACEHOLDER*/ String> {
+public interface EncounterRepository extends ReactiveCassandraRepository<Encounter, UUID> {
 
 	@AllowFiltering
 	Flux<Encounter> findAllByLevel(int level);

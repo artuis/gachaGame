@@ -17,7 +17,7 @@ public interface EncounterService {
 	
 	public Mono<RewardToken> setEncounter(UUID i, List<UUID> colIDs, UUID encounterID);
 
-	public Mono<?> runEncounter(List<Collectible> sent, Encounter journey);
+	public int runEncounter(List<Collectible> sent, Encounter journey);
 
 	
 	

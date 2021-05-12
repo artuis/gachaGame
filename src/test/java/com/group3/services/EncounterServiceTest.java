@@ -109,8 +109,8 @@ class EncounterServiceTest {
 		sentIDs.add(id1);
 		sentIDs.add(id2);
 
-		Mono<RewardToken> testResult = esi.setEncounter(id1, sentIDs, id1);
-
+		esi.setEncounter(id1, sentIDs, id1);
+		
 		verify(gamerMock).save(argThat(gamer -> gamer.getActiveEncounters().size() > 0));
 	}
 
@@ -136,7 +136,7 @@ class EncounterServiceTest {
 	@Test
 	void testWinRunEncounter() {
 		// Inputting strong team
-		int result = (int) esi.runEncounter(inputC, inputE).block();
+		int result = esi.runEncounter(inputC, inputE);
 		// Should return 33 reward
 		assertEquals(result, 33);
 	}
@@ -146,7 +146,7 @@ class EncounterServiceTest {
 		mol2.setCurrentStat(1);
 		mol3.setCurrentStat(1);
 		// Inputting weak team
-		int result = (int) esi.runEncounter(inputC, inputE).block();
+		int result = esi.runEncounter(inputC, inputE);
 		// Should return 10 reward
 		assertEquals(result, 10);
 	}
