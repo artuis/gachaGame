@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,8 +15,11 @@ import org.springframework.core.annotation.Order;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import com.group3.beans.Collectible;
 import com.group3.beans.Event;
 import com.group3.beans.Gamer;
+import com.group3.beans.RewardToken;
+import com.group3.services.CollectibleService;
 import com.group3.services.EventService;
 import com.group3.services.GamerService;
 
@@ -27,6 +31,8 @@ public class ScheduledTasks implements CommandLineRunner {
 	private GamerService gamerService;
 	@Autowired 
 	private EventService eventService;
+	@Autowired
+	private CollectibleService collectibleService;
 	// ScheduledTasks will begin a thread and run after the Driver finishes initialization
 	
 	@Override
@@ -207,6 +213,25 @@ public class ScheduledTasks implements CommandLineRunner {
 				Event.setRollMod(1.05d);
 				log.debug("Current rollMod: {}", Event.getRollMod());
 			}
+		}
+	}
+	
+	@Scheduled(cron="0 0 * * * *")
+	public void checkEncounterCompletion() {
+		Date current = Date.from(Instant.now());
+		List<RewardToken> encounterTokens = encounterService.viewOngoingEncounters()
+				.collectList().block();
+		List<Collectible> releasedCollectibles = new ArrayList<>();
+		for(RewardToken token : encounterTokens) {
+			log.debug("Checking current encounters for completion...");
+			if(current.after(token.getEndTime())) {
+				token.setEncounterComplete(true);
+				for(UUID collectibleId : token.getCollectiblesOnEncounter()) {
+					collectibleService.getCollectible(collectibleId.toString()).map(collectible -> 
+					collectible.setOnEncounter(false))
+				}
+			}
+			
 		}
 	}
 }
