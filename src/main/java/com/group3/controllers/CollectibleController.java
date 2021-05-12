@@ -78,13 +78,13 @@ public class CollectibleController {
 	}
 	
 	@PostMapping("/fusion")
-	public Mono<ResponseEntity<?>> collectibleFusion(
+	public Mono<ResponseEntity<Collectible>> collectibleFusion(
 			@RequestParam("collectibleId1") UUID collectibleId1, 
 			@RequestParam("collectibleId2") UUID collectibleId2,
 			@RequestParam("collectibleId3") UUID collectibleId3,
 			@RequestParam("collectibleId4") UUID collectibleId4,
 			@RequestParam("collectibleId5") UUID collectibleId5) {
-		List<UUID> collectibleIds = new ArrayList<UUID>();
+		List<UUID> collectibleIds = new ArrayList<>();
 		collectibleIds.add(collectibleId1);
 		collectibleIds.add(collectibleId2);
 		collectibleIds.add(collectibleId3);

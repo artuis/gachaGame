@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.datastax.oss.driver.api.core.uuid.Uuids;
 import com.group3.beans.Collectible;
+import com.group3.beans.CollectibleType;
 import com.group3.data.CollectibleRepository;
 import com.group3.data.CollectibleTypeRepository;
 import com.group3.data.GamerRepository;
@@ -26,6 +27,9 @@ public class CollectibleServiceImpl implements CollectibleService {
 	
 	@Autowired
 	private Collectible emptyCollectible;
+	
+	@Autowired
+	private CollectibleType emptyCollectibleType;
 
 	@Autowired
 	private CollectibleRepository repo;
@@ -65,7 +69,6 @@ public class CollectibleServiceImpl implements CollectibleService {
 					if (owned.stream().anyMatch(collectible -> collectible.getTypeId() == c.getTypeId())) {
 						log.debug("Looks like a repeat collectible was rolled.");
 						log.debug(owned.toString());
-						//return Mono.empty();
 					}
 					return repo.insert(c);
 		});
@@ -116,11 +119,11 @@ public class CollectibleServiceImpl implements CollectibleService {
 	@Override
 	public Mono<Collectible> collectibleFusion(List<UUID> collectibleIds) {
 		// create a list of collectibles from the given collectible IDs
-		List<Collectible> defaultEmpty = new ArrayList<Collectible>();
+		List<Collectible> defaultEmpty = new ArrayList<>();
 		defaultEmpty.add(emptyCollectible);
-		List<Collectible> collectibles = getAllCollectibles().filter(collectible -> {
-			return collectibleIds.contains(collectible.getId());
-		}).collectList().defaultIfEmpty(defaultEmpty).block();
+		List<Collectible> collectibles = getAllCollectibles()
+				.filter(collectible -> collectibleIds.contains(collectible.getId()))
+				.collectList().defaultIfEmpty(defaultEmpty).block();
 		// null check
 		if(collectibles == null || collectibles.isEmpty() || collectibles.get(0).equals(emptyCollectible)) {
 			return Mono.empty();
@@ -133,8 +136,8 @@ public class CollectibleServiceImpl implements CollectibleService {
 			}
 		}
 		// if there is no next stage, return empty
-		if(typeRepo.findById(type).block().getNextStage() == null 
-				| typeRepo.findById(type).block().getNextStage() == 0) {
+		if(typeRepo.findById(type).defaultIfEmpty(emptyCollectibleType).block().getNextStage() == null 
+				|| typeRepo.findById(type).defaultIfEmpty(emptyCollectibleType).block().getNextStage() == 0) {
 			return Mono.empty();
 		}
 		// if everything checks out, build the next stage collectible
