@@ -131,13 +131,13 @@ public class CollectibleServiceImpl implements CollectibleService {
 		UUID gamerId = collectibles.get(0).getGamerId();
 		CollectibleType nextStageBase = null;
 		try {
-			nextStageBase = typeServ.getCollectibleType(type).map(currentType -> 
-			typeServ.getCollectibleType(currentType.getNextStage()).map(nextType -> {
+			nextStageBase = typeServ.getCollectibleType(type).flatMap(currentType -> 
+			typeServ.getCollectibleType(currentType.getNextStage()).flatMap(nextType -> {
 				if(nextType != null) {
-					return nextType;
-				} else { return currentType;}
-			})).block().block();
-		} catch (Exception e) {
+					return Mono.just(nextType);
+				} else { return Mono.just(currentType);}
+			})).cast(CollectibleType.class).block();
+		} catch (NullPointerException e) {
 			log.debug("A little null pointer exception never hurt anyone.");
 		}
 		if(nextStageBase == null || nextStageBase.getId() == type) {
