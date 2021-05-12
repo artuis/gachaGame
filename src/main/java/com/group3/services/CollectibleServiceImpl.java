@@ -129,7 +129,7 @@ public class CollectibleServiceImpl implements CollectibleService {
 		}
 		// if everything checks out, build the next stage collectible
 		UUID gamerId = collectibles.get(0).getGamerId();
-		CollectibleType nextStageBase = new CollectibleType();
+		CollectibleType nextStageBase = null;
 		nextStageBase = typeServ.getCollectibleType(type).map(currentType -> 
 		typeServ.getCollectibleType(currentType.getNextStage()).map(nextType -> {
 				if(nextType != null) {
