@@ -37,6 +37,9 @@ public class Gamer implements Serializable, UserDetails {
 	private UUID gamerId;
 	@Column
 	@JsonInclude(Include.NON_NULL)
+	private String email;
+	@Column
+	@JsonInclude(Include.NON_NULL)
 	private String username;
 	@Column
 	@JsonInclude(Include.NON_NULL)
@@ -116,6 +119,14 @@ public class Gamer implements Serializable, UserDetails {
 
 	public void setGamerId(UUID gamerId) {
 		this.gamerId = gamerId;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public String getUsername() {

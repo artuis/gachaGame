@@ -6,6 +6,7 @@ import java.util.UUID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +27,7 @@ import com.group3.beans.Collectible;
 import com.group3.beans.Gamer;
 import com.group3.services.CollectibleService;
 import com.group3.services.CollectibleTypeService;
+import com.group3.services.EmailService;
 import com.group3.services.GamerService;
 import com.group3.util.JWTUtil;
 
@@ -46,6 +48,8 @@ public class GamerController {
 	private CollectibleTypeService collectibleTypeService;
 	@Autowired
 	private CollectibleService collectibleService;
+	@Autowired
+	private EmailService emailService;
 
 	private Logger log = LoggerFactory.getLogger(GamerController.class);
 
@@ -72,6 +76,9 @@ public class GamerController {
 			if (gamer.getUsername() == null || gamer.getGamerId() == null) {
 				return ResponseEntity.status(HttpStatus.CONFLICT).body(gg);
 			} 
+			if(gamer.getEmail() != null) {
+				emailService.sendEmail(gamer.getEmail(), "Welcome to GachaGame!", "We hope you enjoy your time here!");
+			}
 			return ResponseEntity.ok(gamer);
 		});
 	}
@@ -116,6 +123,9 @@ public class GamerController {
 		return gamerService.banGamer(gamerId, daysBanned).defaultIfEmpty(emptyGamer).map(gamer -> {
 			if (gamer.getGamerId() == null) {
 				return ResponseEntity.notFound().build();
+			}
+			if(gamer.getEmail() != null) {
+				emailService.sendEmail(gamer.getEmail(), "BANNED from GachaGame!", "Scram you little rat!");
 			}
 			return ResponseEntity.ok(gamer);
 		});
