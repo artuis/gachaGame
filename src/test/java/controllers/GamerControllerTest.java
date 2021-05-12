@@ -24,6 +24,7 @@ import com.group3.beans.Gamer;
 import com.group3.controllers.GamerController;
 import com.group3.services.CollectibleService;
 import com.group3.services.CollectibleTypeService;
+import com.group3.services.EmailService;
 import com.group3.services.GamerService;
 import com.group3.util.JWTUtil;
 
@@ -36,7 +37,7 @@ public class GamerControllerTest {
 	@TestConfiguration
 	static class Configuration {
 		@Bean
-		public GamerController getGamerController(Gamer gg, Collectible c, JWTUtil jwtUtil, GamerService gs, CollectibleTypeService cts, CollectibleService cs) {
+		public GamerController getGamerController(Gamer gg, Collectible c, JWTUtil jwtUtil, GamerService gs, CollectibleTypeService cts, CollectibleService cs, EmailService es) {
 			GamerController gc = new GamerController();
 			gc.setEmptyCollectible(c);
 			gc.setEmptyGamer(gg);
@@ -44,6 +45,7 @@ public class GamerControllerTest {
 			gc.setGamerService(gs);
 			gc.setCollectibleTypeService(cts);
 			gc.setCollectibleService(cs);
+			gc.setEmailService(es);
 			return gc;
 		}
 		
@@ -73,6 +75,10 @@ public class GamerControllerTest {
 		
 		@Bean CollectibleService getCollectibleService() {
 			return Mockito.mock(CollectibleService.class);
+		}
+		
+		@Bean EmailService getEmailService() {
+			return Mockito.mock(EmailService.class);
 		}
 	}
 	
