@@ -1,5 +1,7 @@
 package com.group3.services;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import org.slf4j.Logger;
@@ -8,8 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import com.datastax.oss.driver.api.core.uuid.Uuids;
 import com.group3.beans.Collectible;
+import com.group3.beans.CollectibleType;
 import com.group3.data.CollectibleRepository;
+import com.group3.data.CollectibleTypeRepository;
 import com.group3.data.GamerRepository;
 
 import reactor.core.publisher.Flux;
@@ -22,9 +27,18 @@ public class CollectibleServiceImpl implements CollectibleService {
 	
 	@Autowired
 	private Collectible emptyCollectible;
+	
+	@Autowired
+	private CollectibleType emptyCollectibleType;
+	
+	@Autowired
+	private CollectibleTypeServiceImpl typeServ;
 
 	@Autowired
 	private CollectibleRepository repo;
+	
+	@Autowired
+	private CollectibleTypeRepository typeRepo;
 	
 	@Autowired
 	private GamerRepository gamerRepo;
@@ -56,9 +70,8 @@ public class CollectibleServiceImpl implements CollectibleService {
 				.collectList()
 				.flatMap(owned -> {
 					if (owned.stream().anyMatch(collectible -> collectible.getTypeId() == c.getTypeId())) {
-						log.debug("looks like owned stuff was found");
+						log.debug("Looks like a repeat collectible was rolled.");
 						log.debug(owned.toString());
-						return Mono.empty();
 					}
 					return repo.insert(c);
 		});
@@ -98,11 +111,43 @@ public class CollectibleServiceImpl implements CollectibleService {
 			log.debug("Collectible's gamerId: {}", collectible.getGamerId());
 			log.debug("GamerId: {}", gamerId);
 			if(!collectible.getGamerId().equals(gamerId)) {
-				return Mono.just(ResponseEntity.badRequest().body("Collectible does not belong to the specified gamer."));
+				return Mono.just(ResponseEntity.badRequest()
+						.body("Collectible does not belong to the specified gamer."));
 			} else {
 				return repo.delete(collectible).thenReturn(ResponseEntity.ok(collectible));
 			}
 		});
+	}
+
+	@Override
+	public Mono<Collectible> collectibleFusion(List<UUID> collectibleIds) {
+		// create a list of collectibles from the given collectible IDs
+		List<Collectible> defaultEmpty = new ArrayList<>();
+		defaultEmpty.add(emptyCollectible);
+		List<Collectible> collectibles = getAllCollectibles()
+				.filter(collectible -> collectibleIds.contains(collectible.getId()))
+				.collectList().defaultIfEmpty(defaultEmpty).block();
+		// null check
+		if(collectibles == null || collectibles.isEmpty() || collectibles.get(0).equals(emptyCollectible)) {
+			return Mono.empty();
+		}
+		// if the collectibles in the list aren't all of the same type, return empty
+		int type = collectibles.get(0).getTypeId();
+		for(Collectible collectible : collectibles) {
+			if(collectible.getTypeId() != type) {
+				return Mono.empty();
+			}
+		}
+		// if there is no next stage, return empty
+		if(typeServ.getCollectibleType(type).defaultIfEmpty(emptyCollectibleType).block().getNextStage() == null 
+				|| typeServ.getCollectibleType(type).defaultIfEmpty(emptyCollectibleType).block().getNextStage() == 0) {
+			return Mono.empty();
+		}
+		// if everything checks out, build the next stage collectible
+		UUID gamerId = collectibles.get(0).getGamerId();
+		CollectibleType nextStageBase = typeServ.getCollectibleType(type).block();
+		Collectible nextStage = Collectible.fromCollectibleTypeAndId(nextStageBase, gamerId);
+		return repo.deleteAll(collectibles).then(repo.save(nextStage));
 	}
 	
 }
