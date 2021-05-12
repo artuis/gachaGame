@@ -15,7 +15,6 @@ import org.springframework.stereotype.Component;
 @Component
 @Table("rewardtoken")
 public class RewardToken {
-	private static final long serialVersionUID = 4776899515170739876L;
 
 	@PrimaryKeyColumn(name = "tokenID", ordinal = 0, type = PrimaryKeyType.PARTITIONED)
 	private UUID tokenID;
