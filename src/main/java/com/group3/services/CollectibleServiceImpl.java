@@ -130,16 +130,12 @@ public class CollectibleServiceImpl implements CollectibleService {
 		// if everything checks out, build the next stage collectible
 		UUID gamerId = collectibles.get(0).getGamerId();
 		CollectibleType nextStageBase = null;
-		try {
-			nextStageBase = typeServ.getCollectibleType(type).flatMap(currentType -> 
-			typeServ.getCollectibleType(currentType.getNextStage()).flatMap(nextType -> {
-				if(nextType != null) {
-					return Mono.just(nextType);
-				} else { return Mono.just(currentType);}
-			})).cast(CollectibleType.class).block();
-		} catch (NullPointerException e) {
-			log.debug("A little null pointer exception never hurt anyone.");
-		}
+		nextStageBase = typeServ.getCollectibleType(type).flatMap(currentType -> 
+		typeServ.getCollectibleType(currentType.getNextStage()).flatMap(nextType -> {
+			if(nextType != null) {
+				return Mono.just(nextType);
+			} else { return Mono.just(currentType);}
+		})).cast(CollectibleType.class).block();
 		if(nextStageBase == null || nextStageBase.getId() == type) {
 			return Mono.empty();
 		}

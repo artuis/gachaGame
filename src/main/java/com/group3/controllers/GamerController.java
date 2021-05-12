@@ -128,11 +128,13 @@ public class GamerController {
 		return gamerService.findByUsername(gg.getUsername()).defaultIfEmpty(emptyGamer).cast(Gamer.class).map(gamer -> {
 			if (gamer.getUsername() == null) {
 				return ResponseEntity.status(HttpStatus.NOT_FOUND).body(gg);
-			}
+			} else if(gamer.getRole().equals(Gamer.Role.BANNED)) {
+				return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(gg);
+			} else {
 			exchange.getResponse().addCookie(ResponseCookie.from("token", jwtUtil.generateToken(gamer))
 					.path("/").httpOnly(true).build());
 			return ResponseEntity.ok(gamer); // 👌
-
+			}
 		});
 	}
 

@@ -13,7 +13,7 @@ import org.springframework.data.cassandra.core.mapping.Table;
 import org.springframework.stereotype.Component;
 
 @Component
-@Table("rewardtoken")
+@Table("rewardtokens")
 public class RewardToken {
 
 	@PrimaryKeyColumn(name = "tokenID", ordinal = 0, type = PrimaryKeyType.PARTITIONED)
