@@ -106,6 +106,11 @@
 			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		
+		<dependency>
+    		<groupId>org.springframework.boot</groupId>
+    		<artifactId>spring-boot-starter-mail</artifactId>
+    	</dependency>
 
 		<dependency>
 			<groupId>org.awaitility</groupId>
@@ -132,8 +137,6 @@
 			<version>0.11.1</version>
 			<scope>runtime</scope>
 		</dependency>
-		<!-- maybe use lombok? <dependency> <groupId>org.projectlombok</groupId> 
-			<artifactId>lombok</artifactId> <version>1.18.10</version> <scope>provided</scope> 
-			</dependency> -->
+
 	</dependencies>
 </project>

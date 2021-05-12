@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,10 +15,14 @@ import org.springframework.core.annotation.Order;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import com.group3.beans.Collectible;
 import com.group3.beans.Event;
 import com.group3.beans.Gamer;
+import com.group3.beans.RewardToken;
+import com.group3.services.CollectibleService;
 import com.group3.services.EventService;
 import com.group3.services.GamerService;
+import com.group3.services.RewardTokenService;
 
 @Component
 @Order(1)
@@ -27,6 +32,10 @@ public class ScheduledTasks implements CommandLineRunner {
 	private GamerService gamerService;
 	@Autowired 
 	private EventService eventService;
+	@Autowired
+	private CollectibleService collectibleService;
+	@Autowired
+	private RewardTokenService rewardService;
 	// ScheduledTasks will begin a thread and run after the Driver finishes initialization
 	
 	@Override
@@ -209,4 +218,59 @@ public class ScheduledTasks implements CommandLineRunner {
 			}
 		}
 	}
+	
+	@Scheduled(cron="0 0 * * * *")
+	public void checkEncounterCompletion() {
+		Date current = Date.from(Instant.now());
+		//MAYBE NOT??// List<Collectible> releasedCollectibles = null;
+		List<RewardToken> encounterTokens = rewardService.viewCompletedTokens(false)
+				.filter(token -> current.after(token.getEndTime())).collectList().block();
+		for(RewardToken token : encounterTokens) {
+			token.setEncounterComplete(true);
+			for(UUID collectibleId : token.getCollectiblesOnEncounter()) {
+				collectibleService.getCollectible(collectibleId.toString())
+				.map(collectible -> {
+					collectible.setOnEncounter(false);
+					return collectibleService.updateCollectible(collectible);
+				}).block();
+			}
+			// reward to gamer block goes here
+			rewardService.updateRewardToken(token).block();
+		}
+				
+	}			
+//				.map(token -> {
+//				if(current.after(token.getEndTime())) {
+//					token.setEncounterComplete(true);
+//					Flux.just(token.getCollectiblesOnEncounter()).map(collectibleId -> {
+//						collectibleService.getCollectible(collectibleId.tostring()).map(collectible -> {
+//						
+//						});
+//					});
+//						collectibleService.getCollectible(collectibleId.toString())
+//						.map(collectible -> {
+//							collectible.setOnEncounter(false);
+//							return collectibleService.updateCollectible(collectible)
+//							.subscribe(releasedCollectibles::add);
+//						});
+//				}
+//				}});
+//	}
+//		// maybe not // List<Collectible> releasedCollectibles = new ArrayList<>();
+//		for(RewardToken token : encounterTokens) {
+//			log.debug("Checking current encounters for completion...");
+//			if(current.after(token.getEndTime())) {
+//				token.setEncounterComplete(true);
+//				for(UUID collectibleId : token.getCollectiblesOnEncounter()) {
+//					collectibleService.getCollectible(collectibleId.toString())
+//					.map(collectible -> {
+//					collectible.setOnEncounter(false);
+//					return collectibleService.updateCollectible(collectible);
+//				}).thenReturn(rewardService.updateRewardToken(token)).block();
+//				}
+//				// return reward here
+//			}
+//			
+//		}
+//	}
 }
