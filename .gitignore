@@ -13,5 +13,5 @@ buildNumber.properties
 *.jks
 *.crt
 *.der
-application.properties
+src/main/resources/application.properties
 .directory
