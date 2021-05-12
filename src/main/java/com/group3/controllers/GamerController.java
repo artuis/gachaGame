@@ -1,5 +1,6 @@
 package com.group3.controllers;
 
+import java.util.List;
 import java.util.UUID;
 
 import org.slf4j.Logger;
@@ -28,7 +29,6 @@ import com.group3.services.CollectibleTypeService;
 import com.group3.services.GamerService;
 import com.group3.util.JWTUtil;
 
-import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @RestController
@@ -79,8 +79,8 @@ public class GamerController {
 
 	@PreAuthorize("hasAuthority('MODERATOR')")
 	@GetMapping
-	public ResponseEntity<Flux<Gamer>> getGamers() {
-		return ResponseEntity.ok(gamerService.getGamers());
+	public Mono<ResponseEntity<List<Gamer>>> getGamers() {
+		return gamerService.getGamers().collectList().map(gamers -> ResponseEntity.ok(gamers));
 	}
 
 	// more human readable way of obtaining a stored gamer
@@ -152,7 +152,7 @@ public class GamerController {
 
 	@PreAuthorize("hasAuthority('GAMER')")
 	@PutMapping("/collectibles/roll")
-	public Mono<ResponseEntity<?>> rollNewCollectible(ServerWebExchange exchange) {
+	public Mono<ResponseEntity<Object>> rollNewCollectible(ServerWebExchange exchange) {
 		String token = exchange.getRequest().getCookies().getFirst("token").getValue();
 		return gamerService.getGamer(UUID.fromString((String) jwtUtil.getAllClaimsFromToken(token).get("id")))
 				.flatMap(gamer -> {

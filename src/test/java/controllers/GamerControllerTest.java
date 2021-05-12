@@ -85,4 +85,7 @@ public class GamerControllerTest {
 		Mono<ResponseEntity<Gamer>> result = gc.registerGamer(gamer);
 		StepVerifier.create(result).expectNext(ResponseEntity.status(201).body(gamer));
 	}
+	
+	@Test
+	public void 
 }
