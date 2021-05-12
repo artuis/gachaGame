@@ -24,6 +24,9 @@ public class CollectibleServiceImpl implements CollectibleService {
 	private Logger log = LoggerFactory.getLogger(CollectibleServiceImpl.class);
 	
 	@Autowired
+	private Collectible emptyCollectible;
+	
+	@Autowired
 	private CollectibleTypeServiceImpl typeServ;
 
 	@Autowired
@@ -31,8 +34,6 @@ public class CollectibleServiceImpl implements CollectibleService {
 	
 	@Autowired
 	private GamerRepository gamerRepo;
-	
-	private Collectible emptyCollectible = new Collectible();
 	
 	public CollectibleServiceImpl() {
 		super();
