@@ -190,6 +190,8 @@ public class GamerController {
 					log.debug("" + gamer.getDailyRolls());
 					if (gamer.getDailyRolls() > 0) {
 						gamer.setDailyRolls(gamer.getDailyRolls() - 1);
+					} else if (gamer.getRolls() > 0) {
+						gamer.setRolls(gamer.getRolls() - 1);
 					} else if (gamer.getStrings() >= 1000) {
 						gamer.setStrings(gamer.getStrings() - 1000);
 					} else if (gamer.getStardust() >= 10) {
