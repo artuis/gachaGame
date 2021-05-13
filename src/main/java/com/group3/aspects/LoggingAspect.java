@@ -46,6 +46,7 @@ public class LoggingAspect {
 	}
 	
 	// hook - a method that only exists as the target for an annotation
-	@Pointcut("execution( * com.group3..*(..) )")
+	@Pointcut("execution( * com.group3..*(..) )"
+			+ "&& !execution( * com.group3.schedule..*(..) )")
 	private void everything() { /* Empty method for hook */ }
 }
