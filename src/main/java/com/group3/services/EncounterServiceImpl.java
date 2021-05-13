@@ -48,8 +48,10 @@ public class EncounterServiceImpl implements EncounterService {
 		// Get the collectibles to send on the journey
 		List<Collectible> sent = new ArrayList<>();
 		for(UUID collectibleId : colIDs) {
-			collectibleService.getCollectible(collectibleId.toString())
-			.map(collectible -> sent.add(collectible)).block();
+			Collectible collectible = collectibleService.getCollectible(collectibleId.toString()).block();
+			if(collectible != null) {
+				sent.add(collectible);
+			}
 		}
 		// If any of the collectibles sent
 		// are on an encounter

@@ -110,6 +110,5 @@ public class Encounter {
 		return "Encounter [encounterID=" + encounterID + ", level=" + level + ", difficulty=" + difficulty + ", reward="
 				+ reward + ", length=" + length + "]";
 	}
-	
-	
+
 }

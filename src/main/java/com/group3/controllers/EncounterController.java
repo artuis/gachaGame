@@ -71,7 +71,7 @@ public class EncounterController {
 	
 	@PreAuthorize("hasAuthority('MODERATOR')")
 	@DeleteMapping
-	public Mono<ResponseEntity<?>> deleteEncounterTemplate(@RequestParam UUID encounterID) {
+	public Mono<ResponseEntity<Void>> deleteEncounterTemplate(@RequestParam UUID encounterID) {
 		return encounterService.deleteEncounterTemplate(encounterID).thenReturn(ResponseEntity.ok().build());
 	}
 	
