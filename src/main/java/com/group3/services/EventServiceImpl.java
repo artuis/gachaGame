@@ -45,7 +45,7 @@ public class EventServiceImpl implements EventService {
 		return eventRepo.insert(event);
 	}
 
-	public Mono<?> deleteEvent(UUID eventId) {
+	public Mono<Void> deleteEvent(UUID eventId) {
 		return eventRepo.deleteById(eventId);
 	}
 	

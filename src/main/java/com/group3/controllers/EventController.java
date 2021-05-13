@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -40,9 +41,9 @@ public class EventController {
 	}
 	
 	@PreAuthorize("hasAuthority('MODERATOR')")
-	@DeleteMapping
-	public void deleteEvent(@RequestBody UUID eventId) {
-		eventService.deleteEvent(eventId).subscribe();			
+	@DeleteMapping("{UUID}")
+	public Mono<ResponseEntity<Object>> deleteEvent(@PathVariable("UUID") UUID eventId) {
+		return eventService.deleteEvent(eventId).thenReturn(ResponseEntity.noContent().build());
 	}
 	
 	@GetMapping
