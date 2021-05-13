@@ -5,6 +5,7 @@ import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,6 +20,7 @@ import com.group3.services.EventService;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+@Component
 @RestController
 @RequestMapping(value = "/events")
 public class EventController {
@@ -27,6 +29,13 @@ public class EventController {
 	private EventService eventService;
 	@Autowired
 	private Event emptyEvent;
+	
+	public void setEventService(EventService eventService) {
+		this.eventService = eventService;
+	}
+	public void setEmptyEvent(Event event) {
+		this.emptyEvent = event;
+	}
 	
 	@PreAuthorize("hasAuthority('MODERATOR')")
 	@PostMapping
