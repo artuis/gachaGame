@@ -43,7 +43,7 @@ public class EncounterController {
 			@RequestParam("encounterID") UUID encounterID, ServerWebExchange exchange) {
 
 		String token = exchange.getRequest().getCookies().getFirst("token").getValue();
-		encounterService.setEncounter((UUID) jwtUtil.getAllClaimsFromToken(token).get("id"), colIDs, encounterID);
+		return encounterService.setEncounter(UUID.fromString((String) jwtUtil.getAllClaimsFromToken(token).get("id")), colIDs, encounterID);
 
 		// return something?
 		return null;
@@ -53,7 +53,7 @@ public class EncounterController {
 	@GetMapping("{gamerId}")
 	public Publisher<?> viewRunningEncounters(ServerWebExchange exchange) {
 		String token = exchange.getRequest().getCookies().getFirst("token").getValue();
-		return encounterService.getRunningEncounters((UUID) jwtUtil.getAllClaimsFromToken(token).get("id"));
+		return encounterService.getRunningEncounters(UUID.fromString((String) jwtUtil.getAllClaimsFromToken(token).get("id")));
 	}
 
 	// TODO Get: receive reward if encounter is completed
