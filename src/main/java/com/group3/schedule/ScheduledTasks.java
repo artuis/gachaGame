@@ -229,8 +229,10 @@ public class ScheduledTasks implements CommandLineRunner {
 			token.setEncounterComplete(true);
 			for(UUID collectibleId : token.getCollectiblesOnEncounter()) {
 				Collectible collectible = collectibleService.getCollectible(collectibleId.toString()).block();
-				collectible.setOnEncounter(false);
-				collectibleService.updateCollectible(collectible).block();
+				if(collectible != null) {
+					collectible.setOnEncounter(false);
+					collectibleService.updateCollectible(collectible).block();
+				}
 			}
 			encounterService.distributeReward(token.getReward(), token.getGamerID());
 			encounterService.updateRewardToken(token).block();

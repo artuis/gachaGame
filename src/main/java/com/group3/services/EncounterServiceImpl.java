@@ -141,6 +141,9 @@ public class EncounterServiceImpl implements EncounterService {
 	@Override
 	public void distributeReward(int reward, UUID gamerID) {
 		Gamer gamer = gamerRepo.findById(gamerID).block();
+		if(gamer == null) {
+			return;
+		}
 		if(reward < 20) {
 			gamer.setStrings(gamer.getStrings() + (reward*10));
 			log.debug("Reward distributed: {} strings", (reward*10));
