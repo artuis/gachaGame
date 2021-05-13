@@ -41,16 +41,8 @@ public class EventController {
 	
 	@PreAuthorize("hasAuthority('MODERATOR')")
 	@DeleteMapping
-	public Mono<ResponseEntity<?>> deleteEvent(@RequestBody UUID eventId) {
-		return eventService.deleteEvent(eventId).subscribe(e -> {
-			if() {
-				return ResponseEntity.status(201);
-			}
-		});
-			
-		
-				
-		
+	public void deleteEvent(@RequestBody UUID eventId) {
+		eventService.deleteEvent(eventId).subscribe();			
 	}
 	
 	@GetMapping

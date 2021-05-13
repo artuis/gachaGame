@@ -29,14 +29,14 @@ public class EventServiceImpl implements EventService {
 	public Flux<Event> viewOngoingEvents(){
 		return eventRepo.findAllByOngoing(true);
 	}
+	
 	/* Creates an event which has a start and end time. 
 	 * If those are null, return empty, otherwise 
-	 * give the event a UUID eventId and insert in repo.*/
+	 * give the event a UUID eventId and insert in eventRepo.*/
+	
 	@Override
 	public Mono<Event> createEvent(Event event) {
-		//verify that event has start and end time before creating
 		if (event.getEventStart() == null || event.getEventEnd() == null) {
-			log.trace("invalid event start/end times");
 			return Mono.empty();
 		}
 		if(event != null) {

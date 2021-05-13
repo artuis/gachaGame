@@ -19,5 +19,4 @@ public interface EventRepository extends ReactiveCassandraRepository<Event, /*PR
 	@AllowFiltering
 	Flux<Event> findAllByOngoing(boolean ongoing);
 	
-	Mono<Event> findEventById(UUID eventId);
 }
