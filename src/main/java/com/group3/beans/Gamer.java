@@ -15,11 +15,13 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 @Table("gamers")
 @Component
+@JsonIgnoreProperties(value = { "password" })
 public class Gamer implements Serializable, UserDetails {
 	private static final long serialVersionUID = 4447548260627752098L;
 
@@ -35,6 +37,9 @@ public class Gamer implements Serializable, UserDetails {
 	@Column
 	@PrimaryKey
 	private UUID gamerId;
+	@Column
+	@JsonInclude(Include.NON_NULL)
+	private String email;
 	@Column
 	@JsonInclude(Include.NON_NULL)
 	private String username;
@@ -116,6 +121,14 @@ public class Gamer implements Serializable, UserDetails {
 
 	public void setGamerId(UUID gamerId) {
 		this.gamerId = gamerId;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public String getUsername() {

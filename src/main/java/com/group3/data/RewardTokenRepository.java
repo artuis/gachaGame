@@ -6,18 +6,16 @@ import org.springframework.data.cassandra.repository.AllowFiltering;
 import org.springframework.data.cassandra.repository.ReactiveCassandraRepository;
 import org.springframework.stereotype.Repository;
 
-import com.group3.beans.Encounter;
+import com.group3.beans.RewardToken;
 
 import reactor.core.publisher.Flux;
-import reactor.core.publisher.Mono;
 
 @Repository
-public interface EncounterRepository extends ReactiveCassandraRepository<Encounter, UUID> {
+public interface RewardTokenRepository extends ReactiveCassandraRepository<RewardToken, UUID> {
 
 	@AllowFiltering
-	Flux<Encounter> findAllByLevel(int level);
-	
-	@AllowFiltering
-	Mono<Encounter> findByEncounterID(UUID encounterID);
+	Flux<RewardToken> findAllByGamerID(UUID gamerID);
 
+	@AllowFiltering
+	Flux<RewardToken> findAllByEncounterComplete(boolean encounterComplete);
 }

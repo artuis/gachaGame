@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,8 +15,12 @@ import org.springframework.core.annotation.Order;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import com.group3.beans.Collectible;
 import com.group3.beans.Event;
 import com.group3.beans.Gamer;
+import com.group3.beans.RewardToken;
+import com.group3.services.CollectibleService;
+import com.group3.services.EncounterService;
 import com.group3.services.EventService;
 import com.group3.services.GamerService;
 
@@ -27,6 +32,10 @@ public class ScheduledTasks implements CommandLineRunner {
 	private GamerService gamerService;
 	@Autowired 
 	private EventService eventService;
+	@Autowired
+	private CollectibleService collectibleService;
+	@Autowired
+	private EncounterService encounterService;
 	// ScheduledTasks will begin a thread and run after the Driver finishes initialization
 	
 	@Override
@@ -209,4 +218,24 @@ public class ScheduledTasks implements CommandLineRunner {
 			}
 		}
 	}
+	
+	@Scheduled(cron="0 * * * * *")
+	public void checkEncounterCompletion() {
+		log.debug("Checking for encounters to end...");
+		Date current = Date.from(Instant.now());
+		List<RewardToken> encounterTokens = encounterService.viewCompletedTokens(false)
+				.filter(token -> current.after(token.getEndTime())).collectList().block();
+		for(RewardToken token : encounterTokens) {
+			token.setEncounterComplete(true);
+			for(UUID collectibleId : token.getCollectiblesOnEncounter()) {
+				Collectible collectible = collectibleService.getCollectible(collectibleId.toString()).block();
+				if(collectible != null) {
+					collectible.setOnEncounter(false);
+					collectibleService.updateCollectible(collectible).block();
+				}
+			}
+			encounterService.distributeReward(token.getReward(), token.getGamerID());
+			encounterService.updateRewardToken(token).block();
+		}
+	}			
 }

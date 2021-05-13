@@ -13,9 +13,8 @@ import org.springframework.data.cassandra.core.mapping.Table;
 import org.springframework.stereotype.Component;
 
 @Component
-@Table("rewardtoken")
+@Table("rewardtokens")
 public class RewardToken {
-	private static final long serialVersionUID = 4776899515170739876L;
 
 	@PrimaryKeyColumn(name = "tokenID", ordinal = 0, type = PrimaryKeyType.PARTITIONED)
 	private UUID tokenID;
@@ -175,19 +174,5 @@ public class RewardToken {
 				+ ", collectiblesOnEncounter=" + collectiblesOnEncounter + ", encounterComplete=" + encounterComplete
 				+ "]";
 	}
-
-//	public Object getRewardIfReady() {
-//		try {
-//			// TODO check scheduler to see if event is complete
-//			// return activeEncounter.toFuture().get(1, TimeUnit.SECONDS);
-//		} catch (InterruptedException e) {
-//			e.printStackTrace();
-//		} catch (ExecutionException e) {
-//			e.printStackTrace();
-//		} catch (TimeoutException e) {
-//			e.printStackTrace();
-//		}
-//		return null;
-//	}
 
 }

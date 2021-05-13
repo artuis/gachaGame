@@ -31,6 +31,18 @@ public class JWTUtil {
 	public void init(){
 		this.key = Keys.hmacShaKeyFor(secret.getBytes());
 	}
+	
+	public void setExpirationTime(String expTime) {
+		this.expirationTime = expTime;
+	}
+	
+	public void setSecret(String secret) {
+		this.secret = secret;
+	}
+	
+	public void setKey(Key key) {
+		this.key = key;
+	}
 
 	public Claims getAllClaimsFromToken(String token) {
 		return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token).getBody();
