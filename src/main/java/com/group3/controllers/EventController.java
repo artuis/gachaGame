@@ -1,8 +1,11 @@
 package com.group3.controllers;
 
+import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -36,9 +39,28 @@ public class EventController {
 				});
 	}
 	
+	@PreAuthorize("hasAuthority('MODERATOR')")
+	@DeleteMapping
+	public Mono<ResponseEntity<?>> deleteEvent(@RequestBody UUID eventId) {
+		return eventService.deleteEvent(eventId).subscribe(e -> {
+			if() {
+				return ResponseEntity.status(201);
+			}
+		});
+			
+		
+				
+		
+	}
+	
 	@GetMapping
 	public Flux<Event> viewOngoingEvents(){
 		return eventService.viewOngoingEvents();
 		
+	}
+	
+	@GetMapping("/allEvents")
+	public Flux<Event> viewAllEvents() {
+		return eventService.getEvents();
 	}
 }
