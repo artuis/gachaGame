@@ -219,7 +219,7 @@ public class ScheduledTasks implements CommandLineRunner {
 		}
 	}
 	
-	@Scheduled(cron="0 * * * * *")
+	@Scheduled(cron="*/10 * * * * *")
 	public void checkEncounterCompletion() {
 		log.debug("Checking for encounters to end...");
 		Date current = Date.from(Instant.now());

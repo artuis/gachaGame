@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.group3.beans.CollectibleType;
+import com.group3.beans.Event;
 import com.group3.data.CollectibleTypeRepository;
 
 import io.netty.util.internal.ThreadLocalRandom;
@@ -23,7 +24,7 @@ public class CollectibleTypeServiceImpl implements CollectibleTypeService {
 
 	@Override
 	public Mono<CollectibleType> rollCollectibleType() {
-		double rand = ThreadLocalRandom.current().nextDouble();
+		double rand = ThreadLocalRandom.current().nextDouble()*Event.getRollMod();
 		if (rand < CollectibleType.Stage.STAGE_1.getRate()) {
 			return collectibleTypeRepo
 					.findCollectiblesByStage(CollectibleType.Stage.STAGE_1)

@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.datastax.oss.driver.api.core.uuid.Uuids;
 import com.group3.beans.Collectible;
 import com.group3.beans.Encounter;
+import com.group3.beans.Event;
 import com.group3.beans.Gamer;
 import com.group3.beans.RewardToken;
 import com.group3.data.CollectibleRepository;
@@ -147,7 +148,7 @@ public class EncounterServiceImpl implements EncounterService {
 			return;
 		}
 		if(reward < 20) {
-			gamer.setStrings(gamer.getStrings() + (reward*10));
+			gamer.setStrings(gamer.getStrings() + (reward*10*Event.getStringMod()));
 			log.debug("Reward distributed: {} strings", (reward*10));
 		} else if(reward < 40) {
 			gamer.setStardust(gamer.getStardust() + (reward/10));
