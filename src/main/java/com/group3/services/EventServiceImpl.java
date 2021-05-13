@@ -37,6 +37,7 @@ public class EventServiceImpl implements EventService {
 	@Override
 	public Mono<Event> createEvent(Event event) {
 		if (event.getEventStart() == null || event.getEventEnd() == null) {
+			log.trace("Invalid event start/end times");
 			return Mono.empty();
 		}
 		if(event != null) {
