@@ -30,6 +30,10 @@ public class GamerServiceImpl implements GamerService {
 	private GamerRepository gamerRepo;
 	
 	private Logger log = LoggerFactory.getLogger(GamerServiceImpl.class);
+	
+	public void setGamerRepo(GamerRepository gamerRepo) {
+		this.gamerRepo = gamerRepo;
+	}
 
 	@Override
 	public Mono<Gamer> getGamer(UUID gamerId) {
@@ -126,7 +130,6 @@ public class GamerServiceImpl implements GamerService {
 							gamer.setLoginBonusCollected(true);
 						}
 						gamerRepo.save(gamer).subscribe();
-
 					} 
 				})
 				.map(gamer -> gamer);

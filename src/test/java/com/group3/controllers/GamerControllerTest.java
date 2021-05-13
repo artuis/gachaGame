@@ -1,4 +1,4 @@
-package controllers;
+package com.group3.controllers;
 
 import java.time.Duration;
 import java.util.Arrays;
@@ -23,8 +23,7 @@ import com.datastax.oss.driver.api.core.uuid.Uuids;
 import com.group3.beans.Collectible;
 import com.group3.beans.CollectibleType;
 import com.group3.beans.CollectibleType.Stage;
-import com.group3.beans.Gamer;
-import com.group3.controllers.GamerController;
+import com.group3.beans.Gamer;	
 import com.group3.services.CollectibleService;
 import com.group3.services.CollectibleTypeService;
 import com.group3.services.EmailService;
@@ -86,10 +85,6 @@ class GamerControllerTest {
 		}
 	}
 	
-	@Autowired
-	private Gamer g;
-	@Autowired
-	private Collectible c;
 	@Autowired
 	private JWTUtil jwtUtil;
 	@Autowired
