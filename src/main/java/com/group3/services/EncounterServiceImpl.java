@@ -4,9 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.datastax.oss.driver.api.core.uuid.Uuids;
 import com.group3.beans.Collectible;
 import com.group3.beans.Encounter;
 import com.group3.beans.Gamer;
@@ -14,17 +17,22 @@ import com.group3.beans.RewardToken;
 import com.group3.data.CollectibleRepository;
 import com.group3.data.EncounterRepository;
 import com.group3.data.GamerRepository;
+import com.group3.data.RewardTokenRepository;
 
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @Service
 public class EncounterServiceImpl implements EncounterService {
-
+	private Logger log = LoggerFactory.getLogger(EncounterServiceImpl.class);
 	@Autowired
-	private CollectibleRepository collectibleRepo;
+	private CollectibleService collectibleService;
 	@Autowired
 	private EncounterRepository encounterRepo;
+	@Autowired
+	private RewardTokenRepository rewardRepo;
+	@Autowired
+	private CollectibleRepository collectibleRepo;
 	@Autowired
 	private GamerRepository gamerRepo;
 	
@@ -33,50 +41,43 @@ public class EncounterServiceImpl implements EncounterService {
 	}
 	
 	public Flux<RewardToken> getRunningEncounters(UUID gamerID){
-		// TODO get currently running encounters per gamer
-		return null;
+		return rewardRepo.findAllByGamerID(gamerID);
 	}
 	
 	public Mono<RewardToken> setEncounter(UUID gamerID, List<UUID> colIDs, UUID encID) {
-		
 		// Get the collectibles to send on the journey
 		List<Collectible> sent = new ArrayList<>();
-		colIDs.forEach(x -> 
-		collectibleRepo.findById(x)
-		.doOnNext(y -> sent.add(y)).subscribe());
-		
+		for(UUID collectibleId : colIDs) {
+			collectibleService.getCollectible(collectibleId.toString())
+			.map(collectible -> sent.add(collectible)).block();
+		}
 		// If any of the collectibles sent
 		// are on an encounter
 		// or owned by a different gamer
-		if(sent.stream().anyMatch(x->x.isOnEncounter()) ||
-				sent.stream().anyMatch(x->x.getGamerId()!=gamerID)) {
-			return null;
+		for(Collectible collectible : sent) {
+			if(collectible.isOnEncounter() || !collectible.getGamerId().equals(gamerID)) {
+				log.debug("Collectible list checkpoint failed in encounter service: "
+						+ "collectible on encounter or gamerId does not match");
+				return Mono.empty();
+			}
 		}
 		
 		RewardToken rewardToken = new RewardToken();
-		rewardToken.setTokenID(UUID.randomUUID());
+		rewardToken.setTokenID(Uuids.timeBased());
+		rewardToken.setGamerID(gamerID);
 		rewardToken.setActiveEncounter(encID);
 		rewardToken.setCollectiblesOnEncounter(colIDs);
 		// Get the journey to send on the collectibles
 		encounterRepo.findByEncounterID(encID)
 		.doOnNext( e -> rewardToken.setReward(runEncounter(sent, e)))
 		.doOnNext( e -> rewardToken.setEncounterTimes(e.getLength()))
-		.subscribe();
-
+		.block();
 		// Set the collectibles as unavailable to go on further encounters
-		sent.forEach(c -> c.setOnEncounter(true));
-		
-		// Give the token to gamer
-		gamerRepo.findById(gamerID)
-		.doOnNext(gg -> gg.addActiveEncounter(rewardToken.getTokenID()))
-		.doOnNext(gg -> gamerRepo.save(gg))
-		.subscribe();
-
-		// TODO give rewardToken to scheduler to send alert to gamer when ready
-		
-		
-		return Mono.just(rewardToken);
-		
+		for(Collectible collectible : sent) {
+			collectible.setOnEncounter(true);
+			collectibleRepo.save(collectible).block();
+		}
+		return rewardRepo.insert(rewardToken);
 	}
 	
 	public int runEncounter(List<Collectible> sent, Encounter journey) {
@@ -101,35 +102,17 @@ public class EncounterServiceImpl implements EncounterService {
 			// Return a small amount upon failure
 			reward = 10;
 		}
-		
-		// Return Mono
-		// return Mono.just(reward).delayElement(Duration.ofMillis(journey.getLength()));
-		// Return just int reward
 		return reward;
 	}
 	
-	public Flux<?> getEncounterReward(UUID gamerID) {
-		
-		// THIS IS WRONG: FIX THIS GAMER DECLARATION
-		Gamer gg = (Gamer) gamerRepo.findById(gamerID).subscribe();
-		
-		List<UUID> tokens = gg.getActiveEncounters();
-		
-		// TODO get tokens from rewardTokenRepo
-		
-		// Check if there are even any tokens
-		if(tokens.isEmpty()) {
-			// TODO return response
-			return null;
-		} else {
-			// TODO check if encounters are done
-			// and get rewards from the ones that are
-			//tokens.stream().;
-			
-			
-		}
-		
-		return null;
+	@Override
+	public Flux<RewardToken> viewCompletedTokens(boolean encounterComplete) {
+		return rewardRepo.findAllByEncounterComplete(false);
+	}
+	
+	@Override
+	public Mono<RewardToken> updateRewardToken(RewardToken token) {
+		return rewardRepo.save(token);
 	}
 	
 	// Constructor for testing
@@ -139,5 +122,42 @@ public class EncounterServiceImpl implements EncounterService {
 		this.gamerRepo = gMock;
 	}
 
+	@Override
+	public Mono<Encounter> createEncounterTemplate(Encounter encounter) {
+		encounter.setEncounterID(Uuids.timeBased());
+		return encounterRepo.insert(encounter);
+	}
+
+	@Override
+	public Mono<Encounter> updateEncounterTemplate(Encounter encounter) {
+		return encounterRepo.save(encounter);
+	}
+
+	@Override
+	public Mono<Void> deleteEncounterTemplate(UUID encounter) {
+		return encounterRepo.deleteById(encounter);
+	}
+	
+	@Override
+	public void distributeReward(int reward, UUID gamerID) {
+		Gamer gamer = gamerRepo.findById(gamerID).block();
+		if(reward < 20) {
+			gamer.setStrings(gamer.getStrings() + (reward*10));
+			log.debug("Reward distributed: {} strings", (reward*10));
+		} else if(reward < 40) {
+			gamer.setStardust(gamer.getStardust() + (reward/10));
+			log.debug("Reward distributed: {} stardust", (reward/10));
+		} else if(reward < 60) {
+			gamer.setRolls(gamer.getRolls() + 1);
+			log.debug("Reward distributed: 1 roll");
+		} else if(reward < 80) {
+			gamer.setRolls(gamer.getRolls() + 3);
+			log.debug("Reward distributed: 3 rolls");
+		} else if(reward < 100) {
+			gamer.setRolls(gamer.getRolls() + 5);
+			log.debug("Reward distributed: 5 rolls! Nice.");
+		}
+		gamerRepo.save(gamer).block();
+	}
 	
 }

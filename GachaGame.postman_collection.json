@@ -12,7 +12,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"username\": \"moneyBags\",\r\n    \"password\": \"bigMoneyHoney\",\r\n    \"strings\": 1000000\r\n}",
+					"raw": "{\r\n    \"username\": \"moneyBags\",\r\n    \"password\": \"bigMoneyHoney\",\r\n    \"email\": \"jeffBezoes@amazon.com\",\r\n    \"strings\": 1000000000\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -440,7 +440,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"eventType\": \"DOUBLESTRINGS\",\r\n    \"ongoing\": \"false\",\r\n    \"eventStart\": \"2021-05-09T00:33:43.644+04:00\",\r\n    \"eventEnd\": \"2021-05-10T21:02:43.644+04:00\"\r\n}",
+					"raw": "{\r\n    \"eventType\": \"DOUBLESTRINGS\",\r\n    \"ongoing\": \"false\",\r\n    \"eventStart\": \"2021-05-09T00:00:00.000+04:00\",\r\n    \"eventEnd\": \"2021-05-10T21:00:00.000+04:00\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -514,7 +514,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/collectibles/fusion?collectibleId1=1a8f0130-b32a-11eb-bc9d-cd246fa8807f&collectibleId2=1a05acf0-b32a-11eb-bc9d-cd246fa8807f&collectibleId3=197b6e50-b32a-11eb-bc9d-cd246fa8807f&collectibleId4=18ec74c0-b32a-11eb-bc9d-cd246fa8807f&collectibleId5=181bde50-b32a-11eb-bc9d-cd246fa8807f",
+					"raw": "http://localhost:8080/collectibles/fusion?collectibleId1=f519dac0-b350-11eb-8826-b3384c99a59c&collectibleId2=b8d74600-b2b6-11eb-9020-cd24d47af2af&collectibleId3=42d1b4d0-b32a-11eb-bc9d-cd246fa8807f&collectibleId4=3944f5d0-b348-11eb-b870-13184f180855&collectibleId5=06a0f0c0-b348-11eb-b870-13184f180855",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -527,23 +527,23 @@
 					"query": [
 						{
 							"key": "collectibleId1",
-							"value": "1a8f0130-b32a-11eb-bc9d-cd246fa8807f"
+							"value": "f519dac0-b350-11eb-8826-b3384c99a59c"
 						},
 						{
 							"key": "collectibleId2",
-							"value": "1a05acf0-b32a-11eb-bc9d-cd246fa8807f"
+							"value": "b8d74600-b2b6-11eb-9020-cd24d47af2af"
 						},
 						{
 							"key": "collectibleId3",
-							"value": "197b6e50-b32a-11eb-bc9d-cd246fa8807f"
+							"value": "42d1b4d0-b32a-11eb-bc9d-cd246fa8807f"
 						},
 						{
 							"key": "collectibleId4",
-							"value": "18ec74c0-b32a-11eb-bc9d-cd246fa8807f"
+							"value": "3944f5d0-b348-11eb-b870-13184f180855"
 						},
 						{
 							"key": "collectibleId5",
-							"value": "181bde50-b32a-11eb-bc9d-cd246fa8807f"
+							"value": "06a0f0c0-b348-11eb-b870-13184f180855"
 						}
 					]
 				}
@@ -551,13 +551,13 @@
 			"response": []
 		},
 		{
-			"name": "Get a List",
+			"name": "Moderator create encounter template",
 			"request": {
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"collectibleIds\": [\"bdf823c0-b2b6-11eb-9020-cd24d47af2af\", \"bc830ff0-b2b6-11eb-9020-cd24d47af2af\", \"bb43d930-b2b6-11eb-9020-cd24d47af2af\", \"a83a7f10-b2b6-11eb-9020-cd24d47af2af\", \"471e6b60-b2b6-11eb-9020-cd24d47af2af\"]\r\n}\r\n\r\n",
+					"raw": "{\r\n    \"level\": 25,\r\n    \"difficulty\": 3,\r\n    \"reward\": 45,\r\n    \"length\": 2\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -565,15 +565,53 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:8080/collectibles/fusion",
+					"raw": "http://localhost:8080/encounters/createEncounter",
 					"protocol": "http",
 					"host": [
 						"localhost"
 					],
 					"port": "8080",
 					"path": [
-						"collectibles",
-						"fusion"
+						"encounters",
+						"createEncounter"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Gamer start encounter",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"level\": 25,\r\n    \"difficulty\": 3,\r\n    \"reward\": 45,\r\n    \"length\": 5\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/encounters?collectibleIDList=6bd4b450-b3b0-11eb-973e-eb79c89e847d&encounterID=95b025d0-b3af-11eb-8ba7-e11b6e6df981",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"encounters"
+					],
+					"query": [
+						{
+							"key": "collectibleIDList",
+							"value": "6bd4b450-b3b0-11eb-973e-eb79c89e847d"
+						},
+						{
+							"key": "encounterID",
+							"value": "95b025d0-b3af-11eb-8ba7-e11b6e6df981"
+						}
 					]
 				}
 			},

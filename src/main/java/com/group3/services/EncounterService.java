@@ -11,13 +11,23 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 public interface EncounterService {
+	
+	Mono<Encounter> createEncounterTemplate(Encounter encounter);
+	
+	Mono<Encounter> updateEncounterTemplate(Encounter encounter);
+	
+	Mono<Void> deleteEncounterTemplate(UUID encounter);
 
 	public Flux<RewardToken> getRunningEncounters(UUID gamerID);
 	
-	public Mono<RewardToken> setEncounter(UUID i, List<UUID> colIDs, UUID encounterID);
+	public Mono<RewardToken> setEncounter(UUID gamerID, List<UUID> colIDs, UUID encID);
 
 	public int runEncounter(List<Collectible> sent, Encounter journey);
 
-	
+	Flux<RewardToken> viewCompletedTokens(boolean encounterComplete);
+
+	Mono<RewardToken> updateRewardToken(RewardToken token);
+
+	public void distributeReward(int reward, UUID gamerID);
 	
 }
