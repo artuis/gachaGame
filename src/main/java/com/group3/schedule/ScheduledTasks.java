@@ -20,6 +20,7 @@ import com.group3.beans.Event;
 import com.group3.beans.Gamer;
 import com.group3.beans.RewardToken;
 import com.group3.services.CollectibleService;
+import com.group3.services.EmailService;
 import com.group3.services.EncounterService;
 import com.group3.services.EventService;
 import com.group3.services.GamerService;
@@ -36,6 +37,8 @@ public class ScheduledTasks implements CommandLineRunner {
 	private CollectibleService collectibleService;
 	@Autowired
 	private EncounterService encounterService;
+	@Autowired
+	private EmailService emailService;
 	// ScheduledTasks will begin a thread and run after the Driver finishes initialization
 	
 	@Override
@@ -99,6 +102,11 @@ public class ScheduledTasks implements CommandLineRunner {
 				if(!stillBanned) {
 					gamer.setRole(Gamer.Role.GAMER);
 					log.debug("User ban is lifted: {}", gamer);
+					emailService.sendEmail(
+							gamer.getEmail(), 
+							"Ban Lifted", 
+							"Your ban in GachaGame has lifted. "
+							+ "Please be more mindful of the community in the future.");
 					gamerService.updateGamer(gamer).subscribe(unbannedGamers::add);
 				}
 			}
