@@ -175,18 +175,4 @@ public class RewardToken {
 				+ "]";
 	}
 
-//	public Object getRewardIfReady() {
-//		try {
-//			// TODO check scheduler to see if event is complete
-//			// return activeEncounter.toFuture().get(1, TimeUnit.SECONDS);
-//		} catch (InterruptedException e) {
-//			e.printStackTrace();
-//		} catch (ExecutionException e) {
-//			e.printStackTrace();
-//		} catch (TimeoutException e) {
-//			e.printStackTrace();
-//		}
-//		return null;
-//	}
-
 }
