@@ -1,6 +1,8 @@
 package com.group3.services;
 
 
+import java.util.UUID;
+
 import com.group3.beans.Event;
 
 import reactor.core.publisher.Flux;
@@ -16,4 +18,7 @@ public interface EventService {
 
 	Flux<Event> viewOngoingEvents();
 
+	Mono<?> deleteEvent(UUID eventId);
+	
+	Mono<Event> findEventById(UUID eventId);
 }

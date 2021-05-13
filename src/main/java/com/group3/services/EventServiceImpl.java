@@ -1,5 +1,7 @@
 package com.group3.services;
 
+import java.util.UUID;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,14 +29,15 @@ public class EventServiceImpl implements EventService {
 	public Flux<Event> viewOngoingEvents(){
 		return eventRepo.findAllByOngoing(true);
 	}
-	/*do we want to be able to make more events or are we 
-	 * good with just double strings and 
-	 * turn it on and off/schedule it*/
+	
+	/* Creates an event which has a start and end time. 
+	 * If those are null, return empty, otherwise 
+	 * give the event a UUID eventId and insert in eventRepo.*/
+	
 	@Override
 	public Mono<Event> createEvent(Event event) {
-		//verify that event has start and end time before creating
 		if (event.getEventStart() == null || event.getEventEnd() == null) {
-			log.trace("invalid event start/end times");
+			log.trace("Invalid event start/end times");
 			return Mono.empty();
 		}
 		if(event != null) {
@@ -43,10 +46,18 @@ public class EventServiceImpl implements EventService {
 		return eventRepo.insert(event);
 	}
 
+	public Mono<Void> deleteEvent(UUID eventId) {
+		return eventRepo.deleteById(eventId);
+	}
+	
 	@Override
 	public Mono<Event> updateEvent(Event event){
 		return eventRepo.save(event);
 		
+	}
+	
+	public Mono<Event> findEventById(UUID eventId) {
+		return eventRepo.findById(eventId);
 	}
 
 	@Override
