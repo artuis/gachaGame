@@ -96,8 +96,56 @@ public class CollectibleType implements Serializable {
 		this.baseStat = stat;
 	}
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((baseStat == null) ? 0 : baseStat.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + ((nextStage == null) ? 0 : nextStage.hashCode());
+		result = prime * result + ((prevStage == null) ? 0 : prevStage.hashCode());
+		result = prime * result + ((stage == null) ? 0 : stage.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		CollectibleType other = (CollectibleType) obj;
+		if (baseStat == null) {
+			if (other.baseStat != null)
+				return false;
+		} else if (!baseStat.equals(other.baseStat))
+			return false;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		if (name == null) {
+			if (other.name != null)
+				return false;
+		} else if (!name.equals(other.name))
+			return false;
+		if (nextStage == null) {
+			if (other.nextStage != null)
+				return false;
+		} else if (!nextStage.equals(other.nextStage))
+			return false;
+		if (prevStage == null) {
+			if (other.prevStage != null)
+				return false;
+		} else if (!prevStage.equals(other.prevStage))
+			return false;
+		if (stage != other.stage)
+			return false;
+		return true;
 	}
 
 }

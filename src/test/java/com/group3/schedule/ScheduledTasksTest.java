@@ -50,19 +50,23 @@ class ScheduledTasksTest {
 			return st;
 		}
 		
-		@Bean GamerService getGamerServiceST() {
+		@Bean 
+		GamerService getGamerServiceST() {
 			return Mockito.mock(GamerService.class);
 		}
 		
-		@Bean CollectibleService getCollectibleServiceST() {
+		@Bean 
+		CollectibleService getCollectibleServiceST() {
 			return Mockito.mock(CollectibleService.class);
 		}
 		
-		@Bean EventService getEventServiceST() {
+		@Bean 
+		EventService getEventServiceST() {
 			return Mockito.mock(EventService.class);
 		}
 		
-		@Bean EncounterService getEncounterServiceST() {
+		@Bean 
+		EncounterService getEncounterServiceST() {
 			return Mockito.mock(EncounterService.class);
 		}
 

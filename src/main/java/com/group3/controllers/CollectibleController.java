@@ -27,15 +27,25 @@ import reactor.core.publisher.Mono;
 @RestController
 @RequestMapping(value = "/collectibles")
 public class CollectibleController {
-	@Autowired
 	private Collectible emptyCollectible;
-	
-	@Autowired
 	private CollectibleService collectibleService;
-
-	@Autowired
 	private CollectibleTypeService collectibleTypeService;
 
+	@Autowired
+	public void setEmptyCollectible(Collectible c) {
+		this.emptyCollectible = c;
+	}
+	
+	@Autowired
+	public void setCollectibleService(CollectibleService gs) {
+		this.collectibleService = gs;
+	}
+	
+	@Autowired
+	public void setCollectibleTypeService(CollectibleTypeService cts) {
+		this.collectibleTypeService = cts;
+	}
+	
 	public CollectibleController() {
 		super();
 	}
