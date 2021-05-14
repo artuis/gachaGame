@@ -242,15 +242,14 @@ public class ScheduledTasks implements CommandLineRunner {
 				.flatMap(token -> {
 					token.setEncounterComplete(true);
 					return Flux.fromIterable(token.getCollectiblesOnEncounter())
-							.flatMap(collectibleId -> {
-								return collectibleService.getCollectible(collectibleId.toString())
+							.flatMap(collectibleId -> 
+								collectibleService.getCollectible(collectibleId.toString())
 										.flatMap(collectible -> {
 											if(collectible != null) {
 												collectible.setOnEncounter(false);
 												return collectibleService.updateCollectible(collectible);
 											} else {return Mono.empty();}
-						});
-					});
+						}));
 				}).collectList().block();
 	}			
 }

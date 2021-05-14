@@ -146,6 +146,8 @@ public class EncounterServiceImpl implements EncounterService {
 	@Override
 	public void distributeReward(int reward, UUID gamerID) {
 		Gamer gamer = gamerRepo.findById(gamerID).block();
+		String emailSubject = "GachaGame: Encounter Complete!";
+		String complete = "The encounter your collectibles went on is complete! ";
 		if(gamer == null) {
 			return;
 		}
@@ -154,40 +156,40 @@ public class EncounterServiceImpl implements EncounterService {
 			log.debug("Reward distributed: {} strings", (reward*10));
 			emailService.sendEmail(
 					gamer.getEmail(), 
-					"GachaGame: Encounter Complete!", 
-					"The encounter your collectibles went on is complete! "
+					emailSubject, 
+					complete
 					+ "You received "+(reward*10)+" strings as a reward!");
 		} else if(reward < 40) {
 			gamer.setStardust(gamer.getStardust() + (reward/10));
 			log.debug("Reward distributed: {} stardust", (reward/10));
 			emailService.sendEmail(
 					gamer.getEmail(), 
-					"GachaGame: Encounter Complete!", 
-					"The encounter your collectibles went on is complete! "
+					emailSubject, 
+					complete
 					+ "You received "+(reward/10)+" stardust as a reward!");
 		} else if(reward < 60) {
 			gamer.setRolls(gamer.getRolls() + 1);
 			log.debug("Reward distributed: 1 roll");
 			emailService.sendEmail(
 					gamer.getEmail(), 
-					"GachaGame: Encounter Complete!", 
-					"The encounter your collectibles went on is complete! "
+					emailSubject, 
+					complete
 					+ "You received 1 free roll as a reward!");
 		} else if(reward < 80) {
 			gamer.setRolls(gamer.getRolls() + 3);
 			log.debug("Reward distributed: 3 rolls");
 			emailService.sendEmail(
 					gamer.getEmail(), 
-					"GachaGame: Encounter Complete!", 
-					"The encounter your collectibles went on is complete! "
+					emailSubject, 
+					complete
 					+ "You received 3 free rolls as a reward!");
 		} else if(reward < 100) {
 			gamer.setRolls(gamer.getRolls() + 5);
 			log.debug("Reward distributed: 5 rolls! Nice.");
 			emailService.sendEmail(
 					gamer.getEmail(), 
-					"GachaGame: Encounter Complete!", 
-					"The encounter your collectibles went on is complete! "
+					emailSubject, 
+					complete
 					+ "You received 5 free rolls as a reward! Great work!");
 		}
 
