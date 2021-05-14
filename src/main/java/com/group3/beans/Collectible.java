@@ -97,9 +97,11 @@ public class Collectible implements Serializable{
 
 	@Override
 	public String toString() {
-		return "Collectible [id=" + id.toString() + ", gamerId=" + gamerId.toString() + ", typeId=" + typeId + ", currentStat=" + currentStat
-				+ "]";
+		return "Collectible [gamerId=" + gamerId + ", id=" + id + ", typeId=" + typeId + ", currentStat=" + currentStat
+				+ ", currentStage=" + currentStage + ", onEncounter=" + onEncounter + "]";
 	}
+
+
 	
 	
 }

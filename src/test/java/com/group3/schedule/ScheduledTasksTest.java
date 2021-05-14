@@ -26,6 +26,7 @@ import com.group3.beans.Event;
 import com.group3.beans.Gamer;
 import com.group3.beans.RewardToken;
 import com.group3.services.CollectibleService;
+import com.group3.services.EmailService;
 import com.group3.services.EncounterService;
 import com.group3.services.EventService;
 import com.group3.services.GamerService;
@@ -41,7 +42,8 @@ class ScheduledTasksTest {
 		public ScheduledTasks getScheduledTasks(GamerService gs, 
 				CollectibleService cs, 
 				EventService vs, 
-				EncounterService es) {
+				EncounterService es,
+				EmailService ms) {
 			ScheduledTasks st = new ScheduledTasks();
 			st.setGamerService(gs);
 			st.setCollectibleService(cs);
@@ -68,6 +70,11 @@ class ScheduledTasksTest {
 		@Bean 
 		EncounterService getEncounterServiceST() {
 			return Mockito.mock(EncounterService.class);
+		}
+		
+		@Bean
+		EmailService getEmailServiceST() {
+			return Mockito.mock(EmailService.class)
 		}
 
 	}

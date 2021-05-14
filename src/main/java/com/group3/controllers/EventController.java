@@ -3,6 +3,7 @@ package com.group3.controllers;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Primary;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -19,7 +20,7 @@ import com.group3.services.EventService;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-
+@Primary
 @RestController
 @RequestMapping(value = "/events")
 public class EventController {

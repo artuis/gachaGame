@@ -1,6 +1,7 @@
 package com.group3.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import com.group3.beans.CollectibleType;
@@ -11,7 +12,7 @@ import com.group3.data.CollectibleTypeRepository;
 import io.netty.util.internal.ThreadLocalRandom;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-
+@Primary
 @Service
 public class CollectibleTypeServiceImpl implements CollectibleTypeService {
 

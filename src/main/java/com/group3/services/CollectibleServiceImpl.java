@@ -7,6 +7,7 @@ import java.util.UUID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Primary;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -17,23 +18,33 @@ import com.group3.data.GamerRepository;
 
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-
+@Primary
 @Service
 public class CollectibleServiceImpl implements CollectibleService {
 
 	private Logger log = LoggerFactory.getLogger(CollectibleServiceImpl.class);
 	
-	@Autowired
 	private Collectible emptyCollectible;
-	
-	@Autowired
-	private CollectibleTypeServiceImpl typeServ;
-
-	@Autowired
+	private CollectibleTypeService typeServ;
 	private CollectibleRepository repo;
+	private GamerRepository gamerRepo;
 	
 	@Autowired
-	private GamerRepository gamerRepo;
+	public void setEmptyCollectible(Collectible c) {
+		this.emptyCollectible = c;
+	}
+	@Autowired
+	public void setCollectibleTypeService(CollectibleTypeService cts) {
+		this.typeServ = cts;
+	}
+	@Autowired
+	public void setCollectibleRepository(CollectibleRepository r) {
+		this.repo = r;
+	}
+	@Autowired
+	public void setGamerRepository(GamerRepository gr) {
+		this.gamerRepo = gr;
+	}
 	
 	public CollectibleServiceImpl() {
 		super();

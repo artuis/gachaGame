@@ -7,6 +7,7 @@ import java.util.UUID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import com.datastax.oss.driver.api.core.uuid.Uuids;
@@ -22,7 +23,7 @@ import com.group3.data.RewardTokenRepository;
 
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-
+@Primary
 @Service
 public class EncounterServiceImpl implements EncounterService {
 	private Logger log = LoggerFactory.getLogger(EncounterServiceImpl.class);

@@ -7,6 +7,7 @@ import org.reactivestreams.Publisher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Primary;
 import org.springframework.http.HttpCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -26,7 +27,7 @@ import com.group3.services.EncounterService;
 import com.group3.util.JWTUtil;
 
 import reactor.core.publisher.Mono;
-
+@Primary
 @RestController
 @RequestMapping(value = "/encounters")
 public class EncounterController {

@@ -13,6 +13,7 @@ import java.util.UUID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Primary;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +23,7 @@ import com.group3.data.GamerRepository;
 
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
-
+@Primary
 @Service
 public class GamerServiceImpl implements GamerService {
 	public static int bonusStrings = 1000;	// login bonus strings, global variable
@@ -70,7 +71,7 @@ public class GamerServiceImpl implements GamerService {
 
 	@Override
 	public Mono<Gamer> updateGamer(Gamer gg) {
-		return gamerRepo.findById(gg.getGamerId()).flatMap(gamer -> gamerRepo.save(gamer));
+		return gamerRepo.findById(gg.getGamerId()).flatMap(gamer -> gamerRepo.save(gg));
 	}
 	
 	@Override
