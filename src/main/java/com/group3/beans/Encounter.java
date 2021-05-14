@@ -17,16 +17,16 @@ public class Encounter {
 	private UUID encounterID;
 	// Level of the encounter
 	@PrimaryKeyColumn(name = "level", ordinal = 1, type = PrimaryKeyType.CLUSTERED, ordering = Ordering.DESCENDING)
-	private Integer level;
+	private int level;
 	// Target number the collectibles have to beat to succeed vs encounter
 	@Column
-	private Integer difficulty;
+	private int difficulty;
 	// Amount of 'reward' returned when successful vs encounter
 	@Column
-	private Integer reward;
+	private int reward;
 	// Length of time (in milliseconds) the encounter should last
 	@Column
-	private Long length;
+	private long length;
 	
 	public Encounter() {
 		super();

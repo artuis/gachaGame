@@ -137,7 +137,7 @@ public class GamerController {
 	@DeleteMapping("/logout")
 	public Mono<ServerResponse> logout(ServerWebExchange exchange) {
 		ResponseCookie cookie = ResponseCookie.from("token", "").maxAge(0).build();
-			exchange.getResponse().addCookie(cookie);
+		exchange.getResponse().addCookie(cookie);
 		return ServerResponse.noContent().build();
 	}
 
