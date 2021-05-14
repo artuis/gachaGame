@@ -126,7 +126,7 @@ class GamerControllerTest {
 		gamer.setUsername("test");
 		gamer.setRole(Gamer.Role.GAMER);
 		Mockito.when(gs.findByUsername(gamer.getUsername())).thenReturn(Mono.just(gamer));
-		Mono<ResponseEntity<Gamer>> result = gc.login(gamer, exchange);
+		Mono<ResponseEntity<Object>> result = gc.login(gamer, exchange);
 		StepVerifier.create(result).expectNext(ResponseEntity.ok(gamer)).verifyComplete();
 	}
 	

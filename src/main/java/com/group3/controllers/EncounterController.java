@@ -24,6 +24,7 @@ import com.group3.beans.RewardToken;
 import com.group3.services.EncounterService;
 import com.group3.util.JWTUtil;
 
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @RestController
@@ -43,9 +44,14 @@ public class EncounterController {
 
 	@PreAuthorize("hasAuthority('GAMER')")
 	@PostMapping
-	public Mono<ResponseEntity<RewardToken>> startEncounter(@RequestParam("collectibleIDList") List<UUID> collectibleIDList,
+	public Mono<ResponseEntity<Object>> startEncounter(@RequestParam("collectibleIDList") List<UUID> collectibleIDList,
 			@RequestParam("encounterID") UUID encounterID, ServerWebExchange exchange) {
-		String token = exchange.getRequest().getCookies().getFirst("token").getValue();
+		String token;
+		try {
+			token = exchange.getRequest().getCookies().getFirst("token").getValue();
+		} catch (NullPointerException e) {
+			return Mono.just(ResponseEntity.badRequest().body(e.getStackTrace()));
+		}
 		log.debug("EncounterID passing controller: {}", encounterID);
 		log.debug("CollectibleList passing controller: {}", collectibleIDList);
 		log.debug("String token passing controller: {}", token);
@@ -59,7 +65,12 @@ public class EncounterController {
 	@PreAuthorize("hasAuthority('GAMER')")
 	@GetMapping("{gamerId}")
 	public Publisher<?> viewRunningEncounters(ServerWebExchange exchange) {
-		String token = exchange.getRequest().getCookies().getFirst("token").getValue();
+		String token;
+		try {
+			token = exchange.getRequest().getCookies().getFirst("token").getValue();
+		} catch (NullPointerException e) {
+			return Flux.error(e);
+		}
 		return encounterService.getRunningEncounters((UUID) jwtUtil.getAllClaimsFromToken(token).get("id"));
 	}
 

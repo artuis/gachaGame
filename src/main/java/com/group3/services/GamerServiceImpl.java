@@ -70,9 +70,7 @@ public class GamerServiceImpl implements GamerService {
 
 	@Override
 	public Mono<Gamer> updateGamer(Gamer gg) {
-		return gamerRepo.findById(gg.getGamerId()).flatMap(gamer -> {
-			return gamerRepo.save(gamer);
-		});
+		return gamerRepo.findById(gg.getGamerId()).flatMap(gamer -> gamerRepo.save(gamer));
 	}
 	
 	@Override
