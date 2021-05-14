@@ -97,8 +97,51 @@ public class Collectible implements Serializable{
 
 	@Override
 	public String toString() {
-		return "Collectible [id=" + id.toString() + ", gamerId=" + gamerId.toString() + ", typeId=" + typeId + ", currentStat=" + currentStat
-				+ "]";
+		return "Collectible [gamerId=" + gamerId + ", id=" + id + ", typeId=" + typeId + ", currentStat=" + currentStat
+				+ ", currentStage=" + currentStage + ", onEncounter=" + onEncounter + "]";
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((currentStage == null) ? 0 : currentStage.hashCode());
+		result = prime * result + currentStat;
+		result = prime * result + ((gamerId == null) ? 0 : gamerId.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + (onEncounter ? 1231 : 1237);
+		result = prime * result + typeId;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Collectible other = (Collectible) obj;
+		if (currentStage != other.currentStage)
+			return false;
+		if (currentStat != other.currentStat)
+			return false;
+		if (gamerId == null) {
+			if (other.gamerId != null)
+				return false;
+		} else if (!gamerId.equals(other.gamerId))
+			return false;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		if (onEncounter != other.onEncounter)
+			return false;
+		if (typeId != other.typeId)
+			return false;
+		return true;
 	}
 	
 	
