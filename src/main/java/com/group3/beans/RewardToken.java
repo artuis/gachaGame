@@ -23,7 +23,7 @@ public class RewardToken {
 	@Column
 	private UUID activeEncounter;
 	@Column
-	private int reward;
+	private Integer reward;
 	@Column
 	private Date startTime;
 	@Column
@@ -31,7 +31,7 @@ public class RewardToken {
 	@Column
 	private List<UUID> collectiblesOnEncounter;
 	@Column
-	private boolean encounterComplete = false;
+	private Boolean encounterComplete = false;
 
 	public RewardToken() {
 		super();
