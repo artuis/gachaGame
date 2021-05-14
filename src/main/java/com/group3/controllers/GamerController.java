@@ -5,6 +5,7 @@ import java.util.UUID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpCookie;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +23,7 @@ import org.springframework.web.reactive.function.server.ServerResponse;
 import org.springframework.web.server.ServerWebExchange;
 
 import com.group3.beans.Collectible;
+import com.group3.beans.CollectibleType;
 import com.group3.beans.Gamer;
 import com.group3.services.CollectibleService;
 import com.group3.services.CollectibleTypeService;
@@ -173,14 +175,12 @@ public class GamerController {
 
 	@PreAuthorize("hasAuthority('GAMER')")
 	@PutMapping("/collectibles/roll")
-	public Mono<ResponseEntity<Object>> rollNewCollectible(ServerWebExchange exchange) {
-		String token;
-		try {
-			token = exchange.getRequest().getCookies().getFirst("token").getValue();
-		} catch (NullPointerException e) {
-			return Mono.just(ResponseEntity.badRequest().body(e.getStackTrace()));
+	public Mono<Object> rollNewCollectible(ServerWebExchange exchange) {
+		HttpCookie tokenCookie = exchange.getRequest().getCookies().getFirst("token");
+		if (tokenCookie == null) {
+			return Mono.just(ResponseEntity.badRequest().build());
 		}
-
+		String token = tokenCookie.getValue();
 		return gamerService.getGamer(UUID.fromString((String) jwtUtil.getAllClaimsFromToken(token).get("id")))
 				.flatMap(gamer -> {
 					log.debug("" + gamer.getStardust());
