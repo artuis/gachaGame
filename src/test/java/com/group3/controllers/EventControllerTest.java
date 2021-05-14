@@ -18,8 +18,6 @@ import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 
 @ExtendWith(SpringExtension.class)
-//@WebFluxTest(controllers = EventController.class)
-//@Import(EventService.class)
 class EventControllerTest {
 	@TestConfiguration
 	static class Configuration {
@@ -62,43 +60,14 @@ class EventControllerTest {
 		
 		StepVerifier.create(result).expectNext(ResponseEntity.status(201).body(event)).verifyComplete();
 	}
-//	
-//	@MockBean
-//	EventRepository repository;
-//	
-//	@Autowired
-//	private WebTestClient webClient;
-//	@SuppressWarnings("deprecation")
-//	@Test
-//	void testCreateEvent() {
-//		Event event = new Event();
-//		UUID id = UUID.randomUUID();
-//		event.setEventId(id);
-//		event.setEventType(Event.Type.DOUBLESTRINGS);
-//		event.setOngoing(false);
-//		event.setEventStart(null);
-//		event.setEventEnd(null);
-//		
-//		Mockito.when(repository.save(event)).thenReturn(Mono.just(event));
-//		
-//		webClient.post().uri("/events")
-//        	.contentType(MediaType.APPLICATION_JSON)
-//        	.body(BodyInserters.fromObject(event))
-//        	.exchange()
-//        	.expectStatus().isCreated();
-//		
-//		Mockito.verify(repository, Mockito.times(1)).save(event);
-//	}
-//	
-//	@Test
-//    void testDeleteEvent() {
-//        Mono<Void> voidReturn  = Mono.empty();
-//        Mockito
-//            .when(repository.deleteById(UUID.randomUUID()))
-//            .thenReturn(voidReturn);
-// 
-//        webClient.delete().uri("/events/{UUID}")
-//            .exchange()
-//            .expectStatus().isOk();
-//    }
+	
+	@Test
+	void deleteEventDeletesEvent() {
+		UUID id = UUID.randomUUID();
+		
+		Mockito.when(eventService.deleteEvent(id)).thenReturn(Mono.justOrEmpty(null));
+		
+		Mono<ResponseEntity<Object>> result = eventController.deleteEvent(id);
+		StepVerifier.create(result).expectNext(ResponseEntity.noContent().build()).verifyComplete();
+	}
 }
