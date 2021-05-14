@@ -54,33 +54,37 @@ class GamerControllerTest {
 		
 		
 		@Bean
-		public Collectible getEmptyCollectible() {
+		Collectible getEmptyCollectible() {
 			return Mockito.mock(Collectible.class);
 		}
 		
-		@Bean Gamer getEmptyGamer() {
+		@Bean 
+		Gamer getEmptyGamer() {
 			return Mockito.mock(Gamer.class);
 		}
 		
-		@Bean JWTUtil getJWTUtil() {
+		@Bean 
+		JWTUtil getJWTUtil() {
 			return Mockito.mock(JWTUtil.class, Mockito.RETURNS_DEEP_STUBS);
 		}
 
 		@Bean
-		public GamerService getGamerService() {
+		GamerService getGamerService() {
 			return Mockito.mock(GamerService.class);
 		}
 		
 		@Bean
-		public CollectibleTypeService getCollectibleTypeService() {
+		CollectibleTypeService getCollectibleTypeService() {
 			return Mockito.mock(CollectibleTypeService.class);
 		}
 		
-		@Bean CollectibleService getCollectibleService() {
+		@Bean 
+		CollectibleService getCollectibleService() {
 			return Mockito.mock(CollectibleService.class);
 		}
 		
-		@Bean EmailService getEmailService() {
+		@Bean 
+		EmailService getEmailService() {
 			return Mockito.mock(EmailService.class);
 		}
 	}
@@ -95,8 +99,6 @@ class GamerControllerTest {
 	private CollectibleService cs;
 	@Autowired 
 	private CollectibleTypeService cts;
-	@Autowired
-	private EmailService es;
 	
 	@Test
 	void testRegisterGamerReturnesEntityWithStatus201() {
