@@ -23,7 +23,7 @@ import com.datastax.oss.driver.api.core.uuid.Uuids;
 import com.group3.beans.Collectible;
 import com.group3.beans.CollectibleType;
 import com.group3.beans.CollectibleType.Stage;
-import com.group3.beans.Gamer;	
+import com.group3.beans.Gamer;
 import com.group3.services.CollectibleService;
 import com.group3.services.CollectibleTypeService;
 import com.group3.services.EmailService;
@@ -52,9 +52,7 @@ class GamerControllerTest {
 			return gc;
 		}
 		
-		
-		@Bean
-		public Collectible getEmptyCollectible() {
+		@Bean Collectible getEmptyCollectible() {
 			return Mockito.mock(Collectible.class);
 		}
 		
@@ -66,13 +64,11 @@ class GamerControllerTest {
 			return Mockito.mock(JWTUtil.class, Mockito.RETURNS_DEEP_STUBS);
 		}
 
-		@Bean
-		public GamerService getGamerService() {
+		@Bean GamerService getGamerService() {
 			return Mockito.mock(GamerService.class);
 		}
 		
-		@Bean
-		public CollectibleTypeService getCollectibleTypeService() {
+		@Bean CollectibleTypeService getCollectibleTypeService() {
 			return Mockito.mock(CollectibleTypeService.class);
 		}
 		

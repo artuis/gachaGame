@@ -243,6 +243,7 @@ public class ScheduledTasks implements CommandLineRunner {
 				.filter(token -> current.after(token.getEndTime()))
 				.flatMap(token -> {
 					token.setEncounterComplete(true);
+					encounterService.distributeReward(token.getReward(), token.getGamerID());
 					return Flux.fromIterable(token.getCollectiblesOnEncounter())
 							.flatMap(collectibleId -> 
 								collectibleService.getCollectible(collectibleId.toString())
