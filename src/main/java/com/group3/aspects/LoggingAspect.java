@@ -16,15 +16,12 @@ public class LoggingAspect {
 	
 	@Around("everything()")
 	public Object log(ProceedingJoinPoint pjp) throws Throwable {
-		// ProceedingJoinPoint - Object representation of the method being called.
 		Object result = null;
 		Logger log = LoggerFactory.getLogger(pjp.getTarget().getClass());
 		log.debug("Method with signature: {}", pjp.getSignature());
 		log.debug("with arguments: {}", Arrays.toString(pjp.getArgs()));
 		try {
-			result = pjp.proceed(); // proceed will call the method with the arguments given to it
-			// If you want to change the arguments, you can pass in a new array of arguments.
-			// result = pjp.proceed(arr);
+			result = pjp.proceed();
 		}  catch(Throwable t) {
 			log.error("Method threw exception: {}", t);
 			for(StackTraceElement s : t.getStackTrace()) {
@@ -37,9 +34,7 @@ public class LoggingAspect {
 					log.warn(s.toString());
 				}
 			}
-			throw t; // we don't want our proxy to have the side-effect of
-			// stopping the exception from being thrown (it needs to be handled elsewhere)
-			// but we do want to log it for ourselves.
+			throw t; 
 		}
 		log.debug("Method returning with: {}", result);
 		return result;
