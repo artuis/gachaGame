@@ -32,9 +32,7 @@ public class CollectibleTypeServiceImpl implements CollectibleTypeService {
 		if (rand < CollectibleType.Stage.STAGE_1.getRate()) {
 			stage = CollectibleType.Stage.STAGE_1;
 		} else {
-			stage = rand < CollectibleType.Stage.STAGE_2.getRate() 
-					? CollectibleType.Stage.STAGE_2
-					: CollectibleType.Stage.STAGE_3;
+			stage = rand < CollectibleType.Stage.STAGE_2.getRate() ? CollectibleType.Stage.STAGE_2 : CollectibleType.Stage.STAGE_3;
 		}
 		return getCollectibleFromStage(stage);
 	}
