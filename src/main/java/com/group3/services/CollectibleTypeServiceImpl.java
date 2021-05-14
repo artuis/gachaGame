@@ -21,6 +21,10 @@ public class CollectibleTypeServiceImpl implements CollectibleTypeService {
 	public CollectibleTypeServiceImpl() {
 		super();
 	}
+	
+	public void setCollectibleTypeRepo(CollectibleTypeRepository ctr) {
+		this.collectibleTypeRepo = ctr;
+	}
 
 	@Override
 	public Mono<CollectibleType> rollCollectibleType() {
