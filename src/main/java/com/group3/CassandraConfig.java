@@ -43,10 +43,7 @@ public class CassandraConfig {
 
 	@Bean
 	public CassandraMappingContext mappingContext(CqlSession cqlSession) {
-
-		CassandraMappingContext mappingContext = new CassandraMappingContext();
-
-		return mappingContext;
+		return new CassandraMappingContext();
 	}
 
 	@Bean

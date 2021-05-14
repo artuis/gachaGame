@@ -133,6 +133,26 @@ class GamerControllerTest {
 	}
 	
 	@Test
+	void testNotValidUserLoginReturnsNotFound() {
+		MockServerWebExchange exchange = MockServerWebExchange.from(MockServerHttpRequest.post("/gamers/login"));
+		Gamer gamer = new Gamer();
+		Mockito.when(gs.findByUsername(Mockito.any())).thenReturn(Mono.just(gamer));
+		Mono<ResponseEntity<Gamer>> result = gc.login(gamer, exchange);
+		StepVerifier.create(result).expectNext(ResponseEntity.status(HttpStatus.NOT_FOUND).body(gamer)).verifyComplete();
+	}
+	
+	@Test
+	void testBannedLoginReturnsUnauthorized() {
+		MockServerWebExchange exchange = MockServerWebExchange.from(MockServerHttpRequest.post("/gamers/login"));
+		Gamer gamer = new Gamer();
+		gamer.setUsername("test");
+		gamer.setRole(Gamer.Role.BANNED);
+		Mockito.when(gs.findByUsername(gamer.getUsername())).thenReturn(Mono.just(gamer));
+		Mono<ResponseEntity<Gamer>> result = gc.login(gamer, exchange);
+		StepVerifier.create(result).expectNext(ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(gamer)).verifyComplete();
+	}
+	
+	@Test
 	void testLogoutAdds0AgeToken() {
 		MockServerWebExchange exchange = MockServerWebExchange.from(MockServerHttpRequest.delete("/gamers/logout"));
 		Mono<ServerResponse> result = gc.logout(exchange);
@@ -149,6 +169,15 @@ class GamerControllerTest {
 		Mockito.when(gs.findGamerByUsername(name)).thenReturn(Mono.just(gamer));
 		Mono<ResponseEntity<Gamer>> result = gc.getGamerByUsername(name);
 		StepVerifier.create(result).expectNext(ResponseEntity.ok(gamer)).verifyComplete();
+	}
+	
+	@Test
+	void getGamerByUsernameWhenNotExistReturnsNotFound() {
+		String name = "name";
+		Gamer gamer = new Gamer();
+		Mockito.when(gs.findGamerByUsername(name)).thenReturn(Mono.just(gamer));
+		Mono<ResponseEntity<Gamer>> result = gc.getGamerByUsername(name);
+		StepVerifier.create(result).expectNext(ResponseEntity.notFound().build()).verifyComplete();
 	}
 	
 	@Test
