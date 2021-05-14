@@ -29,18 +29,43 @@ import com.group3.services.GamerService;
 @Order(1)
 public class ScheduledTasks implements CommandLineRunner {
 	private Logger log = LoggerFactory.getLogger(ScheduledTasks.class);
-	@Autowired
+
 	private GamerService gamerService;
-	@Autowired 
 	private EventService eventService;
-	@Autowired
 	private CollectibleService collectibleService;
-	@Autowired
 	private EncounterService encounterService;
-	@Autowired
 	private EmailService emailService;
-	// ScheduledTasks will begin a thread and run after the Driver finishes initialization
 	
+	@Autowired
+	public void setGamerService(GamerService gs) {
+		this.gamerService = gs;
+	}
+	
+	@Autowired
+	public void setEventService(EventService vs) {
+		this.eventService = vs;
+	}
+
+	@Autowired
+	public void setCollectibleService(CollectibleService gs) {
+		this.collectibleService = gs;
+	}
+	
+	@Autowired
+	public void setEncounterService(EncounterService es) {
+		this.encounterService = es;
+	}
+	
+	@Autowired
+	public void setEmailService(EmailService es) {
+		this.emailService = es;
+	}
+	
+	public ScheduledTasks() {
+		super();
+	}
+	
+	// ScheduledTasks will begin a thread and run after the Driver finishes initialization
 	@Override
 	public void run(String... args) throws Exception {
 		// intentionally blank, perhaps log later
@@ -59,7 +84,7 @@ public class ScheduledTasks implements CommandLineRunner {
 	public void dailyRollsReset() {
 		log.debug("Resetting daily free rolls");
 		List<Gamer> rollsReset = gamerService.getGamers().collectList().block();
-		List<Gamer> gamersReset = new ArrayList<Gamer>();
+		List<Gamer> gamersReset = new ArrayList<>();
 		for(Gamer gamer : rollsReset) {
 				gamer.setDailyRolls(10);
 				gamerService.updateGamer(gamer).subscribe(gamersReset::add);
