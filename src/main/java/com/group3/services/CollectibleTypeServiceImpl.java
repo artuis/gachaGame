@@ -1,6 +1,5 @@
 package com.group3.services;
 
-import org.reactivestreams.Publisher;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,24 +27,21 @@ public class CollectibleTypeServiceImpl implements CollectibleTypeService {
 
 	@Override
 	public Mono<CollectibleType> rollCollectibleType() {
-		double rand = ThreadLocalRandom.current().nextDouble()*Event.getRollMod();
-		if (rand < CollectibleType.Stage.STAGE_1.getRate()) {
-			return collectibleTypeRepo
-					.findCollectiblesByStage(CollectibleType.Stage.STAGE_1)
-					.collectList()
-					.map(collectibles -> collectibles.get(ThreadLocalRandom.current().nextInt(collectibles.size())));
-		} else if (rand < CollectibleType.Stage.STAGE_2.getRate()) {
-			return collectibleTypeRepo
-					.findCollectiblesByStage(CollectibleType.Stage.STAGE_2)
-					.collectList()
-					.map(collectibles -> collectibles.get(ThreadLocalRandom.current().nextInt(collectibles.size())));
-		} else { /*rand < Collectible.Stage.STAGE_3.getRate())*/
-			return collectibleTypeRepo
-					.findCollectiblesByStage(CollectibleType.Stage.STAGE_3)
-					.collectList()
-					.map(collectibles -> collectibles.get(ThreadLocalRandom.current().nextInt(collectibles.size())));
-		}
+		double rand = ThreadLocalRandom.current().nextDouble() * Event.getRollMod();
+		CollectibleType.Stage stage = rand < CollectibleType.Stage.STAGE_1.getRate() 
+				? CollectibleType.Stage.STAGE_1
+				: rand < (CollectibleType.Stage.STAGE_2.getRate())
+				? CollectibleType.Stage.STAGE_2
+				: CollectibleType.Stage.STAGE_3;
+		return getCollectibleFromStage(stage);
 	}
+
+	private Mono<CollectibleType> getCollectibleFromStage(CollectibleType.Stage stage) {
+		return collectibleTypeRepo.findCollectiblesByStage(stage)
+				.collectList()
+				.map(collectibles -> collectibles.get(ThreadLocalRandom.current().nextInt(collectibles.size())));
+	}
+
 	
 	@Override
 	public Mono<CollectibleType> createCollectibleType(CollectibleType c) {
@@ -53,7 +49,7 @@ public class CollectibleTypeServiceImpl implements CollectibleTypeService {
 	}
 
 	@Override
-	public Publisher<CollectibleType> updateCollectibleType(CollectibleType c) {
+	public Mono<CollectibleType> updateCollectibleType(CollectibleType c) {
 		return collectibleTypeRepo.save(c);
 	}
 
