@@ -208,7 +208,7 @@ public class ScheduledTasks implements CommandLineRunner {
 	 updates any associated global modifiers
 	 */
 	
-	@Scheduled(initialDelay=1000)
+	@Scheduled(initialDelay=1000, fixedDelay=3600000)
 	public List<Event> checkOngoingEvents() {
 		return eventService.viewOngoingEvents().flatMap(event -> {
 			log.debug("Event currently live: {}", event);
