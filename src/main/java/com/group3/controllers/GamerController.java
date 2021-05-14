@@ -23,7 +23,6 @@ import org.springframework.web.reactive.function.server.ServerResponse;
 import org.springframework.web.server.ServerWebExchange;
 
 import com.group3.beans.Collectible;
-import com.group3.beans.CollectibleType;
 import com.group3.beans.Gamer;
 import com.group3.services.CollectibleService;
 import com.group3.services.CollectibleTypeService;
@@ -121,14 +120,13 @@ public class GamerController {
 	}
 
 	@PostMapping("/login")
-	public Mono<ResponseEntity<Object>> login(@RequestBody Gamer gg, ServerWebExchange exchange) {
+	public Mono<ResponseEntity<Gamer>> login(@RequestBody Gamer gg, ServerWebExchange exchange) {
 		return gamerService.findByUsername(gg.getUsername()).defaultIfEmpty(emptyGamer).cast(Gamer.class).map(gamer -> {
 			if (gamer.getUsername() == null) {
 				return ResponseEntity.status(HttpStatus.NOT_FOUND).body(gg);
 			} else if (gamer.getRole().equals(Gamer.Role.BANNED)) {
 				return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(gg);
 			} else {
-
 				exchange.getResponse().addCookie(
 						ResponseCookie.from("token", jwtUtil.generateToken(gamer)).path("/").httpOnly(true).build());
 				return ResponseEntity.ok(gamer); // 👌
@@ -175,7 +173,7 @@ public class GamerController {
 
 	@PreAuthorize("hasAuthority('GAMER')")
 	@PutMapping("/collectibles/roll")
-	public Mono<Object> rollNewCollectible(ServerWebExchange exchange) {
+	public Mono<ResponseEntity<Object>> rollNewCollectible(ServerWebExchange exchange) {
 		HttpCookie tokenCookie = exchange.getRequest().getCookies().getFirst("token");
 		if (tokenCookie == null) {
 			return Mono.just(ResponseEntity.badRequest().build());
