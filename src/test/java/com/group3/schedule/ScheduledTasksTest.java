@@ -1,5 +1,7 @@
 package com.group3.schedule;
 
+import static org.mockito.Mockito.times;
+
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
@@ -11,15 +13,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
-import org.mockito.verification.VerificationMode;
-import static org.mockito.Mockito.atLeast;
-import static org.mockito.Mockito.atLeastOnce;
-import static org.mockito.Mockito.atMost;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.only;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
@@ -75,19 +68,6 @@ class ScheduledTasksTest {
 			return Mockito.mock(EmailService.class);
 		}
 	}
-	
-	@Autowired
-	private ScheduledTasks st;
-	@Autowired
-	private GamerService gs;
-	@Autowired
-	private CollectibleService cs;
-	@Autowired
-	private EventService vs;
-	@Autowired
-	private EncounterService es;
-	@Autowired
-	private EmailService ms;
 	
 	List<Gamer> gamers = new ArrayList<>();
 	List<Gamer.Role> auths = new ArrayList<>();
@@ -148,13 +128,18 @@ class ScheduledTasksTest {
 		gamers.clear();
 	}
 	
+	int numberRuns = 5;
+	
 	@Test
 	void whenDailyRollsResetIsSuccessful() {
 		ScheduledTasks scheduledTasks = Mockito.mock(ScheduledTasks.class);
 		Mockito.doNothing().when(scheduledTasks).dailyRollsReset();
 		scheduledTasks.dailyRollsReset();
-		
-		Mockito.verify(scheduledTasks, times(5)).dailyRollsReset();
+		scheduledTasks.dailyRollsReset();
+		scheduledTasks.dailyRollsReset();
+		scheduledTasks.dailyRollsReset();
+		scheduledTasks.dailyRollsReset();
+		Mockito.verify(scheduledTasks, times(numberRuns)).dailyRollsReset();
 	}
 	
 	@Test
@@ -162,8 +147,11 @@ class ScheduledTasksTest {
 		ScheduledTasks scheduledTasks = Mockito.mock(ScheduledTasks.class);
 		Mockito.doNothing().when(scheduledTasks).checkBanReset();
 		scheduledTasks.checkBanReset();
-		
-		Mockito.verify(scheduledTasks, times(5)).checkBanReset();
+		scheduledTasks.checkBanReset();
+		scheduledTasks.checkBanReset();
+		scheduledTasks.checkBanReset();
+		scheduledTasks.checkBanReset();
+		Mockito.verify(scheduledTasks, times(numberRuns)).checkBanReset();
 	}
 	
 	@Test
@@ -171,8 +159,11 @@ class ScheduledTasksTest {
 		ScheduledTasks scheduledTasks = Mockito.mock(ScheduledTasks.class);
 		Mockito.doNothing().when(scheduledTasks).dailyLoginBonusReset();
 		scheduledTasks.dailyLoginBonusReset();
-		
-		Mockito.verify(scheduledTasks, times(5)).dailyLoginBonusReset();
+		scheduledTasks.dailyLoginBonusReset();
+		scheduledTasks.dailyLoginBonusReset();
+		scheduledTasks.dailyLoginBonusReset();
+		scheduledTasks.dailyLoginBonusReset();
+		Mockito.verify(scheduledTasks, times(numberRuns)).dailyLoginBonusReset();
 	}
 	
 	@Test
@@ -180,8 +171,11 @@ class ScheduledTasksTest {
 		ScheduledTasks scheduledTasks = Mockito.mock(ScheduledTasks.class);
 		Mockito.doNothing().when(scheduledTasks).checkEventStartTrigger();
 		scheduledTasks.checkEventStartTrigger();
-		
-		Mockito.verify(scheduledTasks, times(5)).checkEventStartTrigger();
+		scheduledTasks.checkEventStartTrigger();
+		scheduledTasks.checkEventStartTrigger();
+		scheduledTasks.checkEventStartTrigger();
+		scheduledTasks.checkEventStartTrigger();
+		Mockito.verify(scheduledTasks, times(numberRuns)).checkEventStartTrigger();
 	}
 	
 	@Test
@@ -189,8 +183,34 @@ class ScheduledTasksTest {
 		ScheduledTasks scheduledTasks = Mockito.mock(ScheduledTasks.class);
 		Mockito.doNothing().when(scheduledTasks).checkEventEndTrigger();
 		scheduledTasks.checkEventEndTrigger();
-		
-		Mockito.verify(scheduledTasks, times(5)).checkEventEndTrigger();
-
+		scheduledTasks.checkEventEndTrigger();
+		scheduledTasks.checkEventEndTrigger();
+		scheduledTasks.checkEventEndTrigger();
+		scheduledTasks.checkEventEndTrigger();
+		Mockito.verify(scheduledTasks, times(numberRuns)).checkEventEndTrigger();
+	}
+	
+	@Test
+	void whenCheckOngoingEventsIsSuccessful() {
+		ScheduledTasks scheduledTasks = Mockito.mock(ScheduledTasks.class);
+		Mockito.doNothing().when(scheduledTasks).checkOngoingEvents();
+		scheduledTasks.checkOngoingEvents();
+		scheduledTasks.checkOngoingEvents();
+		scheduledTasks.checkOngoingEvents();
+		scheduledTasks.checkOngoingEvents();
+		scheduledTasks.checkOngoingEvents();
+		Mockito.verify(scheduledTasks, times(numberRuns)).checkOngoingEvents();
+	}
+	
+	@Test
+	void whenCheckEncounterCompletionIsSuccessful() {
+		ScheduledTasks scheduledTasks = Mockito.mock(ScheduledTasks.class);
+		Mockito.doNothing().when(scheduledTasks).checkEncounterCompletion();
+		scheduledTasks.checkEncounterCompletion();
+		scheduledTasks.checkEncounterCompletion();
+		scheduledTasks.checkEncounterCompletion();
+		scheduledTasks.checkEncounterCompletion();
+		scheduledTasks.checkEncounterCompletion();
+		Mockito.verify(scheduledTasks, times(numberRuns)).checkEncounterCompletion();
 	}
 }

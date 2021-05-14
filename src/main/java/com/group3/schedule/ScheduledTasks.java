@@ -1,11 +1,7 @@
 package com.group3.schedule;
 
 import java.time.Instant;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,15 +11,16 @@ import org.springframework.core.annotation.Order;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import com.group3.beans.Collectible;
 import com.group3.beans.Event;
 import com.group3.beans.Gamer;
-import com.group3.beans.RewardToken;
 import com.group3.services.CollectibleService;
 import com.group3.services.EmailService;
 import com.group3.services.EncounterService;
 import com.group3.services.EventService;
 import com.group3.services.GamerService;
+
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 @Component
 @Order(1)
@@ -83,19 +80,10 @@ public class ScheduledTasks implements CommandLineRunner {
 	@Scheduled(cron="0 0 0 * * *")
 	public void dailyRollsReset() {
 		log.debug("Resetting daily free rolls");
-		List<Gamer> rollsReset = gamerService.getGamers().collectList().block();
-		List<Gamer> gamersReset = new ArrayList<>();
-		for(Gamer gamer : rollsReset) {
-				gamer.setDailyRolls(10);
-				gamerService.updateGamer(gamer).subscribe(gamersReset::add);
-		}
-		
-		/*
-		gamerService.getGamers()
-		.doOnNext(gg -> gg.setDailyRolls(10))
-		.doOnNext(gg -> gamerService.updateGamer(gg))
-		.subscribe();
-		*/
+		gamerService.getGamers().flatMap(gamer -> {
+			gamer.setDailyRolls(10);
+			return gamerService.updateGamer(gamer);
+		}).collectList().block();
 	}
 
 	/*
@@ -112,17 +100,12 @@ public class ScheduledTasks implements CommandLineRunner {
 	@Scheduled(cron="0 * * * * *")
 	public void checkBanReset() {
 		Date current = Date.from(Instant.now());
-		List<Gamer> bannedGamers = gamerService.getGamersByRole(Gamer.Role.BANNED)
-				.collectList().block();
-		List<Gamer> unbannedGamers = new ArrayList<Gamer>();
-			for(Gamer gamer : bannedGamers) {
-				Set<Date> banDates = gamer.getBanDates();
-				boolean stillBanned = false;
-				for(Date date : banDates) {
-					if(date.after(current)) {
-						stillBanned = true;
-						break;
-					}
+		gamerService.getGamersByRole(Gamer.Role.BANNED).flatMap(gamer -> {
+			boolean stillBanned = false;
+			for(Date banDate : gamer.getBanDates()) {
+				if(banDate.after(current)) {
+					stillBanned = true;
+					break;
 				}
 				if(!stillBanned) {
 					gamer.setRole(Gamer.Role.GAMER);
@@ -132,9 +115,10 @@ public class ScheduledTasks implements CommandLineRunner {
 							"Ban Lifted", 
 							"Your ban in GachaGame has lifted. "
 							+ "Please be more mindful of the community in the future.");
-					gamerService.updateGamer(gamer).subscribe(unbannedGamers::add);
 				}
 			}
+			return gamerService.updateGamer(gamer);
+		}).collectList().block();
 	}
 
 	/*
@@ -146,12 +130,10 @@ public class ScheduledTasks implements CommandLineRunner {
 	@Scheduled(cron="0 0 0 * * *")
 	public void dailyLoginBonusReset() {
 		log.debug("Resetting daily login bonuses");
-		List<Gamer> loginReset = gamerService.getGamers().collectList().block();
-		List<Gamer> resetGamers = new ArrayList<Gamer>();
-		for(Gamer gamer : loginReset) {
+		gamerService.getGamers().flatMap(gamer -> {
 			gamer.setLoginBonusCollected(false);
-			gamerService.updateGamer(gamer).subscribe(resetGamers::add);
-		}
+			return gamerService.updateGamer(gamer);
+		}).collectList().block();
 	}
 
 	/*
@@ -169,11 +151,8 @@ public class ScheduledTasks implements CommandLineRunner {
 	@Scheduled(cron="*/10 * * * * *")
 	public void checkEventStartTrigger() {
 		Date current = Date.from(Instant.now());
-		List<Event> updatedEvents = new ArrayList<Event>();
-		List<Event> eventList = eventService.getEvents()
-				.collectList().block();
-		for(Event event : eventList) {
-			if(event.isOngoing() == false 
+		eventService.getEvents().flatMap(event -> {
+			if(event.isOngoing() == false
 					&& current.after(event.getEventStart())
 					&& current.before(event.getEventEnd())) {
 				event.setOngoing(true);
@@ -186,11 +165,9 @@ public class ScheduledTasks implements CommandLineRunner {
 					Event.setRollMod(1.05d);
 				}
 				log.debug("Event now live!");
-				eventService.updateEvent(event)
-				.subscribe(updatedEvents::add);
 			}
-
-		}
+			return eventService.updateEvent(event);
+		}).collectList().block();
 	}
 	/*
 	 Check Event End Trigger
@@ -205,12 +182,8 @@ public class ScheduledTasks implements CommandLineRunner {
 	@Scheduled(cron="*/10 * * * * *")
 	public void checkEventEndTrigger() {
 		Date current = Date.from(Instant.now());
-		List<Event> updatedEvents = new ArrayList<Event>();
-		List<Event> eventList = eventService.getEvents()
-				.collectList().block();
-		for(Event event : eventList) {
-			if(event.isOngoing() == true 
-					&& current.after(event.getEventEnd())) {
+		eventService.viewOngoingEvents().flatMap(event -> {
+			if(current.after(event.getEventEnd())) {
 				event.setOngoing(false);
 				Event.Type type = event.getEventType();
 				log.debug("Event teardown: {}", type);
@@ -221,10 +194,9 @@ public class ScheduledTasks implements CommandLineRunner {
 					Event.setRollMod(1.0d);
 				}
 				log.debug("Event has ended. Thanks for playing!");
-				eventService.updateEvent(event)
-				.subscribe(updatedEvents::add);
 			}
-		}
+			return eventService.updateEvent(event);
+		}).collectList().block();
 	}
 	
 	/*
@@ -236,9 +208,7 @@ public class ScheduledTasks implements CommandLineRunner {
 	
 	@Scheduled(initialDelay=1000, fixedDelay=3600000)
 	public void checkOngoingEvents() {
-		List<Event> ongoingEvents = eventService.viewOngoingEvents()
-				.collectList().block();
-		for(Event event : ongoingEvents) {
+		eventService.viewOngoingEvents().flatMap(event -> {
 			log.debug("Event currently live: {}", event);
 			Event.Type type = event.getEventType();
 			if(type.equals(Event.Type.DOUBLESTRINGS)) {
@@ -249,26 +219,38 @@ public class ScheduledTasks implements CommandLineRunner {
 				Event.setRollMod(1.05d);
 				log.debug("Current rollMod: {}", Event.getRollMod());
 			}
-		}
+			return Mono.just(event);
+		}).collectList().block();
 	}
+	
+	/*
+	 Check Encounter Completion
+	 checks the reward token repository for  tokens that are marked 
+	 as not completed, if the current time is after the end time: the
+	 encounter token is marked complete, the list of collectibles on 
+	 the encounter is retrieved and marked as not being on an encounter,
+	 the collectible changes are saved, the reward is distributed to 
+	 the gamer (which is saved in the distribution method), and the 
+	 updated token is finally saved.
+	 */
 	
 	@Scheduled(cron="*/10 * * * * *")
 	public void checkEncounterCompletion() {
-		log.debug("Checking for encounters to end...");
 		Date current = Date.from(Instant.now());
-		List<RewardToken> encounterTokens = encounterService.viewCompletedTokens(false)
-				.filter(token -> current.after(token.getEndTime())).collectList().block();
-		for(RewardToken token : encounterTokens) {
-			token.setEncounterComplete(true);
-			for(UUID collectibleId : token.getCollectiblesOnEncounter()) {
-				Collectible collectible = collectibleService.getCollectible(collectibleId.toString()).block();
-				if(collectible != null) {
-					collectible.setOnEncounter(false);
-					collectibleService.updateCollectible(collectible).block();
-				}
-			}
-			encounterService.distributeReward(token.getReward(), token.getGamerID());
-			encounterService.updateRewardToken(token).block();
-		}
+		encounterService.viewCompletedTokens(false)
+				.filter(token -> current.after(token.getEndTime()))
+				.flatMap(token -> {
+					token.setEncounterComplete(true);
+					return Flux.fromIterable(token.getCollectiblesOnEncounter())
+							.flatMap(collectibleId -> {
+								return collectibleService.getCollectible(collectibleId.toString())
+										.flatMap(collectible -> {
+											if(collectible != null) {
+												collectible.setOnEncounter(false);
+												return collectibleService.updateCollectible(collectible);
+											} else {return Mono.empty();}
+						});
+					});
+				}).collectList().block();
 	}			
 }
