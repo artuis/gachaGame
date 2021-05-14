@@ -43,7 +43,6 @@ public class GamerController {
 	private GamerService gamerService;
 	private CollectibleTypeService collectibleTypeService;
 	private CollectibleService collectibleService;
-	@Autowired
 	private EmailService emailService;
 
 	private Logger log = LoggerFactory.getLogger(GamerController.class);
