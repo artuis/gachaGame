@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.group3.beans.CollectibleType;
+import com.group3.beans.CollectibleType.Stage;
 import com.group3.beans.Event;
 import com.group3.data.CollectibleTypeRepository;
 
@@ -28,16 +29,16 @@ public class CollectibleTypeServiceImpl implements CollectibleTypeService {
 	@Override
 	public Mono<CollectibleType> rollCollectibleType() {
 		double rand = ThreadLocalRandom.current().nextDouble() * Event.getRollMod();
-		CollectibleType.Stage stage;
-		if (rand < CollectibleType.Stage.STAGE_1.getRate()) {
-			stage = CollectibleType.Stage.STAGE_1;
+		Stage stage;
+		if (rand < Stage.STAGE_1.getRate()) {
+			stage = Stage.STAGE_1;
 		} else {
-			stage = rand < CollectibleType.Stage.STAGE_2.getRate() ? CollectibleType.Stage.STAGE_2 : CollectibleType.Stage.STAGE_3;
+			stage = rand < Stage.STAGE_2.getRate() ? Stage.STAGE_2 : Stage.STAGE_3;
 		}
 		return getCollectibleFromStage(stage);
 	}
 
-	private Mono<CollectibleType> getCollectibleFromStage(CollectibleType.Stage stage) {
+	private Mono<CollectibleType> getCollectibleFromStage(Stage stage) {
 		return collectibleTypeRepo.findCollectiblesByStage(stage).collectList()
 				.map(collectibles -> collectibles.get(ThreadLocalRandom.current().nextInt(collectibles.size())));
 	}
