@@ -2,6 +2,7 @@ package com.group3.schedule;
 
 import java.time.Instant;
 import java.util.Date;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,6 +12,7 @@ import org.springframework.core.annotation.Order;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import com.group3.beans.Collectible;
 import com.group3.beans.Event;
 import com.group3.beans.Gamer;
 import com.group3.services.CollectibleService;
@@ -78,9 +80,9 @@ public class ScheduledTasks implements CommandLineRunner {
 	 */
 	
 	@Scheduled(cron="0 0 0 * * *")
-	public void dailyRollsReset() {
+	public List<Gamer> dailyRollsReset() {
 		log.debug("Resetting daily free rolls");
-		gamerService.getGamers().flatMap(gamer -> {
+		return gamerService.getGamers().flatMap(gamer -> {
 			gamer.setDailyRolls(10);
 			return gamerService.updateGamer(gamer);
 		}).collectList().block();
@@ -98,9 +100,9 @@ public class ScheduledTasks implements CommandLineRunner {
 	 */
 	
 	@Scheduled(cron="0 * * * * *")
-	public void checkBanReset() {
+	public List<Gamer> checkBanReset() {
 		Date current = Date.from(Instant.now());
-		gamerService.getGamersByRole(Gamer.Role.BANNED).flatMap(gamer -> {
+		return gamerService.getGamersByRole(Gamer.Role.BANNED).flatMap(gamer -> {
 			boolean stillBanned = false;
 			for(Date banDate : gamer.getBanDates()) {
 				if(banDate.after(current)) {
@@ -128,9 +130,9 @@ public class ScheduledTasks implements CommandLineRunner {
 	 */
 	
 	@Scheduled(cron="0 0 0 * * *")
-	public void dailyLoginBonusReset() {
+	public List<Gamer> dailyLoginBonusReset() {
 		log.debug("Resetting daily login bonuses");
-		gamerService.getGamers().flatMap(gamer -> {
+		return gamerService.getGamers().flatMap(gamer -> {
 			gamer.setLoginBonusCollected(false);
 			return gamerService.updateGamer(gamer);
 		}).collectList().block();
@@ -149,9 +151,9 @@ public class ScheduledTasks implements CommandLineRunner {
 	
 
 	@Scheduled(cron="*/10 * * * * *")
-	public void checkEventStartTrigger() {
+	public List<Event> checkEventStartTrigger() {
 		Date current = Date.from(Instant.now());
-		eventService.getEvents().flatMap(event -> {
+		return eventService.getEvents().flatMap(event -> {
 			if(event.isOngoing() == false
 					&& current.after(event.getEventStart())
 					&& current.before(event.getEventEnd())) {
@@ -180,9 +182,9 @@ public class ScheduledTasks implements CommandLineRunner {
 	 */
 	
 	@Scheduled(cron="*/10 * * * * *")
-	public void checkEventEndTrigger() {
+	public List<Event> checkEventEndTrigger() {
 		Date current = Date.from(Instant.now());
-		eventService.viewOngoingEvents().flatMap(event -> {
+		return eventService.viewOngoingEvents().flatMap(event -> {
 			if(current.after(event.getEventEnd())) {
 				event.setOngoing(false);
 				Event.Type type = event.getEventType();
@@ -207,8 +209,8 @@ public class ScheduledTasks implements CommandLineRunner {
 	 */
 	
 	@Scheduled(initialDelay=1000, fixedDelay=3600000)
-	public void checkOngoingEvents() {
-		eventService.viewOngoingEvents().flatMap(event -> {
+	public List<Event> checkOngoingEvents() {
+		return eventService.viewOngoingEvents().flatMap(event -> {
 			log.debug("Event currently live: {}", event);
 			Event.Type type = event.getEventType();
 			if(type.equals(Event.Type.DOUBLESTRINGS)) {
@@ -235,9 +237,9 @@ public class ScheduledTasks implements CommandLineRunner {
 	 */
 	
 	@Scheduled(cron="*/10 * * * * *")
-	public void checkEncounterCompletion() {
+	public List<Collectible> checkEncounterCompletion() {
 		Date current = Date.from(Instant.now());
-		encounterService.viewCompletedTokens(false)
+		return encounterService.viewCompletedTokens(false)
 				.filter(token -> current.after(token.getEndTime()))
 				.flatMap(token -> {
 					token.setEncounterComplete(true);
