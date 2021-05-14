@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import com.datastax.oss.driver.api.core.uuid.Uuids;
 import com.group3.beans.Collectible;
 import com.group3.beans.Encounter;
+import com.group3.beans.Event;
 import com.group3.beans.Gamer;
 import com.group3.beans.RewardToken;
 import com.group3.data.CollectibleRepository;
@@ -35,6 +36,8 @@ public class EncounterServiceImpl implements EncounterService {
 	private CollectibleRepository collectibleRepo;
 	@Autowired
 	private GamerRepository gamerRepo;
+	@Autowired
+	private EmailService emailService;
 	
 	public EncounterServiceImpl() {
 		super();
@@ -147,21 +150,47 @@ public class EncounterServiceImpl implements EncounterService {
 			return;
 		}
 		if(reward < 20) {
-			gamer.setStrings(gamer.getStrings() + (reward*10));
+			gamer.setStrings(gamer.getStrings() + (reward*10*Event.getStringMod()));
 			log.debug("Reward distributed: {} strings", (reward*10));
+			emailService.sendEmail(
+					gamer.getEmail(), 
+					"GachaGame: Encounter Complete!", 
+					"The encounter your collectibles went on is complete! "
+					+ "You received "+(reward*10)+" strings as a reward!");
 		} else if(reward < 40) {
 			gamer.setStardust(gamer.getStardust() + (reward/10));
 			log.debug("Reward distributed: {} stardust", (reward/10));
+			emailService.sendEmail(
+					gamer.getEmail(), 
+					"GachaGame: Encounter Complete!", 
+					"The encounter your collectibles went on is complete! "
+					+ "You received "+(reward/10)+" stardust as a reward!");
 		} else if(reward < 60) {
 			gamer.setRolls(gamer.getRolls() + 1);
 			log.debug("Reward distributed: 1 roll");
+			emailService.sendEmail(
+					gamer.getEmail(), 
+					"GachaGame: Encounter Complete!", 
+					"The encounter your collectibles went on is complete! "
+					+ "You received 1 free roll as a reward!");
 		} else if(reward < 80) {
 			gamer.setRolls(gamer.getRolls() + 3);
 			log.debug("Reward distributed: 3 rolls");
+			emailService.sendEmail(
+					gamer.getEmail(), 
+					"GachaGame: Encounter Complete!", 
+					"The encounter your collectibles went on is complete! "
+					+ "You received 3 free rolls as a reward!");
 		} else if(reward < 100) {
 			gamer.setRolls(gamer.getRolls() + 5);
 			log.debug("Reward distributed: 5 rolls! Nice.");
+			emailService.sendEmail(
+					gamer.getEmail(), 
+					"GachaGame: Encounter Complete!", 
+					"The encounter your collectibles went on is complete! "
+					+ "You received 5 free rolls as a reward! Great work!");
 		}
+
 		gamerRepo.save(gamer).block();
 	}
 	
