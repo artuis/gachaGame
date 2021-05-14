@@ -1,4 +1,4 @@
-package com.group3.services;
+package com.group3.test;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -10,6 +10,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import com.group3.beans.CollectibleType;
 import com.group3.data.CollectibleTypeRepository;
+import com.group3.services.CollectibleTypeServiceImpl;
 
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;

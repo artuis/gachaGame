@@ -1,4 +1,4 @@
-package com.group3.services;
+package com.group3.test;
 
 import java.util.UUID;
 
@@ -14,6 +14,7 @@ import org.springframework.util.Assert;
 
 import com.group3.beans.Gamer;
 import com.group3.data.GamerRepository;
+import com.group3.services.GamerServiceImpl;
 
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;

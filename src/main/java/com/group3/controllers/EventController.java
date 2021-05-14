@@ -24,15 +24,13 @@ import reactor.core.publisher.Mono;
 @RestController
 @RequestMapping(value = "/events")
 public class EventController {
-
-	@Autowired
 	private EventService eventService;
-	@Autowired
 	private Event emptyEvent;
-	
+	@Autowired
 	public void setEventService(EventService eventService) {
 		this.eventService = eventService;
 	}
+	@Autowired
 	public void setEmptyEvent(Event event) {
 		this.emptyEvent = event;
 	}

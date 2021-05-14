@@ -1,4 +1,4 @@
-package com.group3.controllers;
+package com.group3.test;
 
 import java.util.UUID;
 
@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import com.group3.beans.Event;
+import com.group3.controllers.EventController;
 import com.group3.services.EventService;
 
 import reactor.core.publisher.Mono;
@@ -25,18 +26,18 @@ class EventControllerTest {
 	static class Configuration {
 		
 		@Bean
-		public EventController getEventController(EventService eventService, Event event) {
+		EventController getEventController(EventService eventService, Event event) {
 			EventController ec = new EventController();
 			ec.setEventService(eventService);
 			ec.setEmptyEvent(event);
 			return ec;
 		}
 		@Bean
-		public EventService getEventService() {
+		EventService getEventService() {
 			return Mockito.mock(EventService.class);
 		}
 		@Bean
-		public Event getEvent() {
+		Event getEvent() {
 			return Mockito.mock(Event.class);
 		}
 	}

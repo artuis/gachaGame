@@ -1,4 +1,4 @@
-package com.group3.services;
+package com.group3.test;
 
 public class EventServiceTest {
 

@@ -1,4 +1,4 @@
-package com.group3.controllers;
+package com.group3.test;
 
 import java.time.Duration;
 import java.util.Arrays;
@@ -23,6 +23,7 @@ import com.datastax.oss.driver.api.core.uuid.Uuids;
 import com.group3.beans.Collectible;
 import com.group3.beans.CollectibleType;
 import com.group3.beans.CollectibleType.Stage;
+import com.group3.controllers.GamerController;
 import com.group3.beans.Gamer;
 import com.group3.services.CollectibleService;
 import com.group3.services.CollectibleTypeService;

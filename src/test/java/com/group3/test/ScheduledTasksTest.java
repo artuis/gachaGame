@@ -1,4 +1,4 @@
-package com.group3.schedule;
+package com.group3.test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -25,6 +25,7 @@ import com.group3.beans.Collectible;
 import com.group3.beans.Event;
 import com.group3.beans.Gamer;
 import com.group3.beans.RewardToken;
+import com.group3.schedule.ScheduledTasks;
 import com.group3.services.CollectibleService;
 import com.group3.services.EmailService;
 import com.group3.services.EncounterService;
@@ -74,7 +75,7 @@ class ScheduledTasksTest {
 		
 		@Bean
 		EmailService getEmailServiceST() {
-			return Mockito.mock(EmailService.class)
+			return Mockito.mock(EmailService.class);
 		}
 
 	}

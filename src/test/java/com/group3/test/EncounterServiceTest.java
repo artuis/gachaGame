@@ -1,4 +1,4 @@
-package com.group3.services;
+package com.group3.test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.argThat;
@@ -25,6 +25,7 @@ import com.group3.beans.RewardToken;
 import com.group3.data.CollectibleRepository;
 import com.group3.data.EncounterRepository;
 import com.group3.data.GamerRepository;
+import com.group3.services.EncounterServiceImpl;
 
 import reactor.core.publisher.Mono;
 
