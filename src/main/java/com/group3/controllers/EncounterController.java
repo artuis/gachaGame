@@ -25,7 +25,6 @@ import com.group3.beans.RewardToken;
 import com.group3.services.EncounterService;
 import com.group3.util.JWTUtil;
 
-import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 @RestController
