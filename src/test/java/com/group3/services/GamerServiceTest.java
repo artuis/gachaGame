@@ -23,14 +23,14 @@ class GamerServiceTest {
 	@TestConfiguration
 	static class Configuration {
 		@Bean
-		public GamerServiceImpl getGamerServiceImpl(GamerRepository gamerRepo) {
+		GamerServiceImpl getGamerServiceImpl(GamerRepository gamerRepo) {
 			GamerServiceImpl gs = new GamerServiceImpl();
 			gs.setGamerRepo(gamerRepo);
 			return gs;
 		}
 		
 		@Bean
-		public GamerRepository getGamerRepo() {
+		GamerRepository getGamerRepo() {
 			return Mockito.mock(GamerRepository.class);
 		}
 	}

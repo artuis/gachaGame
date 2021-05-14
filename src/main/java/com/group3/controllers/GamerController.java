@@ -5,6 +5,7 @@ import java.util.UUID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpCookie;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
@@ -80,7 +81,6 @@ public class GamerController {
 	public void setCollectibleService(CollectibleService gs) {
 		this.collectibleService = gs;
 	}
-	
 
 	@Autowired
 	public void setEmailService(EmailService es) {
@@ -109,15 +109,11 @@ public class GamerController {
 		return gamerService.addGamer(gg).defaultIfEmpty(emptyGamer).map(gamer -> {
 			if (gamer.getUsername() == null || gamer.getGamerId() == null) {
 				return ResponseEntity.status(HttpStatus.CONFLICT).body(gg);
-			} 
+			}
 
-			if(gamer.getEmail() != null) {
-				Mono.fromRunnable(()-> emailService.sendEmail(
-						gamer.getEmail(),
-						"Welcome to GachaGame!",
-						"We hope you enjoy your time here!"))
-			    .subscribeOn(Schedulers.boundedElastic())
-			    .subscribe();
+			if (gamer.getEmail() != null) {
+				Mono.fromRunnable(() -> emailService.sendEmail(gamer.getEmail(), "Welcome to GachaGame!",
+						"We hope you enjoy your time here!")).subscribeOn(Schedulers.boundedElastic()).subscribe();
 			}
 			return ResponseEntity.status(HttpStatus.CREATED).body(gamer);
 		});
@@ -128,12 +124,12 @@ public class GamerController {
 		return gamerService.findByUsername(gg.getUsername()).defaultIfEmpty(emptyGamer).cast(Gamer.class).map(gamer -> {
 			if (gamer.getUsername() == null) {
 				return ResponseEntity.status(HttpStatus.NOT_FOUND).body(gg);
-			} else if(gamer.getRole().equals(Gamer.Role.BANNED)) {
+			} else if (gamer.getRole().equals(Gamer.Role.BANNED)) {
 				return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(gg);
 			} else {
-			exchange.getResponse().addCookie(ResponseCookie.from("token", jwtUtil.generateToken(gamer))
-					.path("/").httpOnly(true).build());
-			return ResponseEntity.ok(gamer); // 👌
+				exchange.getResponse().addCookie(
+						ResponseCookie.from("token", jwtUtil.generateToken(gamer)).path("/").httpOnly(true).build());
+				return ResponseEntity.ok(gamer); // 👌
 			}
 		});
 	}
@@ -167,13 +163,9 @@ public class GamerController {
 			if (gamer.getGamerId() == null) {
 				return ResponseEntity.notFound().build();
 			}
-			if(gamer.getEmail() != null) {
-				Mono.fromRunnable(()-> emailService.sendEmail(
-						gamer.getEmail(), 
-						"BANNED from GachaGame!",
-						"Scram you little rat!"))
-				.subscribeOn(Schedulers.boundedElastic())
-			    .subscribe();
+			if (gamer.getEmail() != null) {
+				Mono.fromRunnable(() -> emailService.sendEmail(gamer.getEmail(), "BANNED from GachaGame!",
+						"Scram you little rat!")).subscribeOn(Schedulers.boundedElastic()).subscribe();
 			}
 			return ResponseEntity.ok(gamer);
 		});
@@ -182,7 +174,11 @@ public class GamerController {
 	@PreAuthorize("hasAuthority('GAMER')")
 	@PutMapping("/collectibles/roll")
 	public Mono<ResponseEntity<Object>> rollNewCollectible(ServerWebExchange exchange) {
-		String token = exchange.getRequest().getCookies().getFirst("token").getValue();
+		HttpCookie tokenCookie = exchange.getRequest().getCookies().getFirst("token");
+		if (tokenCookie == null) {
+			return Mono.just(ResponseEntity.badRequest().build());
+		}
+		String token = tokenCookie.getValue();
 		return gamerService.getGamer(UUID.fromString((String) jwtUtil.getAllClaimsFromToken(token).get("id")))
 				.flatMap(gamer -> {
 					log.debug("" + gamer.getStardust());

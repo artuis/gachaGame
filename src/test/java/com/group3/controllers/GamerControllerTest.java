@@ -54,33 +54,37 @@ class GamerControllerTest {
 		
 		
 		@Bean
-		public Collectible getEmptyCollectible() {
+		Collectible getEmptyCollectible() {
 			return Mockito.mock(Collectible.class);
 		}
 		
-		@Bean Gamer getEmptyGamer() {
+		@Bean 
+		Gamer getEmptyGamer() {
 			return Mockito.mock(Gamer.class);
 		}
 		
-		@Bean JWTUtil getJWTUtil() {
+		@Bean 
+		JWTUtil getJWTUtil() {
 			return Mockito.mock(JWTUtil.class, Mockito.RETURNS_DEEP_STUBS);
 		}
 
 		@Bean
-		public GamerService getGamerService() {
+		GamerService getGamerService() {
 			return Mockito.mock(GamerService.class);
 		}
 		
 		@Bean
-		public CollectibleTypeService getCollectibleTypeService() {
+		CollectibleTypeService getCollectibleTypeService() {
 			return Mockito.mock(CollectibleTypeService.class);
 		}
 		
-		@Bean CollectibleService getCollectibleService() {
+		@Bean 
+		CollectibleService getCollectibleService() {
 			return Mockito.mock(CollectibleService.class);
 		}
 		
-		@Bean EmailService getEmailService() {
+		@Bean 
+		EmailService getEmailService() {
 			return Mockito.mock(EmailService.class);
 		}
 	}
@@ -93,18 +97,21 @@ class GamerControllerTest {
 	private GamerService gs;
 	@Autowired
 	private CollectibleService cs;
-	@Autowired CollectibleTypeService cts;
+	@Autowired 
+	private CollectibleTypeService cts;
 	
 	@Test
 	void testRegisterGamerReturnesEntityWithStatus201() {
 		Gamer gamer = new Gamer();
 		gamer.setUsername("test");
 		gamer.setRole(Gamer.Role.GAMER);
+		gamer.setEmail("test@test.test");
 		gamer.setGamerId(Uuids.timeBased());
 		Mockito.when(gs.addGamer(gamer)).thenReturn(Mono.just(gamer));
 		Mono<ResponseEntity<Gamer>> result = gc.registerGamer(gamer);
 		StepVerifier.create(result).expectNext(ResponseEntity.status(HttpStatus.CREATED).body(gamer)).verifyComplete();
 	}
+	
 	
 	@Test
 	void testGetGamersReturnsGamers() {
@@ -158,6 +165,7 @@ class GamerControllerTest {
 	void banGamerBansGamer() {
 		UUID rand = UUID.randomUUID();
 		Gamer gamer = new Gamer();
+		gamer.setEmail("test@test.test");
 		gamer.setGamerId(rand);
 		long daysBanned = 7l;
 		Mockito.when(gs.banGamer(gamer.getGamerId(), daysBanned)).thenReturn(Mono.just(gamer));
@@ -166,7 +174,7 @@ class GamerControllerTest {
 	}
 	
 	@Test
-	void rollNewCollectibleRollsCollectible() {
+	void rollNewCollectibleRollsCollectibleFromDailyRolls() {
 		JWTUtil generator = new JWTUtil();
 		generator.setExpirationTime("28800");
 		generator.setSecret("ThisIsSecretForJWTHS512SignatureAlgorithmThatMUSTHave64ByteLength");
@@ -177,6 +185,139 @@ class GamerControllerTest {
 		gamer.setGamerId(UUID.randomUUID());
 		gamer.setAuthorities(Arrays.asList(Gamer.Role.GAMER));
 		gamer.setDailyRolls(1);
+		gamer.setStrings(1000);
+		gamer.setStardust(10);
+		gamer.setCollectionSize(0);
+		gamer.setCollectionStrength(0);
+		
+		Gamer after = new Gamer();
+		after.setUsername("test");
+		after.setGamerId(gamer.getGamerId());
+		after.setAuthorities(Arrays.asList(Gamer.Role.GAMER));
+		after.setDailyRolls(0);
+		
+		CollectibleType collectibleType = new CollectibleType();
+		collectibleType.setBaseStat(5);
+		collectibleType.setId(1);
+		collectibleType.setName("test");
+		collectibleType.setStage(Stage.STAGE_1);
+		
+		Collectible collectible = Collectible.fromCollectibleTypeAndId(collectibleType, gamer.getGamerId());
+		HttpCookie hc = new HttpCookie("token", generator.generateToken(gamer));
+		MockServerWebExchange exchange = MockServerWebExchange.from(MockServerHttpRequest.put("/ganers/collectibles/roll").cookie(hc));
+
+		Mockito.when(gs.getGamer(gamer.getGamerId())).thenReturn(Mono.just(gamer));
+		Mockito.when(jwtUtil.getAllClaimsFromToken(Mockito.anyString()).get(Mockito.anyString())).thenReturn(gamer.getGamerId().toString());
+		Mockito.when(cts.rollCollectibleType()).thenReturn(Mono.just(collectibleType));
+		Mockito.when(cs.createCollectible(Mockito.any())).thenReturn(Mono.just(collectible));
+		Mockito.when(gs.updateGamer(Mockito.any())).thenReturn(Mono.just(after));
+		Mono<ResponseEntity<Object>> result = gc.rollNewCollectible(exchange);
+		StepVerifier.create(result).expectNext(ResponseEntity.ok(collectibleType)).verifyComplete();
+	}
+	
+	@Test
+	void rollNewCollectibleRollsCollectibleFromStrings() {
+		JWTUtil generator = new JWTUtil();
+		generator.setExpirationTime("28800");
+		generator.setSecret("ThisIsSecretForJWTHS512SignatureAlgorithmThatMUSTHave64ByteLength");
+		generator.setKey(Keys.hmacShaKeyFor("ThisIsSecretForJWTHS512SignatureAlgorithmThatMUSTHave64ByteLength".getBytes()));
+		
+		Gamer gamer = new Gamer();
+		gamer.setUsername("test");
+		gamer.setGamerId(UUID.randomUUID());
+		gamer.setAuthorities(Arrays.asList(Gamer.Role.GAMER));
+		gamer.setDailyRolls(0);
+		gamer.setRolls(0);
+		gamer.setStrings(1000);
+		gamer.setStardust(10);
+		gamer.setCollectionSize(0);
+		gamer.setCollectionStrength(0);
+		
+		Gamer after = new Gamer();
+		after.setUsername("test");
+		after.setGamerId(gamer.getGamerId());
+		after.setAuthorities(Arrays.asList(Gamer.Role.GAMER));
+		after.setDailyRolls(0);
+		
+		CollectibleType collectibleType = new CollectibleType();
+		collectibleType.setBaseStat(5);
+		collectibleType.setId(1);
+		collectibleType.setName("test");
+		collectibleType.setStage(Stage.STAGE_1);
+		
+		Collectible collectible = Collectible.fromCollectibleTypeAndId(collectibleType, gamer.getGamerId());
+		HttpCookie hc = new HttpCookie("token", generator.generateToken(gamer));
+		MockServerWebExchange exchange = MockServerWebExchange.from(MockServerHttpRequest.put("/ganers/collectibles/roll").cookie(hc));
+
+		Mockito.when(gs.getGamer(gamer.getGamerId())).thenReturn(Mono.just(gamer));
+		Mockito.when(jwtUtil.getAllClaimsFromToken(Mockito.anyString()).get(Mockito.anyString())).thenReturn(gamer.getGamerId().toString());
+		Mockito.when(cts.rollCollectibleType()).thenReturn(Mono.just(collectibleType));
+		Mockito.when(cs.createCollectible(Mockito.any())).thenReturn(Mono.just(collectible));
+		Mockito.when(gs.updateGamer(Mockito.any())).thenReturn(Mono.just(after));
+		Mono<ResponseEntity<Object>> result = gc.rollNewCollectible(exchange);
+		StepVerifier.create(result).expectNext(ResponseEntity.ok(collectibleType)).verifyComplete();
+	}
+	
+	@Test
+	void rollNewCollectibleRollsCollectibleFromRolls() {
+		JWTUtil generator = new JWTUtil();
+		generator.setExpirationTime("28800");
+		generator.setSecret("ThisIsSecretForJWTHS512SignatureAlgorithmThatMUSTHave64ByteLength");
+		generator.setKey(Keys.hmacShaKeyFor("ThisIsSecretForJWTHS512SignatureAlgorithmThatMUSTHave64ByteLength".getBytes()));
+		
+		Gamer gamer = new Gamer();
+		gamer.setUsername("test");
+		gamer.setGamerId(UUID.randomUUID());
+		gamer.setAuthorities(Arrays.asList(Gamer.Role.GAMER));
+		gamer.setDailyRolls(0);
+		gamer.setRolls(1);
+		gamer.setStrings(1000);
+		gamer.setStardust(10);
+		gamer.setCollectionSize(0);
+		gamer.setCollectionStrength(0);
+		
+		Gamer after = new Gamer();
+		after.setUsername("test");
+		after.setGamerId(gamer.getGamerId());
+		after.setAuthorities(Arrays.asList(Gamer.Role.GAMER));
+		after.setDailyRolls(0);
+		
+		CollectibleType collectibleType = new CollectibleType();
+		collectibleType.setBaseStat(5);
+		collectibleType.setId(1);
+		collectibleType.setName("test");
+		collectibleType.setStage(Stage.STAGE_1);
+		
+		Collectible collectible = Collectible.fromCollectibleTypeAndId(collectibleType, gamer.getGamerId());
+		HttpCookie hc = new HttpCookie("token", generator.generateToken(gamer));
+		MockServerWebExchange exchange = MockServerWebExchange.from(MockServerHttpRequest.put("/ganers/collectibles/roll").cookie(hc));
+
+		Mockito.when(gs.getGamer(gamer.getGamerId())).thenReturn(Mono.just(gamer));
+		Mockito.when(jwtUtil.getAllClaimsFromToken(Mockito.anyString()).get(Mockito.anyString())).thenReturn(gamer.getGamerId().toString());
+		Mockito.when(cts.rollCollectibleType()).thenReturn(Mono.just(collectibleType));
+		Mockito.when(cs.createCollectible(Mockito.any())).thenReturn(Mono.just(collectible));
+		Mockito.when(gs.updateGamer(Mockito.any())).thenReturn(Mono.just(after));
+		Mono<ResponseEntity<Object>> result = gc.rollNewCollectible(exchange);
+		StepVerifier.create(result).expectNext(ResponseEntity.ok(collectibleType)).verifyComplete();
+	}
+	
+	@Test
+	void rollNewCollectibleRollsCollectibleFromStardust() {
+		JWTUtil generator = new JWTUtil();
+		generator.setExpirationTime("28800");
+		generator.setSecret("ThisIsSecretForJWTHS512SignatureAlgorithmThatMUSTHave64ByteLength");
+		generator.setKey(Keys.hmacShaKeyFor("ThisIsSecretForJWTHS512SignatureAlgorithmThatMUSTHave64ByteLength".getBytes()));
+		
+		Gamer gamer = new Gamer();
+		gamer.setUsername("test");
+		gamer.setGamerId(UUID.randomUUID());
+		gamer.setAuthorities(Arrays.asList(Gamer.Role.GAMER));
+		gamer.setRolls(0);
+		gamer.setDailyRolls(0);
+		gamer.setStrings(0);
+		gamer.setStardust(10);
+		gamer.setCollectionSize(0);
+		gamer.setCollectionStrength(0);
 		
 		Gamer after = new Gamer();
 		after.setUsername("test");

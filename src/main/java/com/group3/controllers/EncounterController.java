@@ -7,6 +7,7 @@ import org.reactivestreams.Publisher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -45,8 +46,12 @@ public class EncounterController {
 	@PostMapping
 	public Mono<ResponseEntity<RewardToken>> startEncounter(@RequestParam("collectibleIDList") List<UUID> collectibleIDList,
 			@RequestParam("encounterID") UUID encounterID, ServerWebExchange exchange) {
-		String token = exchange.getRequest().getCookies().getFirst("token").getValue();
 
+		HttpCookie tokenCookie = exchange.getRequest().getCookies().getFirst("token");
+		if (tokenCookie == null) {
+			return Mono.just(ResponseEntity.badRequest().build());
+		}
+		String token = tokenCookie.getValue();
 		log.debug("EncounterID passing controller: {}", encounterID);
 		log.debug("CollectibleList passing controller: {}", collectibleIDList);
 		log.debug("String token passing controller: {}", token);
@@ -60,8 +65,13 @@ public class EncounterController {
 	@PreAuthorize("hasAuthority('GAMER')")
 	@GetMapping("{gamerId}")
 	public Publisher<?> viewRunningEncounters(ServerWebExchange exchange) {
-		String token = exchange.getRequest().getCookies().getFirst("token").getValue();
-		return encounterService.getRunningEncounters(UUID.fromString((String) jwtUtil.getAllClaimsFromToken(token).get("id")));
+
+		HttpCookie tokenCookie = exchange.getRequest().getCookies().getFirst("token");
+		if (tokenCookie == null) {
+			return Mono.just(ResponseEntity.badRequest().build());
+		}
+		String token = tokenCookie.getValue();
+		return encounterService.getRunningEncounters((UUID) jwtUtil.getAllClaimsFromToken(token).get("id"));
 	}
 
 	@PreAuthorize("hasAuthority('MODERATOR')")
