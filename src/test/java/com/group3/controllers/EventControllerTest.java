@@ -14,6 +14,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import com.group3.beans.Event;
 import com.group3.services.EventService;
 
+import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
 
@@ -70,4 +71,31 @@ class EventControllerTest {
 		Mono<ResponseEntity<Object>> result = eventController.deleteEvent(id);
 		StepVerifier.create(result).expectNext(ResponseEntity.noContent().build()).verifyComplete();
 	}
+	
+	@Test
+	void viewOngoingEventsReturnsAllOngoingEvents() {
+		Event event1 = new Event();
+		Event event2 = new Event();
+		event1.setOngoing(true);
+		event2.setOngoing(false);
+		
+		Mockito.when(eventService.viewOngoingEvents()).thenReturn(Flux.just(event1));
+		
+		Flux<Event> result = eventController.viewOngoingEvents();
+		
+		StepVerifier.create(result).expectNext(event1).verifyComplete();
+	}
+	
+	@Test
+	void viewAllEventsReturnsAllEvents() {
+		Event event1 = new Event();
+		Event event2 = new Event();
+		
+		Mockito.when(eventService.getEvents()).thenReturn(Flux.just(event1, event2));
+		
+		Flux<Event> result = eventController.viewAllEvents();
+		
+		StepVerifier.create(result).expectNext(event1, event2).verifyComplete();
+	}
+	
 }
