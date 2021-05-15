@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -40,7 +41,18 @@ public class EncounterController {
 		super();
 	}
 
-	// TODO Get: view available encounters
+	@PreAuthorize("hasAuthority('GAMER')")
+	@GetMapping
+	public Publisher<?> viewEncounters(ServerWebExchange exchange) {
+
+		HttpCookie tokenCookie = exchange.getRequest().getCookies().getFirst("token");
+		if (tokenCookie == null) {
+			return Mono.just(ResponseEntity.badRequest().build());
+		}
+		String token = tokenCookie.getValue();
+		return encounterService.getEncounters(UUID.fromString(jwtUtil
+				.getAllClaimsFromToken(token).get("id").toString()));
+	}
 
 	@PreAuthorize("hasAuthority('GAMER')")
 	@PostMapping
@@ -71,8 +83,10 @@ public class EncounterController {
 			return Mono.just(ResponseEntity.badRequest().build());
 		}
 		String token = tokenCookie.getValue();
-		return encounterService.getRunningEncounters((UUID) jwtUtil.getAllClaimsFromToken(token).get("id"));
+		return encounterService.getRunningEncounters(UUID.fromString(jwtUtil
+				.getAllClaimsFromToken(token).get("id").toString()));
 	}
+	
 
 	@PreAuthorize("hasAuthority('MODERATOR')")
 	@PostMapping("/createEncounter")
