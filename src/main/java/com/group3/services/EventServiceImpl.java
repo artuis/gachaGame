@@ -18,7 +18,10 @@ import reactor.core.publisher.Mono;
 public class EventServiceImpl implements EventService {
 
 	@Autowired
-	private EventRepository eventRepo;
+	private EventRepository eventRepository;
+	
+	@Autowired
+	private Event emptyEvent;
 	
 	private Logger log = LoggerFactory.getLogger(GamerServiceImpl.class);
 	
@@ -26,8 +29,15 @@ public class EventServiceImpl implements EventService {
 		super();
 	}
 	
+	public void setEventRepository(EventRepository eventRepository) {
+		this.eventRepository = eventRepository;
+	}
+	public void setEmptyEvent(Event event) {
+		this.emptyEvent = event;
+	}
+	
 	public Flux<Event> viewOngoingEvents(){
-		return eventRepo.findAllByOngoing(true);
+		return eventRepository.findAllByOngoing(true);
 	}
 	
 	/* Creates an event which has a start and end time. 
@@ -43,26 +53,26 @@ public class EventServiceImpl implements EventService {
 		if(event != null) {
 			event.setEventId(Uuids.timeBased());
 		}
-		return eventRepo.insert(event);
+		return eventRepository.insert(event);
 	}
 
 	public Mono<Void> deleteEvent(UUID eventId) {
-		return eventRepo.deleteById(eventId);
+		return eventRepository.deleteById(eventId);
 	}
 	
 	@Override
 	public Mono<Event> updateEvent(Event event){
-		return eventRepo.save(event);
+		return eventRepository.save(event);
 		
 	}
 	
 	public Mono<Event> findEventById(UUID eventId) {
-		return eventRepo.findById(eventId);
+		return eventRepository.findById(eventId);
 	}
 
 	@Override
 	public Flux<Event> getEvents(){
-		return eventRepo.findAll();
+		return eventRepository.findAll();
 	}
 	
 }

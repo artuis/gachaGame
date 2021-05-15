@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import com.group3.beans.Collectible;
 import com.group3.beans.Encounter;
+import com.group3.beans.Gamer;
 import com.group3.beans.RewardToken;
 
 import reactor.core.publisher.Flux;
@@ -28,6 +29,6 @@ public interface EncounterService {
 
 	Mono<RewardToken> updateRewardToken(RewardToken token);
 
-	public void distributeReward(int reward, UUID gamerID);
+	public Mono<Gamer> distributeReward(int reward, UUID gamerID);
 	
 }
