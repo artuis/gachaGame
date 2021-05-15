@@ -7,6 +7,7 @@ import org.reactivestreams.Publisher;
 
 import com.group3.beans.Collectible;
 import com.group3.beans.Encounter;
+import com.group3.beans.Gamer;
 import com.group3.beans.RewardToken;
 
 import reactor.core.publisher.Flux;
@@ -29,12 +30,12 @@ public interface EncounterService {
 	Flux<RewardToken> viewCompletedTokens(boolean encounterComplete);
 
 	Mono<RewardToken> updateRewardToken(RewardToken token);
-	
-	public void closeReward(UUID encounterID, UUID gamerID);
 
-	public void distributeReward(int reward, UUID gamerID);
 
 	public Flux<Encounter> getEncounters(UUID uuid);
 	
+
+	public Mono<Gamer> distributeReward(int reward, UUID gamerID);
+
 	
 }

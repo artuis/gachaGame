@@ -26,7 +26,7 @@ public class AuthenticationManager implements ReactiveAuthenticationManager {
 		String authToken = authentication.getCredentials().toString();
 		
 		try {
-			if (!jwtUtil.validateToken(authToken)) {
+			if (!jwtUtil.validateToken(authToken).booleanValue()) {
 				return Mono.empty();
 			}
 			Claims claims = jwtUtil.getAllClaimsFromToken(authToken);

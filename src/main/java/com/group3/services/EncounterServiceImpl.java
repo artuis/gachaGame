@@ -38,88 +38,83 @@ public class EncounterServiceImpl implements EncounterService {
 	private GamerRepository gamerRepo;
 	@Autowired
 	private EmailService emailService;
-	
+
 	public EncounterServiceImpl() {
 		super();
 	}
-	
-	public Flux<RewardToken> getRunningEncounters(UUID gamerID){
+
+	public Flux<RewardToken> getRunningEncounters(UUID gamerID) {
 		return rewardRepo.findAllByGamerID(gamerID);
 	}
-	
+
 	public Mono<RewardToken> setEncounter(UUID gamerID, List<UUID> colIDs, UUID encID) {
 		// Get the collectibles to send on the journey
 		List<Collectible> sent = new ArrayList<>();
-		for(UUID collectibleId : colIDs) {
+		for (UUID collectibleId : colIDs) {
 			Collectible collectible = collectibleService.getCollectible(collectibleId.toString()).block();
-			if(collectible != null) {
+			if (collectible != null) {
 				sent.add(collectible);
 			}
 		}
 		// If any of the collectibles sent
 		// are on an encounter
 		// or owned by a different gamer
-		for(Collectible collectible : sent) {
-			if(collectible.isOnEncounter() || !collectible.getGamerId().equals(gamerID)) {
+		for (Collectible collectible : sent) {
+			if (collectible.isOnEncounter() || !collectible.getGamerId().equals(gamerID)) {
 				log.debug("Collectible list checkpoint failed in encounter service: "
 						+ "collectible on encounter or gamerId does not match");
 				return Mono.empty();
 			}
 		}
-		
+
 		RewardToken rewardToken = new RewardToken();
 		rewardToken.setTokenID(Uuids.timeBased());
 		rewardToken.setGamerID(gamerID);
 		rewardToken.setActiveEncounter(encID);
 		rewardToken.setCollectiblesOnEncounter(colIDs);
 		// Get the journey to send on the collectibles
-		encounterRepo.findByEncounterID(encID)
-		.doOnNext( e -> rewardToken.setReward(runEncounter(sent, e)))
-		.doOnNext( e -> rewardToken.setEncounterTimes(e.getLength()))
-		.block();
+		encounterRepo.findByEncounterID(encID).doOnNext(e -> rewardToken.setReward(runEncounter(sent, e)))
+				.doOnNext(e -> rewardToken.setEncounterTimes(e.getLength())).block();
 		// Set the collectibles as unavailable to go on further encounters
-		for(Collectible collectible : sent) {
+		for (Collectible collectible : sent) {
 			collectible.setOnEncounter(true);
 			collectibleRepo.save(collectible).block();
 		}
 		return rewardRepo.insert(rewardToken);
 	}
-	
+
 	public int runEncounter(List<Collectible> sent, Encounter journey) {
 		// The deterministic version of the encounter runner.
 		// A random version can be made later. (this is simpler to test)
-		
+
 		// Gather stat total of sent collectible list
 		// TODO: Create a better way of calculating 'success'
-		int total = sent.stream()
-						.mapToInt(x -> x.getCurrentStat())
-						.sum();
+		int total = sent.stream().mapToInt(x -> x.getCurrentStat()).sum();
 		int reward;
 
 		// If the combined statistical score of each collectible, reaches the set
 		// Encounter difficulty, it wins and returns with a reward.
-		if(total >= journey.getDifficulty()) {
+		if (total >= journey.getDifficulty()) {
 			// Reward is defined by the encounter and limited by the number
 			// of collectibles you send on the journey
 			reward = journey.getReward() / sent.size();
-		}
-		else {
+		} else {
 			// Return a small amount upon failure
 			reward = 10;
 		}
 		return reward;
 	}
-	
+
 	@Override
 	public Flux<RewardToken> viewCompletedTokens(boolean encounterComplete) {
 		return rewardRepo.findAllByEncounterComplete(false);
 	}
-	
+
 	@Override
 	public Mono<RewardToken> updateRewardToken(RewardToken token) {
 		return rewardRepo.save(token);
 	}
-	
+
 	// Constructor for testing
 	public EncounterServiceImpl(CollectibleRepository cMock, EncounterRepository eMock, GamerRepository gMock) {
 		this.collectibleRepo = cMock;
@@ -142,57 +137,49 @@ public class EncounterServiceImpl implements EncounterService {
 	public Mono<Void> deleteEncounterTemplate(UUID encounter) {
 		return encounterRepo.deleteById(encounter);
 	}
-	
-	@Override
-	public void distributeReward(int reward, UUID gamerID) {
-		Gamer gamer = gamerRepo.findById(gamerID).block();
-		if(gamer == null) {
-			return;
-		}
-		if(reward < 20) {
-			gamer.setStrings(gamer.getStrings() + (reward*10*Event.getStringMod()));
-			log.debug("Reward distributed: {} strings", (reward*10));
-			emailService.sendEmail(
-					gamer.getEmail(), 
-					"GachaGame: Encounter Complete!", 
-					"The encounter your collectibles went on is complete! "
-					+ "You received "+(reward*10)+" strings as a reward!");
-		} else if(reward < 40) {
-			gamer.setStardust(gamer.getStardust() + (reward/10));
-			log.debug("Reward distributed: {} stardust", (reward/10));
-			emailService.sendEmail(
-					gamer.getEmail(), 
-					"GachaGame: Encounter Complete!", 
-					"The encounter your collectibles went on is complete! "
-					+ "You received "+(reward/10)+" stardust as a reward!");
-		} else if(reward < 60) {
-			gamer.setRolls(gamer.getRolls() + 1);
-			log.debug("Reward distributed: 1 roll");
-			emailService.sendEmail(
-					gamer.getEmail(), 
-					"GachaGame: Encounter Complete!", 
-					"The encounter your collectibles went on is complete! "
-					+ "You received 1 free roll as a reward!");
-		} else if(reward < 80) {
-			gamer.setRolls(gamer.getRolls() + 3);
-			log.debug("Reward distributed: 3 rolls");
-			emailService.sendEmail(
-					gamer.getEmail(), 
-					"GachaGame: Encounter Complete!", 
-					"The encounter your collectibles went on is complete! "
-					+ "You received 3 free rolls as a reward!");
-		} else if(reward < 100) {
-			gamer.setRolls(gamer.getRolls() + 5);
-			log.debug("Reward distributed: 5 rolls! Nice.");
-			emailService.sendEmail(
-					gamer.getEmail(), 
-					"GachaGame: Encounter Complete!", 
-					"The encounter your collectibles went on is complete! "
-					+ "You received 5 free rolls as a reward! Great work!");
-		}
 
-		gamerRepo.save(gamer).block();
+	@Override
+	public Mono<Gamer> distributeReward(int reward, UUID gamerID) {
+		return gamerRepo.findById(gamerID).flatMap(gamer -> {
+			if (gamer == null) {
+				return Mono.empty();
+			}
+			if (reward < 20) {
+				gamer.setStrings(gamer.getStrings() + (reward * 10 * Event.getStringMod()));
+				log.debug("Reward distributed: {} strings", (reward * 10));
+				emailService.sendEmail(gamer.getEmail(), "GachaGame: Encounter Complete!",
+						"The encounter your collectibles went on is complete! " + "You received " + (reward * 10)
+								+ " strings as a reward!");
+			} else if (reward < 40) {
+				gamer.setStardust(gamer.getStardust() + (reward / 10));
+				log.debug("Reward distributed: {} stardust", (reward / 10));
+				emailService.sendEmail(gamer.getEmail(), "GachaGame: Encounter Complete!",
+						"The encounter your collectibles went on is complete! " + "You received " + (reward / 10)
+								+ " stardust as a reward!");
+			} else if (reward < 60) {
+				gamer.setRolls(gamer.getRolls() + 1);
+				log.debug("Reward distributed: 1 roll");
+				emailService.sendEmail(gamer.getEmail(), "GachaGame: Encounter Complete!",
+						"The encounter your collectibles went on is complete! "
+								+ "You received 1 free roll as a reward!");
+			} else if (reward < 80) {
+				gamer.setRolls(gamer.getRolls() + 3);
+				log.debug("Reward distributed: 3 rolls");
+				emailService.sendEmail(gamer.getEmail(), "GachaGame: Encounter Complete!",
+						"The encounter your collectibles went on is complete! "
+								+ "You received 3 free rolls as a reward!");
+			} else if (reward < 100) {
+				gamer.setRolls(gamer.getRolls() + 5);
+				log.debug("Reward distributed: 5 rolls! Nice.");
+				emailService.sendEmail(gamer.getEmail(), "GachaGame: Encounter Complete!",
+						"The encounter your collectibles went on is complete! "
+								+ "You received 5 free rolls as a reward! Great work!");
+			}
+
+			return gamerRepo.save(gamer);
+		});
 	}
+
 
 	@Override
 	public Flux<Encounter> getEncounters(UUID uuid) {
@@ -204,5 +191,4 @@ public class EncounterServiceImpl implements EncounterService {
 	}
 
 
-	
 }
