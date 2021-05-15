@@ -51,7 +51,7 @@ public class CollectibleController {
 	}
 
 	@PutMapping("/upgrade")
-	public Mono<ResponseEntity<?>> upgradeCollectible(@RequestParam("collectibleId") UUID collectibleId) {
+	public Mono<ResponseEntity<Object>> upgradeCollectible(@RequestParam("collectibleId") UUID collectibleId) {
 		return collectibleService.upgradeCollectible(collectibleId);
 	}
 
@@ -73,7 +73,7 @@ public class CollectibleController {
 	
 	@PreAuthorize("hasAuthority('MODERATOR')")
 	@DeleteMapping
-	public Mono<ResponseEntity<?>> removeCollectible(@RequestParam("collectibleId") UUID collectibleId, @RequestParam("gamerId") UUID gamerId) {
+	public Mono<ResponseEntity<Object>> removeCollectible(@RequestParam("collectibleId") UUID collectibleId, @RequestParam("gamerId") UUID gamerId) {
 		return collectibleService.removeCollectible(collectibleId, gamerId);
 	}
 	

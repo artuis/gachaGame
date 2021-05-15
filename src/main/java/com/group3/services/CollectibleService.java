@@ -20,7 +20,7 @@ public interface CollectibleService {
 
 	Mono<Collectible> createCollectible(Collectible c);
 
-	Mono<ResponseEntity<?>> upgradeCollectible(UUID collectibleId);
+	Mono<ResponseEntity<Object>> upgradeCollectible(UUID collectibleId);
 
 	Mono<Collectible> getCollectible(String id);
 

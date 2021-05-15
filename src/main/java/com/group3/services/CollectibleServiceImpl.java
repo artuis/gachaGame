@@ -70,7 +70,7 @@ public class CollectibleServiceImpl implements CollectibleService {
 	}
 	
 	@Override
-	public Mono<ResponseEntity<?>> upgradeCollectible(UUID collectibleId) {
+	public Mono<ResponseEntity<Object>> upgradeCollectible(UUID collectibleId) {
 		return repo.findById(collectibleId)
 				.flatMap(collectible -> {
 					return gamerRepo.findById(collectible.getGamerId())

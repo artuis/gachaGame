@@ -1,6 +1,7 @@
 package com.group3.data;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
@@ -16,6 +17,9 @@ import reactor.core.publisher.Mono;
 @Component
 public class SecurityContextRepository implements ServerSecurityContextRepository {
 	
+	@Value("${springbootwebfluxjjwt.jjwt.cookiename}")
+	private String cookieKey;
+	
 	@Autowired
 	private AuthenticationManager authenticationManager;
 
@@ -26,8 +30,8 @@ public class SecurityContextRepository implements ServerSecurityContextRepositor
 
 	@Override
 	public Mono<SecurityContext> load(ServerWebExchange swe) {
-		if (swe.getRequest().getCookies().containsKey("token") && swe.getRequest().getCookies().getFirst("token") != null) {
-			String authCookie = swe.getRequest().getCookies().getFirst("token").getValue();
+		if (swe.getRequest().getCookies().containsKey(cookieKey) && swe.getRequest().getCookies().getFirst(cookieKey) != null) {
+			String authCookie = swe.getRequest().getCookies().getFirst(cookieKey).getValue();
 			Authentication auth = new UsernamePasswordAuthenticationToken(authCookie, authCookie);
 			return this.authenticationManager.authenticate(auth).map((authentication) -> {
 				return new SecurityContextImpl(authentication);
