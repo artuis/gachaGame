@@ -13,6 +13,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.util.Assert;
 
 import com.group3.beans.Gamer;
+import com.group3.beans.Gamer.Role;
 import com.group3.data.GamerRepository;
 
 import reactor.core.publisher.Mono;
@@ -44,10 +45,41 @@ class GamerServiceTest {
 	void testAddGamerAddsGamer() {
 		Gamer gamer = new Gamer();
 		gamer.setUsername("test");
+		gamer.setRole(Role.MODERATOR);
 		Mockito.when(gr.existsByUsername(gamer.getUsername())).thenReturn(Mono.just(Boolean.FALSE));
 		Mockito.when(gr.insert(gamer)).thenReturn(Mono.just(gamer));
 		Mono<Gamer> result = gsi.addGamer(gamer);
 		StepVerifier.create(result).expectNext(gamer).verifyComplete();
+	}
+	
+	@Test 
+	void testAddGamerFailReturnEmpty() {
+		Gamer gamer = new Gamer();
+		Mono<Gamer> result = gsi.addGamer(gamer);
+		StepVerifier.create(result).verifyComplete();
+	}
+	
+	@Test
+	void testAddGamerWithDefaultCurrencyGetsCurrency() {
+		Gamer gamer = new Gamer();
+		gamer.setUsername("test");
+		gamer.setRolls(10);
+		gamer.setDailyRolls(10);
+		gamer.setStardust(10);
+		gamer.setStrings(1000);
+		Mockito.when(gr.existsByUsername(gamer.getUsername())).thenReturn(Mono.just(Boolean.FALSE));
+		Mockito.when(gr.insert(gamer)).thenReturn(Mono.just(gamer));
+		Mono<Gamer> result = gsi.addGamer(gamer);
+		StepVerifier.create(result).expectNext(gamer).verifyComplete();
+	}
+	
+	@Test 
+	void testUsernameTakenReturnsEmpty() {
+		Gamer gamer = new Gamer();
+		gamer.setUsername("test");
+		Mockito.when(gr.existsByUsername(Mockito.anyString())).thenReturn(Mono.just(Boolean.TRUE));
+		Mono<Gamer> result = gsi.addGamer(gamer);
+		StepVerifier.create(result).verifyComplete();
 	}
 	
 	@Test

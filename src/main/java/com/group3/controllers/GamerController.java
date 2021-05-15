@@ -43,7 +43,6 @@ public class GamerController {
 	private GamerService gamerService;
 	private CollectibleTypeService collectibleTypeService;
 	private CollectibleService collectibleService;
-	@Autowired
 	private EmailService emailService;
 
 	private Logger log = LoggerFactory.getLogger(GamerController.class);
@@ -181,9 +180,6 @@ public class GamerController {
 		String token = tokenCookie.getValue();
 		return gamerService.getGamer(UUID.fromString((String) jwtUtil.getAllClaimsFromToken(token).get("id")))
 				.flatMap(gamer -> {
-					log.debug("" + gamer.getStardust());
-					log.debug("" + gamer.getStrings());
-					log.debug("" + gamer.getDailyRolls());
 					if (gamer.getDailyRolls() > 0) {
 						gamer.setDailyRolls(gamer.getDailyRolls() - 1);
 					} else if (gamer.getRolls() > 0) {
@@ -195,9 +191,6 @@ public class GamerController {
 					} else {
 						return Mono.just(ResponseEntity.badRequest().body("not enough money 5head"));
 					}
-					log.debug("Stardust: {}", gamer.getStardust());
-					log.debug("Strings: {}", gamer.getStrings());
-					log.debug("Daily Rolls: {}", gamer.getDailyRolls());
 					return collectibleTypeService.rollCollectibleType().flatMap(rolled -> {
 						log.debug("rolled: {}", rolled);
 						Collectible collectible = Collectible.fromCollectibleTypeAndId(rolled, gamer.getGamerId());

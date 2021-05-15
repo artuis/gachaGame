@@ -50,7 +50,7 @@ public class GamerServiceImpl implements GamerService {
 			if (!exists.booleanValue()) {
 				gg.setGamerId(Uuids.timeBased());
 				gg.setRegistrationDate(Date.from(Instant.now()));
-				List<Gamer.Role> perms = new ArrayList<Gamer.Role>();
+				List<Gamer.Role> perms = new ArrayList<>();
 				if(gg.getRole() != null && gg.getRole().equals(Gamer.Role.MODERATOR)) {
 					perms.add(Gamer.Role.MODERATOR);
 				} else {gg.setRole(Gamer.Role.GAMER);}
@@ -92,7 +92,7 @@ public class GamerServiceImpl implements GamerService {
 	@Override
 //	@Moderator	// only moderators can perform this action
 	public Mono<Gamer> banGamer(UUID gamerId, long daysBanned) {
-		Mono<Gamer> gamer = gamerRepo.findById(gamerId).flatMap(gg -> {			// find the gamer
+		return gamerRepo.findById(gamerId).flatMap(gg -> {			// find the gamer
 			gg.setRole(Gamer.Role.BANNED);										// set gamer role to banned
 			Set<Date> banDates;													// declare set of ban dates
 			if(gg.getBanDates() == null) {										// check if the set is exists
@@ -105,8 +105,7 @@ public class GamerServiceImpl implements GamerService {
 			banDates.add(banLiftDate);											// add passed date to set
 			gg.setBanDates(banDates);											// assign ban date set to gamer												
 			return gamerRepo.save(gg);											// save updated gamer in repo
-		});
-		return gamer;															// return Mono<Gamer> to controller
+		});																		// return Mono<Gamer> to controller
 	}
 	
 	//Only use this method for logging in, use findGamerByUsername if you need to query by username
@@ -115,7 +114,7 @@ public class GamerServiceImpl implements GamerService {
 		return gamerRepo.findByUsername(username)
 				.doOnSuccess(gamer -> {
 					if (gamer != null) {
-						log.debug("found a gamer: " + gamer.toString());
+						log.debug("found a gamer: {}", gamer);
 						gamer.setLastLogin(Date.from(Instant.now()));
 						if(!gamer.isLoginBonusCollected()) {
 							gamer.setStrings(gamer.getStrings()+bonusStrings);

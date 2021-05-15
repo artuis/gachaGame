@@ -51,16 +51,15 @@ public class CollectibleController {
 	}
 
 	@PutMapping("/upgrade")
-	public Mono<ResponseEntity<?>> upgradeCollectible(@RequestParam("collectibleId") UUID collectibleId) {
+	public Mono<ResponseEntity<Object>> upgradeCollectible(@RequestParam("collectibleId") UUID collectibleId) {
 		return collectibleService.upgradeCollectible(collectibleId);
 	}
 
 	@GetMapping(params = { "filter" })
 	public Publisher<Collectible> getCollectibles(@RequestParam("filter") String filter) {
-		switch (filter.toLowerCase()) {
-		case "all":
+		if (filter.equalsIgnoreCase("all")) {
 			return collectibleService.getAllCollectibles();
-		default:
+		} else {
 			return collectibleService.getCollectibles(filter);
 		}
 	}
@@ -73,7 +72,7 @@ public class CollectibleController {
 	
 	@PreAuthorize("hasAuthority('MODERATOR')")
 	@DeleteMapping
-	public Mono<ResponseEntity<?>> removeCollectible(@RequestParam("collectibleId") UUID collectibleId, @RequestParam("gamerId") UUID gamerId) {
+	public Mono<ResponseEntity<Object>> removeCollectible(@RequestParam("collectibleId") UUID collectibleId, @RequestParam("gamerId") UUID gamerId) {
 		return collectibleService.removeCollectible(collectibleId, gamerId);
 	}
 	

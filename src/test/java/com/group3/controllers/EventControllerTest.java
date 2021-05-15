@@ -24,18 +24,18 @@ class EventControllerTest {
 	static class Configuration {
 		
 		@Bean
-		public EventController getEventController(EventService eventService, Event event) {
+		EventController getEventController(EventService eventService, Event event) {
 			EventController ec = new EventController();
 			ec.setEventService(eventService);
 			ec.setEmptyEvent(event);
 			return ec;
 		}
 		@Bean
-		public EventService getEventService() {
+		EventService getEventService() {
 			return Mockito.mock(EventService.class);
 		}
 		@Bean
-		public Event getEvent() {
+		Event getEvent() {
 			return Mockito.mock(Event.class);
 		}
 	}
