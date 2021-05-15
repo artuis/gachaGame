@@ -75,7 +75,7 @@ class ScheduledTasksTest {
 	Gamer gamer2 = new Gamer();
 	
 	@BeforeEach
-	public void init() {
+	void init() {
 
 		auths.add(Gamer.Role.GAMER);
 

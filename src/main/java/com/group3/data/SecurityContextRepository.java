@@ -26,7 +26,7 @@ public class SecurityContextRepository implements ServerSecurityContextRepositor
 
 	@Override
 	public Mono<SecurityContext> load(ServerWebExchange swe) {
-		if (swe.getRequest().getCookies().containsKey("token")) {
+		if (swe.getRequest().getCookies().containsKey("token") && swe.getRequest().getCookies().getFirst("token") != null) {
 			String authCookie = swe.getRequest().getCookies().getFirst("token").getValue();
 			Authentication auth = new UsernamePasswordAuthenticationToken(authCookie, authCookie);
 			return this.authenticationManager.authenticate(auth).map((authentication) -> {
