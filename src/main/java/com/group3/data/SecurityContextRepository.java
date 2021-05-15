@@ -35,7 +35,7 @@ public class SecurityContextRepository implements ServerSecurityContextRepositor
 			String authCookie = swe.getRequest().getCookies().getFirst(cookieKey).getValue();
 			Authentication auth = new UsernamePasswordAuthenticationToken(authCookie, authCookie);
 			return this.authenticationManager.authenticate(auth)
-					.map(authentication -> new SecurityContextImpl(authentication));
+					.map(SecurityContextImpl::new);
 		} else {
 			return Mono.empty();
 		}

@@ -114,7 +114,7 @@ public class GamerServiceImpl implements GamerService {
 		return gamerRepo.findByUsername(username)
 				.doOnSuccess(gamer -> {
 					if (gamer != null) {
-						log.debug("found a gamer: {}", gamer.toString());
+						log.debug("found a gamer: {}", gamer);
 						gamer.setLastLogin(Date.from(Instant.now()));
 						if(!gamer.isLoginBonusCollected()) {
 							gamer.setStrings(gamer.getStrings()+bonusStrings);
