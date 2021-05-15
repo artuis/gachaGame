@@ -24,7 +24,7 @@ public interface CollectibleService {
 
 	Mono<Collectible> getCollectible(String id);
 
-	Mono<ResponseEntity<?>> removeCollectible(UUID collectibleId, UUID gamerId);
+	Mono<ResponseEntity<Object>> removeCollectible(UUID collectibleId, UUID gamerId);
 
 	Mono<Collectible> collectibleFusion(List<UUID> collectibleIds);
 

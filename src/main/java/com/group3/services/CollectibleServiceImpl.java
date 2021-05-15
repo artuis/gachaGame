@@ -97,7 +97,7 @@ public class CollectibleServiceImpl implements CollectibleService {
 	}
 
 	@Override
-	public Mono<ResponseEntity<?>> removeCollectible(UUID collectibleId, UUID gamerId) {
+	public Mono<ResponseEntity<Object>> removeCollectible(UUID collectibleId, UUID gamerId) {
 		return repo.findById(collectibleId).flatMap(collectible -> {
 			if(!collectible.getGamerId().equals(gamerId)) {
 				return Mono.just(ResponseEntity.badRequest()

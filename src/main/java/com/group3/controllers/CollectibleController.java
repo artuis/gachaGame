@@ -57,10 +57,9 @@ public class CollectibleController {
 
 	@GetMapping(params = { "filter" })
 	public Publisher<Collectible> getCollectibles(@RequestParam("filter") String filter) {
-		switch (filter.toLowerCase()) {
-		case "all":
+		if (filter.toLowerCase().equals("all")) {
 			return collectibleService.getAllCollectibles();
-		default:
+		} else {
 			return collectibleService.getCollectibles(filter);
 		}
 	}

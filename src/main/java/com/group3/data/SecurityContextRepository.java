@@ -16,10 +16,10 @@ import reactor.core.publisher.Mono;
 
 @Component
 public class SecurityContextRepository implements ServerSecurityContextRepository {
-	
+
 	@Value("${springbootwebfluxjjwt.jjwt.cookiename}")
 	private String cookieKey;
-	
+
 	@Autowired
 	private AuthenticationManager authenticationManager;
 
@@ -30,15 +30,15 @@ public class SecurityContextRepository implements ServerSecurityContextRepositor
 
 	@Override
 	public Mono<SecurityContext> load(ServerWebExchange swe) {
-		if (swe.getRequest().getCookies().containsKey(cookieKey) && swe.getRequest().getCookies().getFirst(cookieKey) != null) {
+		if (swe.getRequest().getCookies().containsKey(cookieKey)
+				&& swe.getRequest().getCookies().getFirst(cookieKey) != null) {
 			String authCookie = swe.getRequest().getCookies().getFirst(cookieKey).getValue();
 			Authentication auth = new UsernamePasswordAuthenticationToken(authCookie, authCookie);
-			return this.authenticationManager.authenticate(auth).map((authentication) -> {
-				return new SecurityContextImpl(authentication);
-			});
+			return this.authenticationManager.authenticate(auth)
+					.map(authentication -> new SecurityContextImpl(authentication));
 		} else {
 			return Mono.empty();
 		}
 	}
-	
+
 }
