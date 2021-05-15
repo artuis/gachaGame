@@ -29,6 +29,11 @@ public interface EncounterService {
 
 	Mono<RewardToken> updateRewardToken(RewardToken token);
 
+
+	public Flux<Encounter> getEncounters(UUID uuid);
+	
+
 	public Mono<Gamer> distributeReward(int reward, UUID gamerID);
+
 	
 }

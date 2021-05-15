@@ -180,4 +180,15 @@ public class EncounterServiceImpl implements EncounterService {
 		});
 	}
 
+
+	@Override
+	public Flux<Encounter> getEncounters(UUID uuid) {
+
+		Gamer gamer = gamerRepo.findById(uuid).block();
+		
+		return encounterRepo.findAll()
+			.filter(encounter -> encounter.getLevel() <= gamer.getCollectionStrength());
+	}
+
+
 }

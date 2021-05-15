@@ -40,12 +40,24 @@ public class EncounterController {
 		super();
 	}
 
-	// TODO Get: view available encounters
+	@PreAuthorize("hasAuthority('GAMER')")
+	@GetMapping
+	public Publisher<?> viewEncounters(ServerWebExchange exchange) {
+
+		HttpCookie tokenCookie = exchange.getRequest().getCookies().getFirst("token");
+		if (tokenCookie == null) {
+			return Mono.just(ResponseEntity.badRequest().build());
+		}
+		String token = tokenCookie.getValue();
+		return encounterService.getEncounters(UUID.fromString(jwtUtil
+				.getAllClaimsFromToken(token).get("id").toString()));
+	}
 
 	@PreAuthorize("hasAuthority('GAMER')")
 	@PostMapping
 	public Mono<ResponseEntity<RewardToken>> startEncounter(@RequestParam("collectibleIDList") List<UUID> collectibleIDList,
 			@RequestParam("encounterID") UUID encounterID, ServerWebExchange exchange) {
+
 		HttpCookie tokenCookie = exchange.getRequest().getCookies().getFirst("token");
 		if (tokenCookie == null) {
 			return Mono.just(ResponseEntity.badRequest().build());
@@ -64,13 +76,16 @@ public class EncounterController {
 	@PreAuthorize("hasAuthority('GAMER')")
 	@GetMapping("{gamerId}")
 	public Publisher<?> viewRunningEncounters(ServerWebExchange exchange) {
+
 		HttpCookie tokenCookie = exchange.getRequest().getCookies().getFirst("token");
 		if (tokenCookie == null) {
 			return Mono.just(ResponseEntity.badRequest().build());
 		}
 		String token = tokenCookie.getValue();
-		return encounterService.getRunningEncounters((UUID) jwtUtil.getAllClaimsFromToken(token).get("id"));
+		return encounterService.getRunningEncounters(UUID.fromString(jwtUtil
+				.getAllClaimsFromToken(token).get("id").toString()));
 	}
+	
 
 	@PreAuthorize("hasAuthority('MODERATOR')")
 	@PostMapping("/createEncounter")
