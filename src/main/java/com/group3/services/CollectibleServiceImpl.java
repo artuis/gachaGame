@@ -81,6 +81,7 @@ public class CollectibleServiceImpl implements CollectibleService {
 											.body("Insufficient strings to upgrade."));
 								} else {
 									gamer.setStrings(gamer.getStrings() - upgradeCost);
+									gamer.setCollectionStrength(gamer.getCollectionStrength() + 1);
 									return gamerRepo.save(gamer).flatMap(gg -> {
 										collectible.setCurrentStat(collectible.getCurrentStat() + 1);
 										return updateCollectible(collectible)
@@ -112,6 +113,7 @@ public class CollectibleServiceImpl implements CollectibleService {
 	public Mono<Collectible> collectibleFusion(List<UUID> collectibleIds) {
 		// create a list of collectibles from the given collectible IDs
 		List<Collectible> defaultEmpty = new ArrayList<>();
+		int lostStrengths = 0;
 		defaultEmpty.add(emptyCollectible);
 		List<Collectible> collectibles = getAllCollectibles()
 				.filter(collectible -> collectibleIds.contains(collectible.getId()))
@@ -126,7 +128,9 @@ public class CollectibleServiceImpl implements CollectibleService {
 			if(collectible.getTypeId() != type) {
 				return Mono.empty();
 			}
+			lostStrengths += collectible.getCurrentStat();
 		}
+		final Integer lostStrength = lostStrengths; // final so we can access it in the mono later
 		// if everything checks out, build the next stage collectible
 		UUID gamerId = collectibles.get(0).getGamerId();
 		CollectibleType nextStageBase = null;
@@ -140,6 +144,11 @@ public class CollectibleServiceImpl implements CollectibleService {
 			return Mono.empty();
 		}
 		Collectible nextStage = Collectible.fromCollectibleTypeAndId(nextStageBase, gamerId);
+		gamerRepo.findById(gamerId).map(gamer -> {
+			gamer.setCollectionSize(gamer.getCollectionSize() - 4);
+			gamer.setCollectionStrength(gamer.getCollectionStrength() - lostStrength + nextStage.getCurrentStat());
+			return gamerRepo.save(gamer);
+		}).block();
 		return repo.deleteAll(collectibles).then(repo.save(nextStage));
 	}
 	
