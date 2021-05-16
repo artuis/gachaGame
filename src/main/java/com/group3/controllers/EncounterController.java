@@ -48,9 +48,8 @@ public class EncounterController {
 		if (tokenCookie == null) {
 			return Mono.just(ResponseEntity.badRequest().build());
 		}
-		String token = tokenCookie.getValue();
-		return encounterService.getEncounters(UUID.fromString(jwtUtil
-				.getAllClaimsFromToken(token).get("id").toString()));
+	
+		return encounterService.getEncounters();
 	}
 
 	@PreAuthorize("hasAuthority('GAMER')")

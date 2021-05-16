@@ -35,5 +35,7 @@ public interface EncounterService {
 
 	public Mono<Gamer> distributeReward(int reward, UUID gamerID);
 
+	Flux<Encounter> getEncounters();
+
 	
 }
