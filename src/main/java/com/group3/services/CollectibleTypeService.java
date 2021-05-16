@@ -16,5 +16,7 @@ public interface CollectibleTypeService {
 	Flux<CollectibleType> getAllCollectibleTypes();
 
 	Mono<CollectibleType> getCollectibleType(int typeId);
+
+	Mono<Void> deleteCollectibleType(CollectibleType c);
 	
 }

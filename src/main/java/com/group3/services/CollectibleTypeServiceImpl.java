@@ -52,6 +52,11 @@ public class CollectibleTypeServiceImpl implements CollectibleTypeService {
 	public Mono<CollectibleType> updateCollectibleType(CollectibleType c) {
 		return collectibleTypeRepo.save(c);
 	}
+	
+	@Override
+	public Mono<Void> deleteCollectibleType(CollectibleType c) {
+		return collectibleTypeRepo.delete(c);
+	}
 
 	@Override
 	public Flux<CollectibleType> getAllCollectibleTypes() {
