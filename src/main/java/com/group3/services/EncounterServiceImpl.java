@@ -180,7 +180,11 @@ public class EncounterServiceImpl implements EncounterService {
 		});
 	}
 
-
+	@Override
+	public Flux<Encounter> getEncounters(){
+		return encounterRepo.findAll();
+	}
+	
 	@Override
 	public Flux<Encounter> getEncounters(UUID uuid) {
 
