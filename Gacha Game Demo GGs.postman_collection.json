@@ -1,0 +1,733 @@
+{
+	"info": {
+		"_postman_id": "2cdfe1fb-f110-428f-892a-198c5b3f5140",
+		"name": "Gacha Game Demo GGs",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "GG Demo",
+			"item": [
+				{
+					"name": "Register GG rorr",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"rorr\",\r\n    \"password\": \"scopeIsNotAccess\",\r\n    \"email\": \"susanNO@cats.com\",\r\n    \"strings\": 1000000\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{EC2_URL}}/gamers/register",
+							"host": [
+								"{{EC2_URL}}"
+							],
+							"path": [
+								"gamers",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login GG rorr",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\" : \"rorr\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{EC2_URL}}/gamers/login",
+							"host": [
+								"{{EC2_URL}}"
+							],
+							"path": [
+								"gamers",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Let's Roll!",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{EC2_URL}}/gamers/collectibles/roll",
+							"host": [
+								"{{EC2_URL}}"
+							],
+							"path": [
+								"gamers",
+								"collectibles",
+								"roll"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All collectibles",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{EC2_URL}}/collectibles?filter",
+							"host": [
+								"{{EC2_URL}}"
+							],
+							"path": [
+								"collectibles"
+							],
+							"query": [
+								{
+									"key": "filter",
+									"value": "all",
+									"disabled": true
+								},
+								{
+									"key": "filter",
+									"value": "7efd06f0-b396-11eb-8376-650be9874b71",
+									"description": "all collectibles for phanniepack",
+									"disabled": true
+								},
+								{
+									"key": "filter",
+									"value": "4846b120-b39a-11eb-86b5-09ef577f78c4",
+									"description": "all collectibles for moneyBags",
+									"disabled": true
+								},
+								{
+									"key": "filter",
+									"value": null,
+									"description": "input rorr UUID :)"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Upgrade collectible for rorr",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{EC2_URL}}/collectibles/upgrade?collectibleId=",
+							"host": [
+								"{{EC2_URL}}"
+							],
+							"path": [
+								"collectibles",
+								"upgrade"
+							],
+							"query": [
+								{
+									"key": "collectibleId",
+									"value": ""
+								},
+								{
+									"key": "collectibleId",
+									"value": null,
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Start encounter rorr",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"level\": 25,\r\n    \"difficulty\": 3,\r\n    \"reward\": 45,\r\n    \"length\": 5\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{EC2_URL}}/encounters?collectibleIDList=&encounterID=95b025d0-b3af-11eb-8ba7-e11b6e6df981",
+							"host": [
+								"{{EC2_URL}}"
+							],
+							"path": [
+								"encounters"
+							],
+							"query": [
+								{
+									"key": "collectibleIDList",
+									"value": ""
+								},
+								{
+									"key": "encounterID",
+									"value": "95b025d0-b3af-11eb-8ba7-e11b6e6df981"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Gamer check events",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{EC2_URL}}/events/allEvents",
+							"host": [
+								"{{EC2_URL}}"
+							],
+							"path": [
+								"events",
+								"allEvents"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login Gamer moneyBags",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\" : \"moneyBags\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{EC2_URL}}/gamers/login",
+							"host": [
+								"{{EC2_URL}}"
+							],
+							"path": [
+								"gamers",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Collectible fusion :)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{EC2_URL}}/collectibles/fusion?collectibleId1=e5e75850-b668-11eb-88e9-5b288a9fdfe1&collectibleId2=e3c42a30-b668-11eb-88e9-5b288a9fdfe1&collectibleId3=c24093a0-b66b-11eb-88e9-5b288a9fdfe1&collectibleId4=befed620-b66b-11eb-88e9-5b288a9fdfe1&collectibleId5=2c4a6860-b668-11eb-88e9-5b288a9fdfe1",
+							"host": [
+								"{{EC2_URL}}"
+							],
+							"path": [
+								"collectibles",
+								"fusion"
+							],
+							"query": [
+								{
+									"key": "collectibleId1",
+									"value": "e5e75850-b668-11eb-88e9-5b288a9fdfe1"
+								},
+								{
+									"key": "collectibleId2",
+									"value": "e3c42a30-b668-11eb-88e9-5b288a9fdfe1"
+								},
+								{
+									"key": "collectibleId3",
+									"value": "c24093a0-b66b-11eb-88e9-5b288a9fdfe1"
+								},
+								{
+									"key": "collectibleId4",
+									"value": "befed620-b66b-11eb-88e9-5b288a9fdfe1"
+								},
+								{
+									"key": "collectibleId5",
+									"value": "2c4a6860-b668-11eb-88e9-5b288a9fdfe1"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Mod Demo",
+			"item": [
+				{
+					"name": "Login Moderator (PhanniePack)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\" : \"phanniepack\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{EC2_URL}}/gamers/login",
+							"host": [
+								"{{EC2_URL}}"
+							],
+							"path": [
+								"gamers",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Running Events",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{EC2_URL}}/events/",
+							"host": [
+								"{{EC2_URL}}"
+							],
+							"path": [
+								"events",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Double Strings Event",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"eventType\": \"DOUBLESTRINGS\",\r\n    \"ongoing\": \"false\",\r\n    \"eventStart\": \"2022-05-18T00:00:00.000+04:00\",\r\n    \"eventEnd\": \"2022-05-18T21:00:00.000+04:00\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{EC2_URL}}/events",
+							"host": [
+								"{{EC2_URL}}"
+							],
+							"path": [
+								"events"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Event",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{EC2_URL}}/events/?UUID=ed33d5b0-b2a4-11eb-87d1-4f9eaa7e1734",
+							"host": [
+								"{{EC2_URL}}"
+							],
+							"path": [
+								"events",
+								""
+							],
+							"query": [
+								{
+									"key": "UUID",
+									"value": "ed33d5b0-b2a4-11eb-87d1-4f9eaa7e1734"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Events",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{EC2_URL}}/events/allEvents",
+							"host": [
+								"{{EC2_URL}}"
+							],
+							"path": [
+								"events",
+								"allEvents"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create CollectibleType",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"stage\" : \"STAGE_1\",\r\n    \"collectibleId\" : 22,\r\n    \"name\" : \"Bituminous Coal\",\r\n    \"baseStat\":12,\r\n    \"prevStage\": null,\r\n    \"nextStage\": null\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{EC2_URL}}/collectibletypes",
+							"host": [
+								"{{EC2_URL}}"
+							],
+							"path": [
+								"collectibletypes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Encounters (preDelete)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{EC2_URL}}/encounters",
+							"host": [
+								"{{EC2_URL}}"
+							],
+							"path": [
+								"encounters"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Encounter",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"level\": 1000,\n    \"difficulty\": 500,\n    \"reward\": 3000,\n    \"length\": 10\n}"
+						},
+						"url": {
+							"raw": "{{EC2_URL}}/encounters/createEncounter",
+							"host": [
+								"{{EC2_URL}}"
+							],
+							"path": [
+								"encounters",
+								"createEncounter"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Encounter",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{EC2_URL}}/encounters?encounterID=0d8d2eb0-b674-11eb-b6b2-63620472f7f3",
+							"host": [
+								"{{EC2_URL}}"
+							],
+							"path": [
+								"encounters"
+							],
+							"query": [
+								{
+									"key": "encounterID",
+									"value": "0d8d2eb0-b674-11eb-b6b2-63620472f7f3"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Encounters",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{EC2_URL}}/encounters",
+							"host": [
+								"{{EC2_URL}}"
+							],
+							"path": [
+								"encounters"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Ban 'moneyBags'",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{EC2_URL}}/gamers/ban/4846b120-b39a-11eb-86b5-09ef577f78c4?daysBanned=1",
+							"host": [
+								"{{EC2_URL}}"
+							],
+							"path": [
+								"gamers",
+								"ban",
+								"4846b120-b39a-11eb-86b5-09ef577f78c4"
+							],
+							"query": [
+								{
+									"key": "daysBanned",
+									"value": "1"
+								},
+								{
+									"key": "",
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "View All 'moneyBags' Collectibles",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{EC2_URL}}/collectibles?filter=4846b120-b39a-11eb-86b5-09ef577f78c4",
+							"host": [
+								"{{EC2_URL}}"
+							],
+							"path": [
+								"collectibles"
+							],
+							"query": [
+								{
+									"key": "filter",
+									"value": "all",
+									"disabled": true
+								},
+								{
+									"key": "filter",
+									"value": "2c8119c0-b0cb-11eb-aac2-97bd40d131e5",
+									"description": "all collectibles for phanniepack",
+									"disabled": true
+								},
+								{
+									"key": "filter",
+									"value": "4846b120-b39a-11eb-86b5-09ef577f78c4",
+									"description": "all collectibles for moneyBags"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Collectible",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{EC2_URL}}/collectibles?collectibleId=e5e75850-b668-11eb-88e9-5b288a9fdfe1&gamerId=4846b120-b39a-11eb-86b5-09ef577f78c4",
+							"host": [
+								"{{EC2_URL}}"
+							],
+							"path": [
+								"collectibles"
+							],
+							"query": [
+								{
+									"key": "collectibleId",
+									"value": "e5e75850-b668-11eb-88e9-5b288a9fdfe1"
+								},
+								{
+									"key": "gamerId",
+									"value": "4846b120-b39a-11eb-86b5-09ef577f78c4"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "View All 'moneyBags' Collectibles",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{EC2_URL}}/collectibles?filter=4846b120-b39a-11eb-86b5-09ef577f78c4",
+							"host": [
+								"{{EC2_URL}}"
+							],
+							"path": [
+								"collectibles"
+							],
+							"query": [
+								{
+									"key": "filter",
+									"value": "all",
+									"disabled": true
+								},
+								{
+									"key": "filter",
+									"value": "2c8119c0-b0cb-11eb-aac2-97bd40d131e5",
+									"description": "all collectibles for phanniepack",
+									"disabled": true
+								},
+								{
+									"key": "filter",
+									"value": "4846b120-b39a-11eb-86b5-09ef577f78c4",
+									"description": "all collectibles for moneyBags"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": [
+		{
+			"key": "EC2_URL",
+			"value": "ec2-54-202-71-5.us-west-2.compute.amazonaws.com:8080"
+		}
+	]
+}
