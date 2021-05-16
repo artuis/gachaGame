@@ -1,8 +1,6 @@
 package com.group3.controllers;
 
 import org.reactivestreams.Publisher;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -20,7 +18,6 @@ import reactor.core.publisher.Mono;
 @RestController
 @RequestMapping(value = "/collectibletypes")
 public class CollectibleTypeController {
-	private Logger log = LoggerFactory.getLogger(CollectibleTypeController.class);
 	@Autowired
 	private CollectibleTypeService collectibleService;
 	
@@ -31,8 +28,6 @@ public class CollectibleTypeController {
 	@PreAuthorize("hasAuthority('MODERATOR')")
 	@PostMapping
 	public Publisher<CollectibleType> addCollectibleType(@RequestBody CollectibleType c) {
-		log.debug("Type controller: type entering via request: {}",c);
-		log.debug("======================================================");
 		return collectibleService.createCollectibleType(c);
 	}
 	
