@@ -20,9 +20,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.util.Assert;
 
 import com.group3.beans.Collectible;
 import com.group3.beans.Event;
+import com.group3.beans.Event.Type;
 import com.group3.beans.Gamer;
 import com.group3.beans.RewardToken;
 import com.group3.services.CollectibleService;
@@ -224,10 +226,28 @@ class ScheduledTasksTest {
 		event1.setEventEnd(Date.from(Instant.now().plus(5l, ChronoUnit.MINUTES)));
 		event2.setEventStart(event1.getEventStart());
 		event2.setEventEnd(event1.getEventEnd());
+		event2.setEventType(Type.ROLLMOD);
 		events.add(event1);
-		Mockito.when(vs.viewOngoingEvents()).thenReturn(Flux.just(event1));
+		events.add(event2);
+		Mockito.when(vs.viewOngoingEvents()).thenReturn(Flux.just(event1, event2));
 		List<Event> result = st.checkOngoingEvents();
 		assertEquals(events, result);
+	}
+	
+	@Test
+	void checkEventTriggerChangesEvent() {
+		event1.setEventEnd(Date.from(Instant.now()));
+		event1.setOngoing(true);
+		event1.setEventType(Event.Type.DOUBLESTRINGS);
+		event2.setEventEnd(Date.from(Instant.now()));
+		event2.setOngoing(true);
+		event2.setEventType(Event.Type.ROLLMOD);
+		Mockito.when(vs.viewOngoingEvents()).thenReturn(Flux.just(event1, event2));
+		Mockito.when(vs.updateEvent(event1)).thenReturn(Mono.just(event1));
+		Mockito.when(vs.updateEvent(event2)).thenReturn(Mono.just(event2));
+		st.checkEventEndTrigger();
+		Assert.isTrue(!event1.isOngoing(), "event not changed");
+		Assert.isTrue(!event2.isOngoing(), "event not changed");
 	}
 	
 	@Test
