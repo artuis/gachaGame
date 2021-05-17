@@ -4,6 +4,8 @@ import java.util.Arrays;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.slf4j.Marker;
+import org.slf4j.MarkerFactory;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -18,18 +20,19 @@ public class LoggingAspect {
 	public Object log(ProceedingJoinPoint pjp) throws Throwable {
 		Object result = null;
 		Logger log = LoggerFactory.getLogger(pjp.getTarget().getClass());
+		Marker marker = MarkerFactory.getMarker("METHOD ERROR");
 		log.debug("Method with signature: {}", pjp.getSignature());
 		log.debug("with arguments: {}", Arrays.toString(pjp.getArgs()));
 		try {
 			result = pjp.proceed();
 		}  catch(Throwable t) {
-			log.error("Method threw exception: {}", t);
+			log.error(marker,"Method threw exception: {}", t);
 			for(StackTraceElement s : t.getStackTrace()) {
 				log.warn(s.toString());
 			}
 			if(t.getCause() != null) {
 				Throwable t2 = t.getCause();
-				log.error("Method threw wrapped exception: {}", t2);
+				log.error(marker, "Method threw wrapped exception: {}", t2);
 				for(StackTraceElement s : t2.getStackTrace()) {
 					log.warn(s.toString());
 				}

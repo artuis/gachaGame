@@ -47,7 +47,6 @@ public class Encounter {
 		this.difficulty = difficulty;
 	}
 	public int getReward() {
-		// TODO figure out a better 'reward'
 		return reward;
 	}
 	public void setReward(int reward) {

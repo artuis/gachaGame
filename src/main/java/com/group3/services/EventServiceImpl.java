@@ -23,7 +23,7 @@ public class EventServiceImpl implements EventService {
 	@Autowired
 	private Event emptyEvent;
 	
-	private Logger log = LoggerFactory.getLogger(GamerServiceImpl.class);
+	private Logger log = LoggerFactory.getLogger(EventServiceImpl.class);
 	
 	public EventServiceImpl() {
 		super();
@@ -49,11 +49,10 @@ public class EventServiceImpl implements EventService {
 		if (event.getEventStart() == null || event.getEventEnd() == null) {
 			log.trace("Invalid event start/end times");
 			return Mono.empty();
-		}
-		if(event != null) {
+		} else {
 			event.setEventId(Uuids.timeBased());
+			return eventRepository.insert(event);
 		}
-		return eventRepository.insert(event);
 	}
 
 	public Mono<Void> deleteEvent(UUID eventId) {

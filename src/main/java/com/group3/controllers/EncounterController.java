@@ -7,6 +7,7 @@ import org.reactivestreams.Publisher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -35,6 +36,8 @@ public class EncounterController {
 	private JWTUtil jwtUtil;
 	@Autowired
 	private EncounterService encounterService;
+	@Value("${springbootwebfluxjjwt.jjwt.cookiename}")
+	private String cookieKey;
 
 	public EncounterController() {
 		super();
@@ -44,7 +47,7 @@ public class EncounterController {
 	@GetMapping
 	public Publisher<?> viewEncounters(ServerWebExchange exchange) {
 
-		HttpCookie tokenCookie = exchange.getRequest().getCookies().getFirst("token");
+		HttpCookie tokenCookie = exchange.getRequest().getCookies().getFirst(cookieKey);
 		if (tokenCookie == null) {
 			return Mono.just(ResponseEntity.badRequest().build());
 		}
@@ -57,7 +60,7 @@ public class EncounterController {
 	public Mono<ResponseEntity<RewardToken>> startEncounter(@RequestParam("collectibleIDList") List<UUID> collectibleIDList,
 			@RequestParam("encounterID") UUID encounterID, ServerWebExchange exchange) {
 
-		HttpCookie tokenCookie = exchange.getRequest().getCookies().getFirst("token");
+		HttpCookie tokenCookie = exchange.getRequest().getCookies().getFirst(cookieKey);
 		if (tokenCookie == null) {
 			return Mono.just(ResponseEntity.badRequest().build());
 		}
@@ -76,7 +79,7 @@ public class EncounterController {
 	@GetMapping("{gamerId}")
 	public Publisher<?> viewRunningEncounters(ServerWebExchange exchange) {
 
-		HttpCookie tokenCookie = exchange.getRequest().getCookies().getFirst("token");
+		HttpCookie tokenCookie = exchange.getRequest().getCookies().getFirst(cookieKey);
 		if (tokenCookie == null) {
 			return Mono.just(ResponseEntity.badRequest().build());
 		}

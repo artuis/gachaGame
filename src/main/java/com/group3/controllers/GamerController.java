@@ -5,6 +5,7 @@ import java.util.UUID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpCookie;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseCookie;
@@ -44,6 +45,8 @@ public class GamerController {
 	private CollectibleTypeService collectibleTypeService;
 	private CollectibleService collectibleService;
 	private EmailService emailService;
+	@Value("${springbootwebfluxjjwt.jjwt.cookiename}")
+	private String cookieKey;
 
 	private Logger log = LoggerFactory.getLogger(GamerController.class);
 
@@ -127,7 +130,7 @@ public class GamerController {
 				return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(gg);
 			} else {
 				exchange.getResponse().addCookie(
-						ResponseCookie.from("token", jwtUtil.generateToken(gamer)).path("/").httpOnly(true).build());
+						ResponseCookie.from(cookieKey, jwtUtil.generateToken(gamer)).path("/").httpOnly(true).build());
 				return ResponseEntity.ok(gamer); // 👌
 			}
 		});
@@ -135,7 +138,7 @@ public class GamerController {
 
 	@DeleteMapping("/logout")
 	public Mono<ServerResponse> logout(ServerWebExchange exchange) {
-		ResponseCookie cookie = ResponseCookie.from("token", "").maxAge(0).build();
+		ResponseCookie cookie = ResponseCookie.from(cookieKey, "").maxAge(0).build();
 		exchange.getResponse().addCookie(cookie);
 		return ServerResponse.noContent().build();
 	}
@@ -173,7 +176,7 @@ public class GamerController {
 	@PreAuthorize("hasAuthority('GAMER')")
 	@PutMapping("/collectibles/roll")
 	public Mono<ResponseEntity<Object>> rollNewCollectible(ServerWebExchange exchange) {
-		HttpCookie tokenCookie = exchange.getRequest().getCookies().getFirst("token");
+		HttpCookie tokenCookie = exchange.getRequest().getCookies().getFirst(cookieKey);
 		if (tokenCookie == null) {
 			return Mono.just(ResponseEntity.badRequest().build());
 		}
