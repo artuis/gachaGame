@@ -45,8 +45,6 @@ public class GamerController {
 	private CollectibleTypeService collectibleTypeService;
 	private CollectibleService collectibleService;
 	private EmailService emailService;
-	
-	private String cookieKey = SecurityContextRepository.cookieKey;
 
 	private Logger log = LoggerFactory.getLogger(GamerController.class);
 
@@ -130,7 +128,7 @@ public class GamerController {
 				return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(gg);
 			} else {
 				exchange.getResponse().addCookie(
-						ResponseCookie.from(cookieKey, jwtUtil.generateToken(gamer)).path("/").httpOnly(true).build());
+						ResponseCookie.from(SecurityContextRepository.COOKIE_KEY, jwtUtil.generateToken(gamer)).path("/").httpOnly(true).build());
 				return ResponseEntity.ok(gamer); // 👌
 			}
 		});
@@ -138,7 +136,7 @@ public class GamerController {
 
 	@DeleteMapping("/logout")
 	public Mono<ServerResponse> logout(ServerWebExchange exchange) {
-		ResponseCookie cookie = ResponseCookie.from(cookieKey, "").maxAge(0).build();
+		ResponseCookie cookie = ResponseCookie.from(SecurityContextRepository.COOKIE_KEY, "").maxAge(0).build();
 		exchange.getResponse().addCookie(cookie);
 		return ServerResponse.noContent().build();
 	}
@@ -176,7 +174,7 @@ public class GamerController {
 	@PreAuthorize("hasAuthority('GAMER')")
 	@PutMapping("/collectibles/roll")
 	public Mono<ResponseEntity<Object>> rollNewCollectible(ServerWebExchange exchange) {
-		HttpCookie tokenCookie = exchange.getRequest().getCookies().getFirst(cookieKey);
+		HttpCookie tokenCookie = exchange.getRequest().getCookies().getFirst(SecurityContextRepository.COOKIE_KEY);
 		if (tokenCookie == null) {
 			return Mono.just(ResponseEntity.badRequest().build());
 		}

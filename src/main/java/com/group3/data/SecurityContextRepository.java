@@ -16,7 +16,7 @@ import reactor.core.publisher.Mono;
 @Component
 public class SecurityContextRepository implements ServerSecurityContextRepository {
 
-	public static final String cookieKey = "token";
+	public static final String COOKIE_KEY = "token";
 
 	@Autowired
 	private AuthenticationManager authenticationManager;
@@ -28,9 +28,9 @@ public class SecurityContextRepository implements ServerSecurityContextRepositor
 
 	@Override
 	public Mono<SecurityContext> load(ServerWebExchange swe) {
-		if (swe.getRequest().getCookies().containsKey(cookieKey)
-				&& swe.getRequest().getCookies().getFirst(cookieKey) != null) {
-			String authCookie = swe.getRequest().getCookies().getFirst(cookieKey).getValue();
+		if (swe.getRequest().getCookies().containsKey(COOKIE_KEY)
+				&& swe.getRequest().getCookies().getFirst(COOKIE_KEY) != null) {
+			String authCookie = swe.getRequest().getCookies().getFirst(COOKIE_KEY).getValue();
 			Authentication auth = new UsernamePasswordAuthenticationToken(authCookie, authCookie);
 			return this.authenticationManager.authenticate(auth)
 					.map(SecurityContextImpl::new);

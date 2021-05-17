@@ -26,13 +26,13 @@ public class LoggingAspect {
 		try {
 			result = pjp.proceed();
 		}  catch(Throwable t) {
-			log.error(marker,"Method threw exception: {}", t);
+			log.error(marker,"Method threw exception: ", t);
 			for(StackTraceElement s : t.getStackTrace()) {
 				log.warn(s.toString());
 			}
 			if(t.getCause() != null) {
 				Throwable t2 = t.getCause();
-				log.error(marker, "Method threw wrapped exception: {}", t2);
+				log.error(marker, "Method threw wrapped exception: ", t2);
 				for(StackTraceElement s : t2.getStackTrace()) {
 					log.warn(s.toString());
 				}
