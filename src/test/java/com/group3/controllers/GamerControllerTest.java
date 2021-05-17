@@ -52,7 +52,6 @@ class GamerControllerTest {
 			return gc;
 		}
 		
-		
 		@Bean
 		Collectible getEmptyCollectible() {
 			return Mockito.mock(Collectible.class);

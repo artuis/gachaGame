@@ -43,6 +43,30 @@ public class EncounterServiceImpl implements EncounterService {
 		super();
 	}
 
+	public void setCollectibleService(CollectibleService collectibleService) {
+		this.collectibleService = collectibleService;
+	}
+
+	public void setEncounterRepo(EncounterRepository encounterRepo) {
+		this.encounterRepo = encounterRepo;
+	}
+
+	public void setRewardRepo(RewardTokenRepository rewardRepo) {
+		this.rewardRepo = rewardRepo;
+	}
+
+	public void setCollectibleRepo(CollectibleRepository collectibleRepo) {
+		this.collectibleRepo = collectibleRepo;
+	}
+
+	public void setGamerRepo(GamerRepository gamerRepo) {
+		this.gamerRepo = gamerRepo;
+	}
+
+	public void setEmailService(EmailService emailService) {
+		this.emailService = emailService;
+	}
+
 	public Flux<RewardToken> getRunningEncounters(UUID gamerID) {
 		return rewardRepo.findAllByGamerID(gamerID);
 	}
