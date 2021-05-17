@@ -5,7 +5,6 @@ import java.util.UUID;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpCookie;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseCookie;
@@ -25,6 +24,7 @@ import org.springframework.web.server.ServerWebExchange;
 
 import com.group3.beans.Collectible;
 import com.group3.beans.Gamer;
+import com.group3.data.SecurityContextRepository;
 import com.group3.services.CollectibleService;
 import com.group3.services.CollectibleTypeService;
 import com.group3.services.EmailService;
@@ -45,8 +45,8 @@ public class GamerController {
 	private CollectibleTypeService collectibleTypeService;
 	private CollectibleService collectibleService;
 	private EmailService emailService;
-	@Value("${springbootwebfluxjjwt.jjwt.cookiename}")
-	private String cookieKey;
+	
+	private String cookieKey = SecurityContextRepository.cookieKey;
 
 	private Logger log = LoggerFactory.getLogger(GamerController.class);
 

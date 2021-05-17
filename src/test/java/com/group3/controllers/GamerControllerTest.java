@@ -233,7 +233,7 @@ class GamerControllerTest {
 		
 		Collectible collectible = Collectible.fromCollectibleTypeAndId(collectibleType, gamer.getGamerId());
 		HttpCookie hc = new HttpCookie("token", generator.generateToken(gamer));
-		MockServerWebExchange exchange = MockServerWebExchange.from(MockServerHttpRequest.put("/ganers/collectibles/roll").cookie(hc));
+		MockServerWebExchange exchange = MockServerWebExchange.from(MockServerHttpRequest.put("/gamers/collectibles/roll").cookie(hc));
 
 		Mockito.when(gs.getGamer(gamer.getGamerId())).thenReturn(Mono.just(gamer));
 		Mockito.when(jwtUtil.getAllClaimsFromToken(Mockito.anyString()).get(Mockito.anyString())).thenReturn(gamer.getGamerId().toString());

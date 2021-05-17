@@ -7,7 +7,6 @@ import org.reactivestreams.Publisher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -23,6 +22,7 @@ import org.springframework.web.server.ServerWebExchange;
 
 import com.group3.beans.Encounter;
 import com.group3.beans.RewardToken;
+import com.group3.data.SecurityContextRepository;
 import com.group3.services.EncounterService;
 import com.group3.util.JWTUtil;
 
@@ -36,8 +36,8 @@ public class EncounterController {
 	private JWTUtil jwtUtil;
 	@Autowired
 	private EncounterService encounterService;
-	@Value("${springbootwebfluxjjwt.jjwt.cookiename}")
-	private String cookieKey;
+	
+	private String cookieKey = SecurityContextRepository.cookieKey;
 
 	public EncounterController() {
 		super();

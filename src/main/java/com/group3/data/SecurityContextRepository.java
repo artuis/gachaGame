@@ -1,7 +1,6 @@
 package com.group3.data;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
@@ -17,8 +16,7 @@ import reactor.core.publisher.Mono;
 @Component
 public class SecurityContextRepository implements ServerSecurityContextRepository {
 
-	@Value("${springbootwebfluxjjwt.jjwt.cookiename}")
-	private String cookieKey;
+	public static final String cookieKey = "token";
 
 	@Autowired
 	private AuthenticationManager authenticationManager;
