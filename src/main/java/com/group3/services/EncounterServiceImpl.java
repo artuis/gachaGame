@@ -88,8 +88,8 @@ public class EncounterServiceImpl implements EncounterService {
 		// A random version can be made later. (this is simpler to test)
 
 		// Gather stat total of sent collectible list
-		// TODO: Create a better way of calculating 'success'
-		int total = sent.stream().mapToInt(x -> x.getCurrentStat()).sum();
+		// In the Future: Create a better way of calculating 'success'
+		int total = sent.stream().mapToInt(Collectible::getCurrentStat).sum();
 		int reward;
 
 		// If the combined statistical score of each collectible, reaches the set
@@ -141,38 +141,40 @@ public class EncounterServiceImpl implements EncounterService {
 	@Override
 	public Mono<Gamer> distributeReward(int reward, UUID gamerID) {
 		return gamerRepo.findById(gamerID).flatMap(gamer -> {
+			String completeMsg = "GachaGame: Encounter Complete!";
+			String emailMsg = "The encounter your collectibles went on is complete! ";
 			if (gamer == null) {
 				return Mono.empty();
 			}
 			if (reward < 20) {
 				gamer.setStrings(gamer.getStrings() + (reward * 10 * Event.getStringMod()));
 				log.debug("Reward distributed: {} strings", (reward * 10));
-				emailService.sendEmail(gamer.getEmail(), "GachaGame: Encounter Complete!",
-						"The encounter your collectibles went on is complete! " + "You received " + (reward * 10)
+				emailService.sendEmail(gamer.getEmail(), completeMsg,
+						emailMsg + "You received " + (reward * 10)
 								+ " strings as a reward!");
 			} else if (reward < 40) {
 				gamer.setStardust(gamer.getStardust() + (reward / 10));
 				log.debug("Reward distributed: {} stardust", (reward / 10));
-				emailService.sendEmail(gamer.getEmail(), "GachaGame: Encounter Complete!",
-						"The encounter your collectibles went on is complete! " + "You received " + (reward / 10)
+				emailService.sendEmail(gamer.getEmail(), completeMsg,
+						emailMsg + "You received " + (reward / 10)
 								+ " stardust as a reward!");
 			} else if (reward < 60) {
 				gamer.setRolls(gamer.getRolls() + 1);
 				log.debug("Reward distributed: 1 roll");
-				emailService.sendEmail(gamer.getEmail(), "GachaGame: Encounter Complete!",
-						"The encounter your collectibles went on is complete! "
+				emailService.sendEmail(gamer.getEmail(), completeMsg,
+						emailMsg
 								+ "You received 1 free roll as a reward!");
 			} else if (reward < 80) {
 				gamer.setRolls(gamer.getRolls() + 3);
 				log.debug("Reward distributed: 3 rolls");
-				emailService.sendEmail(gamer.getEmail(), "GachaGame: Encounter Complete!",
-						"The encounter your collectibles went on is complete! "
+				emailService.sendEmail(gamer.getEmail(), completeMsg,
+						emailMsg
 								+ "You received 3 free rolls as a reward!");
 			} else if (reward < 100) {
 				gamer.setRolls(gamer.getRolls() + 5);
 				log.debug("Reward distributed: 5 rolls! Nice.");
-				emailService.sendEmail(gamer.getEmail(), "GachaGame: Encounter Complete!",
-						"The encounter your collectibles went on is complete! "
+				emailService.sendEmail(gamer.getEmail(), completeMsg,
+						emailMsg
 								+ "You received 5 free rolls as a reward! Great work!");
 			}
 

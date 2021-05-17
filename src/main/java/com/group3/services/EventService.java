@@ -19,7 +19,7 @@ public interface EventService {
 
 	Flux<Event> viewOngoingEvents();
 
-	Mono<?> deleteEvent(UUID eventId);
+	Mono<Void> deleteEvent(UUID eventId);
 	
 	Mono<Event> findEventById(UUID eventId);
 

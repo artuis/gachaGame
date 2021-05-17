@@ -22,6 +22,7 @@ import org.springframework.web.server.ServerWebExchange;
 
 import com.group3.beans.Encounter;
 import com.group3.beans.RewardToken;
+import com.group3.data.SecurityContextRepository;
 import com.group3.services.EncounterService;
 import com.group3.util.JWTUtil;
 
@@ -44,7 +45,7 @@ public class EncounterController {
 	@GetMapping
 	public Publisher<?> viewEncounters(ServerWebExchange exchange) {
 
-		HttpCookie tokenCookie = exchange.getRequest().getCookies().getFirst("token");
+		HttpCookie tokenCookie = exchange.getRequest().getCookies().getFirst(SecurityContextRepository.COOKIE_KEY);
 		if (tokenCookie == null) {
 			return Mono.just(ResponseEntity.badRequest().build());
 		}
@@ -57,7 +58,7 @@ public class EncounterController {
 	public Mono<ResponseEntity<RewardToken>> startEncounter(@RequestParam("collectibleIDList") List<UUID> collectibleIDList,
 			@RequestParam("encounterID") UUID encounterID, ServerWebExchange exchange) {
 
-		HttpCookie tokenCookie = exchange.getRequest().getCookies().getFirst("token");
+		HttpCookie tokenCookie = exchange.getRequest().getCookies().getFirst(SecurityContextRepository.COOKIE_KEY);
 		if (tokenCookie == null) {
 			return Mono.just(ResponseEntity.badRequest().build());
 		}
@@ -76,7 +77,7 @@ public class EncounterController {
 	@GetMapping("{gamerId}")
 	public Publisher<?> viewRunningEncounters(ServerWebExchange exchange) {
 
-		HttpCookie tokenCookie = exchange.getRequest().getCookies().getFirst("token");
+		HttpCookie tokenCookie = exchange.getRequest().getCookies().getFirst(SecurityContextRepository.COOKIE_KEY);
 		if (tokenCookie == null) {
 			return Mono.just(ResponseEntity.badRequest().build());
 		}

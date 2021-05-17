@@ -150,8 +150,7 @@ public class ScheduledTasks implements CommandLineRunner {
 	public List<Event> checkEventStartTrigger() {
 		Date current = Date.from(Instant.now());
 		return eventService.getEvents().flatMap(event -> {
-			if (event.isOngoing() == false && current.after(event.getEventStart())
-					&& current.before(event.getEventEnd())) {
+			if (!event.isOngoing() && current.after(event.getEventStart()) && current.before(event.getEventEnd())) {
 				event.setOngoing(true);
 				Event.Type type = event.getEventType();
 				log.debug("Initializing event: {}", type);
@@ -235,18 +234,17 @@ public class ScheduledTasks implements CommandLineRunner {
 					token.setEncounterComplete(true);
 					return encounterService.distributeReward(token.getReward(), token.getGamerID())
 							.thenReturn(encounterService.updateRewardToken(token)).flatMap(rewardToken -> rewardToken)
-							.flux().flatMap(rewardToke -> Flux.fromIterable(token.getCollectiblesOnEncounter())
-									.flatMap(collectibleId -> {
-										return collectibleService.getCollectible(collectibleId.toString())
-												.flatMap(collectible -> {
-													if (collectible != null) {
-														collectible.setOnEncounter(false);
-														return collectibleService.updateCollectible(collectible);
-													} else {
-														return Mono.empty();
-													}
-												});
-									}));
+							.flux()
+							.flatMap(rewardToke -> Flux.fromIterable(token.getCollectiblesOnEncounter())
+									.flatMap(collectibleId -> collectibleService
+											.getCollectible(collectibleId.toString()).flatMap(collectible -> {
+												if (collectible != null) {
+													collectible.setOnEncounter(false);
+													return collectibleService.updateCollectible(collectible);
+												} else {
+													return Mono.empty();
+												}
+											})));
 				}).collectList().block();
 	}
 }
